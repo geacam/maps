@@ -10,6 +10,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/shpjs/5.0.2/shp.js"></script>
 <script src="https://unpkg.com/tokml@0.4.0/tokml.js"></script>
+
+<!-- Firebase SDKs (compat para garantizar máxima estabilidad) -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
 
@@ -65,6 +71,18 @@ header {
 .status-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
 
+/* BOTÓN DE CUENTA CLOUD */
+#cloud-auth-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 8px;
+  background: rgba(255,255,255,.75); border: 1.5px solid var(--border2);
+  color: var(--text2); font-family: 'Syne', sans-serif;
+  font-size: 11px; font-weight: 700; cursor: pointer; transition: all .2s;
+}
+#cloud-auth-btn:hover { background: var(--blue-lt); border-color: var(--blue); color: var(--blue); }
+#cloud-auth-btn.logged-in { background: var(--green-lt); border-color: var(--green); color: var(--green); }
+#cloud-auth-btn.disabled-cloud { opacity: 0.7; cursor: not-allowed; }
+
 #hover-btn {
   display: flex; align-items: center; gap: 7px;
   padding: 7px 14px; border-radius: 8px;
@@ -97,11 +115,8 @@ header {
   box-shadow: var(--shadow);
 }
 
-/* Upload row — 2 columnas compactas */
-.upload-row {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
-  padding: 10px;
-}
+/* Upload row — 3 columnas (fotos, shp, txt) */
+.upload-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding: 10px; }
 .mini-drop {
   border: 1.5px dashed var(--border2); border-radius: 8px;
   padding: 10px 6px; text-align: center; cursor: pointer;
@@ -186,9 +201,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 
 .empty-unified { text-align: center; padding: 28px 12px; color: var(--muted); font-size: 11px; font-family: 'Space Mono', monospace; line-height: 1.9; }
 
-/* Upload row — 3 columnas (fotos, shp, txt) */
-.upload-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding: 10px; }
-
 /* TXT SIGPAC import panel */
 .sigpac-import-card { padding: 10px 12px; }
 .sigpac-import-card .sec-label { margin-bottom: 6px; }
@@ -202,7 +214,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 /* SHP pin markers */
 .shp-pin-icon { position: relative; }
 
-/* ── QUERY TRIPLE SWITCHER — dentro del sidebar ── */
+/* ── QUERY TRIPLE SWITCHER ── */
 #query-switcher {
   display: flex; gap: 2px;
   background: var(--glass); border: 1px solid var(--glass-border);
@@ -250,10 +262,10 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 #query-popup .qp-row { display: flex; gap: 5px; }
 #query-popup .qp-label { color: var(--muted); min-width: 64px; }
 
-/* ── SEARCH PANEL (right side) — alineado con sigpac-card ── */
+/* ── SEARCH PANEL (right side) ── */
 #search-panel {
   position: absolute; left: calc(var(--panel-w) + 24px); bottom: 12px;
-  top: calc(12px + 68px + 8px + 46px + 8px); /* header + upload-row + gap + query-switcher + gap */
+  top: calc(12px + 68px + 8px + 46px + 8px);
   width: 240px; z-index: 850; display: none; flex-direction: column;
   pointer-events: none;
 }
@@ -294,9 +306,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 .search-btn:hover { background: #1e55bb; }
 .search-btn.green { background: var(--green); }
 .search-btn.green:hover { background: #166038; }
-.search-result-highlight {
-  color: 'rgba(47,111,222,0.3)'; weight: 2; fillOpacity: 0.2;
-}
 
 /* ── LAYER ROW: search icon ── */
 .layer-search-btn {
@@ -306,8 +315,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 }
 .layer-search-btn:hover { color: var(--blue); background: var(--blue-lt); }
 .layer-search-btn.active-search { color: var(--blue); background: var(--blue-lt); }
-.layer-search-btn.green:hover { color: var(--green); background: var(--green-lt); }
-.layer-search-btn.green.active-search { color: var(--green); background: var(--green-lt); }
 
 /* ── YEAR SELECTOR ── */
 .year-sel {
@@ -318,9 +325,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   transition: all .15s; flex-shrink: 0;
 }
 .year-sel:hover, .year-sel:focus { border-color: var(--blue); }
-
-/* ── CULTIVO layer color ── */
-:root { --cultivo: #1e8a4c; }
 
 /* ── SHP DOWNLOAD BUTTONS ── */
 .shp-dl-wrap { display: flex; gap: 3px; }
@@ -336,13 +340,12 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 .shp-dl-btn.shp-f { background: var(--green-lt); color: var(--green); border-color: rgba(30,138,76,.25); }
 .shp-dl-btn.shp-f:hover { background: var(--green); color: #fff; }
 
-/* ── PARCEL TOOLTIP → más grande ── */
+/* ── PARCEL TOOLTIP ── */
 #parcel-tooltip {
   font-size: 13px !important;
 }
 #parcel-tooltip .tt-id { font-size: 14px !important; }
 #parcel-tooltip .tt-detail { font-size: 11px !important; }
-
 
 /* MAP */
 #map { flex: 1; }
@@ -423,6 +426,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   letter-spacing: .08em; text-transform: uppercase;
   transition: all .18s; color: var(--text2); background: transparent;
 }
+
 /* ── GEOLOCATION BUTTON ── */
 #geolocate-btn {
   position: absolute; bottom: 130px; right: 12px; z-index: 999;
@@ -453,11 +457,52 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 .measure-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
 .measure-btn.active { background: #9b27c8; color: #fff; border-color: #9b27c8; box-shadow: 0 0 0 3px rgba(155,39,200,.2), var(--shadow); }
 
-/* De abajo a arriba: GPS(130) → Lápiz(174) → Área(218) → Línea(262) */
 #measure-line-btn { bottom: 262px; }
 #measure-area-btn { bottom: 218px; }
 
-/* ── DRAW BUTTON (lápiz) ── */
+/* ── GLOBE / COORDINATES BUTTON ── */
+#globe-btn {
+  position: absolute; bottom: 306px; right: 12px; z-index: 999;
+  width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow); backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; color: var(--text2);
+}
+#globe-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
+#globe-btn.active { background: #1e8a4c; color: #fff; border-color: #1e8a4c; box-shadow: 0 0 0 3px rgba(30,138,76,.2), var(--shadow); }
+
+/* Globe coords popup */
+#globe-popup {
+  position: absolute; z-index: 1200;
+  background: var(--glass); border: 1.5px solid #1e8a4c;
+  border-radius: 12px; padding: 12px 14px 10px;
+  box-shadow: var(--shadow); backdrop-filter: blur(16px);
+  min-width: 220px; display: none;
+  font-family: 'Space Mono', monospace;
+}
+#globe-popup .gp-close {
+  position: absolute; top: 7px; right: 8px;
+  background: none; border: none; color: var(--muted); cursor: pointer;
+  font-size: 13px; padding: 2px 5px; border-radius: 4px;
+}
+#globe-popup .gp-close:hover { color: var(--danger); }
+#globe-popup .gp-title { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: #1e8a4c; font-weight: 700; margin-bottom: 8px; }
+#globe-popup .gp-coords { font-size: 11px; color: var(--text); line-height: 1.7; margin-bottom: 10px; }
+#globe-popup .gp-coords span { color: var(--muted); font-size: 9px; }
+#globe-popup .gp-links { display: flex; gap: 6px; }
+#globe-popup .gp-link {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px;
+  padding: 6px 8px; border-radius: 7px; border: none; cursor: pointer;
+  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  text-decoration: none; transition: all .15s;
+}
+#globe-popup .gp-link.earth { background: #e6f4ec; color: #1e8a4c; border: 1px solid rgba(30,138,76,.25); }
+#globe-popup .gp-link.earth:hover { background: #1e8a4c; color: #fff; }
+#globe-popup .gp-link.maps { background: var(--blue-lt); color: var(--blue); border: 1px solid rgba(47,111,222,.25); }
+#globe-popup .gp-link.maps:hover { background: var(--blue); color: #fff; }
+
+/* ── DRAW BUTTON ── */
 #draw-btn {
   position: absolute; bottom: 174px; right: 12px; z-index: 999;
   width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
@@ -492,16 +537,62 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 }
 #draw-hint.show { display: block; }
 
+/* ── CLOUD MODAL STYLES ── */
+.auth-modal {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.auth-modal.open { opacity: 1; pointer-events: all; }
+.auth-card {
+  width: 340px; background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 22px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 14px; position: relative;
+}
+.auth-close {
+  position: absolute; top: 12px; right: 12px; background: none; border: none;
+  font-size: 16px; color: var(--muted); cursor: pointer; padding: 4px;
+}
+.auth-title { font-weight: 800; font-size: 18px; color: var(--text); }
+.auth-input-group { display: flex; flex-direction: column; gap: 4px; }
+.auth-input-group label { font-family: 'Space Mono', monospace; font-size: 9px; text-transform: uppercase; color: var(--muted); }
+.auth-input {
+  width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Space Mono', monospace; font-size: 11px; outline: none; transition: border-color .15s;
+}
+.auth-input:focus { border-color: var(--blue); }
+.auth-actions-row { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.auth-main-btn {
+  width: 100%; padding: 10px; border-radius: 8px; border: none; font-weight: 700;
+  font-family: 'Space Mono', monospace; font-size: 11px; background: var(--blue); color: #fff;
+  cursor: pointer; transition: background .15s;
+}
+.auth-main-btn:hover { background: #1e55bb; }
+.auth-sub-link {
+  font-size: 10px; color: var(--blue); text-align: center; text-decoration: none;
+  font-weight: 600; cursor: pointer; display: block;
+}
+.auth-sub-link:hover { text-decoration: underline; }
+.auth-user-info { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 4px; }
+.auth-user-email { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); word-break: break-all; }
+
 /* Mobile: shift everything up proportionally */
 @media (max-width: 700px) {
   #measure-line-btn { bottom: 310px; }
   #measure-area-btn { bottom: 262px; }
   #draw-btn         { bottom: 218px; }
   #geolocate-btn    { bottom: 174px; }
+  #globe-btn        { bottom: 354px; }
   .measure-btn      { width: 42px; height: 42px; }
   #draw-btn         { width: 42px; height: 42px; }
+  #globe-btn        { width: 42px; height: 42px; }
 }
 
+#basemap-switcher { top: 12px; right: 12px; }
+#orto-year-wrap { border-left: 1px solid var(--glass-border); margin-left: 1px; }
+#orto-year-wrap .year-sel { background: transparent; border: none; color: var(--text); padding: 4px 3px; font-size: 8px; }
+#orto-year-wrap .year-sel:focus { outline: none; }
 .bm-btn.active { background: var(--blue); color: #fff; box-shadow: 0 1px 4px rgba(47,111,222,.4); }
 .bm-btn:not(.active):hover { background: var(--blue-lt); color: var(--blue); }
 
@@ -513,7 +604,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   pointer-events: none; letter-spacing: .04em;
 }
 
-/* ── HAMBURGER (móvil) ── */
+/* ── HAMBURGER ── */
 #menu-btn {
   display: none;
   position: absolute; top: 12px; left: 12px; z-index: 1001;
@@ -534,9 +625,9 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 @media (max-width: 700px) {
   :root { --panel-w: 280px; }
 
-  header { padding: 0 12px; height: 48px; }
+  header { padding: 0 12px; height: 48px; gap: 6px; }
   .logo-sub, .status-pill { display: none; }
-  .logo-text { font-size: 16px; }
+  .logo-text { font-size: 15px; }
 
   /* Hamburguesa: esquina superior DERECHA */
   #menu-btn { display: flex; left: auto; right: 12px; top: 12px; }
@@ -548,7 +639,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
     transform: translateX(calc(100% + 24px));
     transition: transform .28s cubic-bezier(.4,0,.2,1);
     z-index: 900;
-    /* Solo mostrar el panel SIGPAC — ocultar el resto */
   }
   .sidebar.mobile-open { transform: translateX(0); }
 
@@ -558,7 +648,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   .sidebar .layers-card,
   .sidebar #search-panel { display: none !important; }
 
-  /* Query switcher: dentro del sidebar en móvil, arriba del todo, visible */
+  /* Query switcher */
   #query-switcher {
     display: flex;
     order: -1;
@@ -566,16 +656,16 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
     margin-bottom: 0;
   }
 
-  /* Search panel: no aparece en móvil */
+  /* Search panel */
   #search-panel { display: none !important; }
 
-  /* Basemap switcher: esquina inferior IZQUIERDA en móvil */
+  /* Basemap switcher */
   #basemap-switcher {
     top: auto; right: auto;
     bottom: 90px; left: 12px;
   }
 
-  /* Popup consulta: casi ancho completo centrado */
+  /* Popup consulta */
   #query-popup {
     min-width: 0;
     max-width: calc(100vw - 24px);
@@ -583,7 +673,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
     left: 12px !important;
   }
 
-  /* Zoom y geolocate: más grandes para táctil */
+  /* Zoom y geolocate */
   #geolocate-btn { width: 42px; height: 42px; bottom: 130px; }
   #draw-btn      { width: 42px; height: 42px; }
   .leaflet-control-zoom a {
@@ -591,10 +681,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
     line-height: 36px !important; font-size: 18px !important;
   }
 
-  /* Query switcher: botones más grandes en táctil */
   .qs-btn { font-size: 8px; padding: 7px 8px; }
-
-  /* Bm-btn más compacto */
   .bm-btn { font-size: 8px; padding: 5px 8px; }
 }
 </style>
@@ -616,6 +703,17 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
     </div>
   </div>
   <div class="header-sep"></div>
+  
+  <!-- Botón de Sincronización Cloud -->
+  <button id="cloud-auth-btn" title="Configurar cuenta en la nube">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/>
+      <line x1="12" y1="12" x2="12" y2="22"/>
+      <polyline points="16 16 12 12 8 16"/>
+    </svg>
+    <span>Mi Cuenta</span>
+  </button>
+  
   <div class="status-pill"><span class="dot"></span>WMS activo</div>
 </header>
 
@@ -715,7 +813,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 
   </aside>
 
-  <!-- Search panel (slide in right of sidebar) -->
+  <!-- Search panel -->
   <div id="search-panel">
     <div class="search-card">
       <div class="search-card-header">
@@ -737,6 +835,28 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   </div>
 
   <div id="map"></div>
+  <button id="globe-btn" title="Coordenadas y enlaces externos">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+    </svg>
+  </button>
+  <div id="globe-popup">
+    <button class="gp-close" id="gp-close-btn">✕</button>
+    <div class="gp-title">Coordenadas</div>
+    <div class="gp-coords" id="gp-coords"></div>
+    <div class="gp-links">
+      <a class="gp-link earth" id="gp-earth-link" href="#" target="_blank" rel="noopener">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        Google Earth
+      </a>
+      <a class="gp-link maps" id="gp-maps-link" href="#" target="_blank" rel="noopener">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Google Maps
+      </a>
+    </div>
+  </div>
   <button class="measure-btn" id="measure-area-btn" title="Medir área">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/>
@@ -762,11 +882,68 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
     </svg>
   </button>
   <div id="basemap-switcher">
-    <button class="bm-btn active" id="bm-sat" onclick="setBasemap('sat')">Satélite</button>
+    <button class="bm-btn" id="bm-sat" onclick="setBasemap('sat')" style="display:none">Satélite</button>
     <button class="bm-btn" id="bm-osm" onclick="setBasemap('osm')">Calles</button>
-    <button class="bm-btn" id="bm-earth" onclick="setBasemap('earth')">Earth</button>
+    <button class="bm-btn active" id="bm-earth" onclick="setBasemap('earth')">Earth</button>
+    <button class="bm-btn" id="bm-sigpac" onclick="setBasemap('sigpac')">SIGPAC</button>
+    <div id="orto-year-wrap" style="display:none;align-items:center;padding:0 2px 0 1px;">
+      <select id="orto-year-sel" class="year-sel" title="Año de ortofoto"
+        onchange="setOrtoYear(this.value)">
+        <option value="2024">2024</option>
+        <option value="2022">2022</option>
+        <option value="2018">2018</option>
+        <option value="2015">2015</option>
+        <option value="2012">2012</option>
+      </select>
+    </div>
   </div>
-  <div id="imagery-date">Esri World Imagery</div>
+  <div id="imagery-date">Google Earth</div>
+</div>
+
+<!-- Modal de Autenticación en la Nube -->
+<div class="auth-modal" id="authModal">
+  <div class="auth-card">
+    <button class="auth-close" id="authModalClose">✕</button>
+    <div class="auth-title" id="authModalTitle">Sincronización en la Nube</div>
+    
+    <!-- Vista del usuario conectado -->
+    <div id="authViewUser" style="display:none;">
+      <div class="auth-user-info">
+        <div>
+          <span style="font-size:9px;color:var(--muted);font-family:'Space Mono';display:block;">CONECTADO COMO</span>
+          <span class="auth-user-email" id="authActiveEmail">usuario@correo.com</span>
+        </div>
+        <span style="font-size:18px;">☁️</span>
+      </div>
+      <p style="font-size:10px;color:var(--muted);line-height:1.4;margin-bottom:12px;font-family:'Space Mono';">
+        Tus capas SHP, KML y XML del proyecto se sincronizarán y descargarán automáticamente en este y cualquier otro dispositivo en el que inicies sesión.
+      </p>
+      <div class="auth-actions-row">
+        <button class="auth-main-btn" id="authLogoutBtn" style="background:var(--danger);">Cerrar Sesión</button>
+      </div>
+    </div>
+
+    <!-- Formulario para iniciar sesión o registrarse -->
+    <div id="authViewForm">
+      <form id="authForm" onsubmit="event.preventDefault();">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="auth-input-group">
+            <label for="authEmail">Correo Electrónico</label>
+            <input class="auth-input" type="email" id="authEmail" required placeholder="ejemplo@correo.com">
+          </div>
+          <div class="auth-input-group">
+            <label for="authPassword">Contraseña</label>
+            <input class="auth-input" type="password" id="authPassword" required placeholder="••••••••" minlength="6">
+          </div>
+          <div class="auth-actions-row">
+            <button class="auth-main-btn" id="authPrimaryBtn">Iniciar Sesión</button>
+            <a class="auth-sub-link" id="authToggleAction">¿No tienes cuenta? Regístrate gratis</a>
+            <a class="auth-sub-link" id="authResetPassword" style="color:var(--muted);font-size:9px;">¿Olvidaste tu contraseña?</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <div id="lightbox">
@@ -780,46 +957,109 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 'use strict';
 
 // ═══════════════════════════════════════════════════════════════
-// 1. MAPA
+// 1. MAPA (Inicializado primero de forma independiente y segura)
 // ═══════════════════════════════════════════════════════════════
 const map = L.map('map', {
   center: [39.5, -3.0], zoom: 8,
   zoomControl: false,
-  maxZoom: 21          // el mapa nunca hace zoom-out forzado al cambiar capa
+  maxZoom: 21
 });
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
+// ── Configuración de ortofotos SIGPAC por año ──────────────────
+const ORTOFOTO_CONFIGS = {
+  '2024': () => L.tileLayer.wms('https://geoservicios.castillalamancha.es/arcgis/services/Raster/ortofoto_2024/MapServer/WMSServer', {
+    layers: '0', format: 'image/jpeg', transparent: false,
+    version: '1.1.1', uppercase: true,
+    maxNativeZoom: 19, maxZoom: 21,
+    attribution: 'CLM Ortofoto 2024'
+  }),
+  '2022': () => L.tileLayer.wms('https://geoservicios.castillalamancha.es/arcgis/services/Raster/ortofoto_2021/MapServer/WMSServer', {
+    layers: '0', format: 'image/jpeg', transparent: false,
+    version: '1.1.1', uppercase: true,
+    maxNativeZoom: 19, maxZoom: 21,
+    attribution: 'CLM Ortofoto 2022'
+  }),
+  '2018': () => L.tileLayer.wms('https://geoservicios.castillalamancha.es/arcgis/services/Raster/ortofoto_2018/MapServer/WMSServer', {
+    layers: '0', format: 'image/jpeg', transparent: false,
+    version: '1.1.1', uppercase: true,
+    maxNativeZoom: 19, maxZoom: 21,
+    attribution: 'CLM Ortofoto 2018'
+  }),
+  '2015': () => L.tileLayer.wms('https://geoservicios.castillalamancha.es/arcgis/services/Raster/ortofoto_2015/MapServer/WMSServer', {
+    layers: '0', format: 'image/jpeg', transparent: false,
+    version: '1.1.1', uppercase: true,
+    maxNativeZoom: 19, maxZoom: 21,
+    attribution: 'CLM Ortofoto 2015'
+  }),
+  '2012': () => L.tileLayer.wms('https://geoservicios.castillalamancha.es/arcgis/services/Raster/ortofoto_2012/MapServer/WMSServer', {
+    layers: '0', format: 'image/jpeg', transparent: false,
+    version: '1.1.1', uppercase: true,
+    maxNativeZoom: 19, maxZoom: 21,
+    attribution: 'CLM Ortofoto 2012'
+  }),
+};
+
+const ORTOFOTO_YEAR_KEY = 'geofotos_ortofoto_year';
+let activeOrtoYear = localStorage.getItem(ORTOFOTO_YEAR_KEY) || '2024';
+
+// Crear el tile layer de la ortofoto activa
+let sigpacLayer = ORTOFOTO_CONFIGS[activeOrtoYear]();
+
 const baseLayers = {
-  // maxNativeZoom = zoom máximo real del servicio; maxZoom = zoom máximo del mapa
-  // Leaflet estirará los tiles del nivel maxNativeZoom en lugar de forzar un zoom-out
   sat:   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
            { attribution: 'Esri', maxNativeZoom: 19, maxZoom: 21 }),
   osm:   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
            { attribution: '© OSM', maxNativeZoom: 19, maxZoom: 21 }),
   earth: L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-           { attribution: '© Google', maxNativeZoom: 20, maxZoom: 21, crossOrigin: true })
+           { attribution: '© Google', maxNativeZoom: 20, maxZoom: 21, crossOrigin: true }),
+  sigpac: sigpacLayer,
 };
-baseLayers.sat.addTo(map);
-let activeBasemap = 'sat';
 
-// Marcas de agua de fecha de imagen (solo para capas satélite)
+// Por defecto: Earth activo
+baseLayers.earth.addTo(map);
+let activeBasemap = 'earth';
+
+// ── Watermark ──────────────────────────────────────────────────
 const IMAGERY_DATES = {
-  sat:   'Esri World Imagery',
-  earth: 'Google Earth'
+  sat:    'Esri World Imagery',
+  earth:  'Google Earth',
+  sigpac: null,
 };
 const dateWatermark = document.getElementById('imagery-date');
 
 function updateDateWatermark(type) {
   if (!dateWatermark) return;
-  const label = IMAGERY_DATES[type];
+  let label = IMAGERY_DATES[type] || null;
+  if (type === 'sigpac') label = `SIGPAC Ortofoto ${activeOrtoYear}`;
   if (label) { dateWatermark.textContent = label; dateWatermark.style.display = ''; }
   else        { dateWatermark.style.display = 'none'; }
 }
 
-function setBasemap(type) {
-  if (type === activeBasemap) return;
-  map.removeLayer(baseLayers[activeBasemap]);
-  baseLayers[type].addTo(map);
+// ── Cambiar año de ortofoto SIGPAC ────────────────────────────
+function setOrtoYear(year) {
+  if (!ORTOFOTO_CONFIGS[year]) return;
+  activeOrtoYear = year;
+  localStorage.setItem(ORTOFOTO_YEAR_KEY, year);
+
+  const wasActive = activeBasemap === 'sigpac';
+  if (wasActive) map.removeLayer(baseLayers.sigpac);
+  baseLayers.sigpac.remove?.();
+
+  sigpacLayer = ORTOFOTO_CONFIGS[year]();
+  baseLayers.sigpac = sigpacLayer;
+
+  if (wasActive) {
+    sigpacLayer.addTo(map);
+    reraiseOverlays();
+    updateDateWatermark('sigpac');
+  }
+
+  const sel = document.getElementById('orto-year-sel');
+  if (sel) sel.value = year;
+}
+
+function reraiseOverlays() {
   if (typeof wmsRecinto !== 'undefined' && map.hasLayer(wmsRecinto)) { map.removeLayer(wmsRecinto); wmsRecinto.addTo(map); }
   if (typeof wmsCultivo !== 'undefined' && map.hasLayer(wmsCultivo)) { map.removeLayer(wmsCultivo); wmsCultivo.addTo(map); }
   if (typeof shpLayers !== 'undefined') shpLayers.forEach(l => {
@@ -828,18 +1068,34 @@ function setBasemap(type) {
     l.leafletLayer.addTo(map);
   });
   if (typeof photoGroup !== 'undefined' && map.hasLayer(photoGroup)) { map.removeLayer(photoGroup); photoGroup.addTo(map); }
+}
+
+function setBasemap(type) {
+  if (type === activeBasemap) return;
+  if (activeBasemap === 'sigpac') map.removeLayer(baseLayers.sigpac);
+  else map.removeLayer(baseLayers[activeBasemap]);
+  if (type === 'sigpac') baseLayers.sigpac.addTo(map);
+  else baseLayers[type].addTo(map);
+  reraiseOverlays();
   activeBasemap = type;
   document.querySelectorAll('.bm-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('bm-' + type)?.classList.add('active');
+  const ortoSel = document.getElementById('orto-year-wrap');
+  if (ortoSel) ortoSel.style.display = (type === 'sigpac') ? 'flex' : 'none';
   updateDateWatermark(type);
 }
-updateDateWatermark('sat');
+
+// Inicializar watermark con Earth
+updateDateWatermark('earth');
+document.addEventListener('DOMContentLoaded', () => {
+  const sel = document.getElementById('orto-year-sel');
+  if (sel) sel.value = activeOrtoYear;
+});
+(function() { const sel = document.getElementById('orto-year-sel'); if (sel) sel.value = activeOrtoYear; })();
 
 // ═══════════════════════════════════════════════════════════════
 // 2. WMS — RECINTOS (multi-año) + CULTIVO DECLARADO
 // ═══════════════════════════════════════════════════════════════
-
-// Configuración de todos los WMS de recintos disponibles
 const RECINTOS_WMS = {
   '2026': 'https://geoservicios.castillalamancha.es/arcgis/services/Vector/Recintos_sigpac/MapServer/WMSServer',
   '2025': 'https://geoservicios.castillalamancha.es/arcgis/services/Vector/Recintos_sigpac_2025/MapServer/WMSServer',
@@ -849,14 +1105,11 @@ const RECINTOS_WMS = {
 const CULTIVO_WMS   = 'https://sigpac-hubcloud.es/wms';
 const CULTIVO_LAYER = 'cultivo_declarado';
 
-// Año activo — persiste en localStorage
 const WMS_YEAR_KEY = 'geofotos_recintos_year';
 let activeRecintoYear = '2026';
-// WMS_URL y ARCGIS_REST_URL son siempre el año activo — se actualizan con setRecintoYear()
 let WMS_URL        = RECINTOS_WMS[activeRecintoYear];
 let ARCGIS_REST_URL = WMS_URL.replace('/WMSServer','/0/query').replace('/services/','/rest/services/');
 
-// Crear las 4 capas WMS (solo la activa se añade al mapa)
 const recintoLayers = {};
 for (const [year, url] of Object.entries(RECINTOS_WMS)) {
   recintoLayers[year] = L.tileLayer.wms(url, {
@@ -866,7 +1119,6 @@ for (const [year, url] of Object.entries(RECINTOS_WMS)) {
     maxZoom: 21, maxNativeZoom: 20
   });
 }
-// Alias para compatibilidad con setBasemap y resto del código
 let wmsRecinto = recintoLayers[activeRecintoYear];
 wmsRecinto.addTo(map);
 
@@ -877,34 +1129,20 @@ const wmsCultivo = L.tileLayer.wms(CULTIVO_WMS, {
   maxZoom: 21, maxNativeZoom: 20
 }).addTo(map);
 
-// ── Cambiar año de recintos ──────────────────────────────────
 function setRecintoYear(year) {
   if (!RECINTOS_WMS[year] || year === activeRecintoYear) return;
-
   const wasVisible = map.hasLayer(wmsRecinto);
-
-  // Quitar capa anterior
   map.removeLayer(wmsRecinto);
-
-  // Actualizar referencias globales
   activeRecintoYear = year;
   localStorage.setItem(WMS_YEAR_KEY, year);
   WMS_URL         = RECINTOS_WMS[year];
   ARCGIS_REST_URL = WMS_URL.replace('/WMSServer','/0/query').replace('/services/','/rest/services/');
   wmsRecinto      = recintoLayers[year];
-
-  // Añadir nueva capa si el toggle está activo
   if (wasVisible) wmsRecinto.addTo(map);
-
-  // Actualizar el select en el panel
   const sel = document.getElementById('recinto-year-sel');
   if (sel) sel.value = year;
-
-  // Actualizar label del año en el panel
   const lbl = document.getElementById('recinto-year-label');
   if (lbl) lbl.textContent = `Recintos ${year}`;
-
-  // Cerrar cualquier popup de consulta abierto (los datos cambiarían)
   if (typeof closeQueryPopup === 'function') closeQueryPopup();
   toast(`Capa de recintos cambiada a ${year}`);
 }
@@ -915,7 +1153,6 @@ document.getElementById('tog-recinto').addEventListener('change', e => {
 document.getElementById('tog-cultivo').addEventListener('change', e => {
   e.target.checked ? wmsCultivo.addTo(map) : map.removeLayer(wmsCultivo);
 });
-// Inicializar el select al año guardado (DOM ya existe)
 (function() {
   const sel = document.getElementById('recinto-year-sel');
   if (sel) sel.value = activeRecintoYear;
@@ -941,7 +1178,6 @@ function applyQueryMode(mode) {
 document.querySelectorAll('.qs-btn').forEach(b => {
   b.addEventListener('click', () => applyQueryMode(b.dataset.mode));
 });
-// Defer restore so queryPopupEl is defined first — done at end of script
 
 // ═══════════════════════════════════════════════════════════════
 // 3. LECTURA EXIF
@@ -996,20 +1232,19 @@ function readPhotoData(file) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 4. MARCADORES SVG — cámara rellena + flecha clásica de dirección
+// 4. MARCADORES SVG
 // ═══════════════════════════════════════════════════════════════
 const clusterMap  = {};
 const CLUSTER_TOL = 0.00005;
 
 const CAM_BLUE   = '#2f6fde';
 const CAM_ORANGE = '#c96800';
-const ARROW_BLUE_FAINT = 'rgba(47,111,222,0.45)'; // flechas inactivas en multi
+const ARROW_BLUE_FAINT = 'rgba(47,111,222,0.45)';
 
 function clusterKey(lat, lng) {
   return Math.round(lat / CLUSTER_TOL) + '_' + Math.round(lng / CLUSTER_TOL);
 }
 
-// Estado global: qué cluster está seleccionado ahora mismo
 let activeClusterKey = null;
 
 function clearActiveCluster() {
@@ -1020,16 +1255,6 @@ function clearActiveCluster() {
   highlightPhotoInSidebar(null);
 }
 
-/*
-  buildCamIcon(photoList, selectedIdx)
-  - selectedIdx === null  → ninguna foto seleccionada (azul)
-  - selectedIdx >= 0      → esa foto seleccionada (naranja)
-
-  Flechas en multi:
-  - Todas las fotos muestran su flecha (azul tenue)
-  - La seleccionada muestra su flecha en naranja sólido
-  - Ninguna seleccionada → todas en azul tenue
-*/
 function buildCamIcon(photoList, selectedIdx) {
   const CX = 40, CY = 42;
   const multi = photoList.length > 1;
@@ -1038,7 +1263,6 @@ function buildCamIcon(photoList, selectedIdx) {
   const isSelected = selectedIdx !== null && selectedIdx >= 0;
   const camFill = isSelected ? CAM_ORANGE : CAM_BLUE;
 
-  // ── Cámara rellena flat ──
   const bx = CX - 12, by = CY - 7;
   const camSvg = `
     <rect x="${bx}" y="${by+4}" width="24" height="14" rx="3" fill="${camFill}"/>
@@ -1048,7 +1272,6 @@ function buildCamIcon(photoList, selectedIdx) {
     <rect x="${bx+2}" y="${by+6}" width="4" height="3" rx="1" fill="white" opacity="0.6"/>
     <rect x="${bx+17}" y="${by+1}" width="5" height="3.5" rx="1" fill="white" opacity="0.5"/>`;
 
-  // ── Flechas clásicas de azimut ──
   const ARROW_DIST = 19;
   const SHAFT_LEN  = 8;
   const SHAFT_W    = 3;
@@ -1059,8 +1282,6 @@ function buildCamIcon(photoList, selectedIdx) {
   photoList.forEach((p, i) => {
     if (p.azimuth === null) return;
     const isSel = selectedIdx === i;
-    // Foto única: naranja si seleccionada, azul si no
-    // Multi: naranja si es la seleccionada, azul tenue para las demás (siempre visibles)
     let arrowColor, arrowOpacity;
     if (!multi) {
       arrowColor   = isSelected ? CAM_ORANGE : CAM_BLUE;
@@ -1073,7 +1294,7 @@ function buildCamIcon(photoList, selectedIdx) {
     const az = p.azimuth * Math.PI / 180;
     const dx = Math.sin(az);
     const dy = -Math.cos(az);
-    const px = -dy, py = dx; // perpendicular
+    const px = -dy, py = dx;
 
     const s1x = CX + dx*ARROW_DIST + px*(SHAFT_W/2);
     const s1y = CY + dy*ARROW_DIST + py*(SHAFT_W/2);
@@ -1097,7 +1318,6 @@ function buildCamIcon(photoList, selectedIdx) {
         fill="${arrowColor}" opacity="${arrowOpacity}"/>`;
   });
 
-  // Badge contador en multi
   const badge = multi ? `
     <circle cx="${CX+13}" cy="${CY-14}" r="${BADGE_R}"
       fill="${isSelected ? CAM_ORANGE : CAM_BLUE}" stroke="white" stroke-width="1.2"/>
@@ -1111,7 +1331,6 @@ function buildCamIcon(photoList, selectedIdx) {
     ${camSvg}
     ${badge}
   </svg>
-  <!-- Hit area: solo el cuerpo de la cámara, no las flechas -->
   <div style="
     position:absolute;
     left:${bx}px; top:${by}px;
@@ -1129,7 +1348,6 @@ function buildCamIcon(photoList, selectedIdx) {
   });
 }
 
-// ── Highlight recíproco: marca la foto en el panel izquierdo ──
 function highlightPhotoInSidebar(photoId) {
   document.querySelectorAll('.list-item[data-type="photo"]').forEach(el => el.classList.remove('active'));
   if (!photoId) return;
@@ -1139,14 +1357,12 @@ function highlightPhotoInSidebar(photoId) {
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ── Añadir marcador al mapa ──
 function addPhotoMarker(photo) {
   const key = clusterKey(photo.lat, photo.lng);
   if (clusterMap[key]) {
     clusterMap[key].photos.push(photo);
     photo.clusterKey = key;
     photo.colorIndex = clusterMap[key].photos.length - 1;
-    // Mantener selectedIdx actual al añadir foto a cluster existente
     refreshClusterMarker(key, clusterMap[key].selectedIdx ?? null);
     bindClusterPopup(key);
   } else {
@@ -1170,11 +1386,8 @@ function refreshClusterMarker(key, selectedIdx) {
   c.marker.setIcon(buildCamIcon(c.photos, selectedIdx));
 }
 
-// ── Popup ──
 function bindClusterPopup(key) {
   const c = clusterMap[key];
-
-  // Limpiar listeners anteriores completamente antes de rebindear
   c.marker.off('click');
   c.marker.off('popupclose');
   c.marker.unbindPopup();
@@ -1184,8 +1397,6 @@ function bindClusterPopup(key) {
 
   c.marker.on('click', function(e) {
     L.DomEvent.stopPropagation(e);
-
-    // Resetear el cluster que estaba activo antes (si era otro)
     if (activeClusterKey && activeClusterKey !== key) {
       refreshClusterMarker(activeClusterKey, null);
     }
@@ -1195,7 +1406,6 @@ function bindClusterPopup(key) {
       refreshClusterMarker(key, 0);
       highlightPhotoInSidebar(c.photos[0].id);
     }
-    // Multi: no preseleccionar ninguna — el usuario elige en el popup
 
     const content = c.photos.length === 1
       ? buildSinglePopup(c.photos[0], key)
@@ -1219,11 +1429,9 @@ function bindClusterPopup(key) {
   });
 }
 
-// ── Conversión WGS84 decimal → UTM ──────────────────────────────────────────
-// Implementación directa sin librerías externas (elipsoide WGS84)
 function latLngToUTM(lat, lng) {
-  const a  = 6378137.0;           // semieje mayor WGS84
-  const f  = 1 / 298.257223563;   // achatamiento
+  const a  = 6378137.0;
+  const f  = 1 / 298.257223563;
   const b  = a * (1 - f);
   const e2 = 1 - (b * b) / (a * a);
   const e  = Math.sqrt(e2);
@@ -1354,7 +1562,6 @@ function addPhotoToSidebar(photo) {
 
   card.querySelector('.photo-thumb').onclick = e => { e.stopPropagation(); openLightbox(photo.thumb, photo.name); };
 
-  // Checkbox visibilidad individual
   const visChk = card.querySelector('.photo-vis');
   visChk.addEventListener('change', e => {
     e.stopPropagation();
@@ -1375,7 +1582,6 @@ function addPhotoToSidebar(photo) {
 
   card.onclick = () => {
     if (photo.lat) {
-      // Resetear cluster activo anterior si era distinto
       if (activeClusterKey && activeClusterKey !== photo.clusterKey) {
         refreshClusterMarker(activeClusterKey, null);
       }
@@ -1388,7 +1594,6 @@ function addPhotoToSidebar(photo) {
     }
   };
   card.querySelector('.item-del').onclick = e => { e.stopPropagation(); removePhoto(photo.id); };
-  // Insertar fotos al principio, antes de cualquier SHP item
   const firstShp = list.querySelector('.list-item[data-type="shp"]');
   list.insertBefore(card, firstShp || document.getElementById('unified-empty'));
   updateCounter();
@@ -1437,14 +1642,14 @@ document.getElementById('lightbox').onclick = e => { if (e.target === e.currentT
 document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open'); });
 
 // ═══════════════════════════════════════════════════════════════
-// 7. CONSULTA WMS (click + hover highlight)
+// 7. CONSULTA WMS
 // ═══════════════════════════════════════════════════════════════
-const tooltip       = document.getElementById('parcel-tooltip'); // kept for hover shade
+const tooltip       = document.getElementById('parcel-tooltip');
 const queryPopupEl  = document.getElementById('query-popup');
 const qpIdEl        = document.getElementById('qp-id');
 const qpDetailEl    = document.getElementById('qp-detail');
 let   highlightPoly = null;
-let   hoverHighlight= null;  // subtle hover shade
+let   hoverHighlight= null;
 let   hoverDebounce = null;
 let   lastHoverKey  = null;
 
@@ -1454,21 +1659,17 @@ function closeQueryPopup() {
 }
 document.getElementById('qp-close-btn').addEventListener('click', closeQueryPopup);
 
-// Posiciona el popup centrado encima del punto de clic, adaptándose al viewport
 function positionQueryPopup(latlng) {
   const el = queryPopupEl;
   el.style.display = 'block';
 
-  // Obtener posición del mapa en la pantalla
   const mapEl   = document.getElementById('map');
   const mapRect = mapEl.getBoundingClientRect();
 
-  // Convertir latlng a píxeles absolutos en pantalla
   const cp = map.latLngToContainerPoint(latlng);
   const screenX = mapRect.left + cp.x;
   const screenY = mapRect.top  + cp.y;
 
-  // Forzar reflow para tener dimensiones reales
   el.style.visibility = 'hidden';
   const W = el.offsetWidth  || 260;
   const H = el.offsetHeight || 160;
@@ -1478,31 +1679,23 @@ function positionQueryPopup(latlng) {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
-  // Por defecto: centrado horizontalmente sobre el clic, con separación generosa encima
   let x = screenX - W / 2;
-  let y = screenY - H - 48;  // 48px de separación por encima del cursor
+  let y = screenY - H - 48;
 
-  // Si se sale por arriba → mostrar debajo del clic
   if (y < mapRect.top + margin) y = screenY + 20;
 
-  // Ajustar horizontalmente para no salirse
   if (x < margin) x = margin;
   if (x + W > vw - margin) x = vw - W - margin;
-
-  // Ajustar verticalmente para no salirse por abajo
   if (y + H > vh - margin) y = vh - H - margin;
 
   el.style.left = x + 'px';
   el.style.top  = y + 'px';
 }
 
-// ── CLICK QUERY ──
-// Helper: construye parámetros GetFeatureInfo adaptados a cada servidor
 function buildGFIParams(mode, point, size, bounds, infoFormat) {
   const sw = map.options.crs.project(bounds.getSouthWest());
   const ne = map.options.crs.project(bounds.getNorthEast());
   if (mode === 'recinto') {
-    // Castilla-La Mancha ArcGIS: WMS 1.1.1 + SRS + X/Y
     return new URLSearchParams({
       SERVICE: 'WMS', VERSION: '1.1.1', REQUEST: 'GetFeatureInfo',
       LAYERS: '0', QUERY_LAYERS: '0', INFO_FORMAT: infoFormat,
@@ -1511,7 +1704,6 @@ function buildGFIParams(mode, point, size, bounds, infoFormat) {
       BBOX: `${sw.x},${sw.y},${ne.x},${ne.y}`,
     });
   } else {
-    // sigpac-hubcloud: WMS 1.3.0 + CRS + I/J + BBOX en lat/lng order
     const bboxStr = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
     return new URLSearchParams({
       SERVICE: 'WMS', VERSION: '1.3.0', REQUEST: 'GetFeatureInfo',
@@ -1538,11 +1730,9 @@ map.on('click', async e => {
     const data = extractData(html);
     if (!data) { closeQueryPopup(); return; }
 
-    // Mostrar popup encima del punto de clic real en pantalla
     if (queryMode === 'recinto') showQueryPopupRecinto(data, e.latlng);
     else                         showQueryPopupCultivo(data, e.latlng);
 
-    // Highlight: pedir GML para obtener geometría exacta
     const gmlParams = buildGFIParams(queryMode, point, size, bounds, 'application/vnd.ogc.gml');
     const gmlRes    = await fetch(`${wmsUrl}?${gmlParams}`);
     const gmlText   = await gmlRes.text();
@@ -1568,61 +1758,38 @@ function showQueryPopupRecinto(d, latlng) {
 }
 
 function showQueryPopupCultivo(d, latlng) {
-  // Mapeo exacto de campos WMS cultivo_declarado → datos reales:
-  // El WMS usa etiquetas confusas; el dato real está en el campo indicado.
-  // Log para depuración:
-  console.log('[Cultivo fields]', d);
-
   const raw = k => {
     const v = d[k];
     return (v && v !== '—' && v !== '' && v !== 'null') ? String(v).trim() : null;
   };
 
-  // Solo extrae los N primeros dígitos de una cadena
   const firstDigits = (v, n) => {
     if (!v) return '?';
-    const m = String(v).replace(/\D/g, '');  // quitar todo lo que no sea dígito
+    const m = String(v).replace(/\D/g, '');
     return m.slice(0, n) || '?';
   };
 
-  // ── Código de recinto (7 campos) ──
-  // PROVINCIA  → campo ZONA,           primeros 2 dígitos
   const prov = firstDigits(raw('ZONA'), 2).padStart(2, '0');
-
-  // MUNICIPIO  → campo POLIGONO,        primeros 1-3 dígitos
   const mun  = firstDigits(raw('POLIGONO'), 3);
-
-  // AGREGADO   → campo PARCELA         (valor directo)
   const ag   = raw('PARCELA') || '0';
-
-  // ZONA       → campo RECINTO         (valor directo)
   const zona = raw('RECINTO') || '0';
-
-  // POLIGONO   → campo C.A. GESTORA    (normalizado: C_A__GESTORA o CA_GESTORA o similar)
   const pol  = raw('C_A__GESTORA') || raw('CA_GESTORA') || raw('C_A_GESTORA') || raw('GESTORA') || '?';
-
-  // PARCELA    → campo NO_EXPEDIENTE
   const par  = raw('NO_EXPEDIENTE') || raw('NOEXPEDIENTE') || raw('N_EXPEDIENTE') || '?';
-
-  // RECINTO    → campo LINEADECLARACION
   const rec  = raw('LINEADECLARACION') || raw('LINEA_DECLARACION') || raw('LINEA') || '?';
 
   const idStr = `${prov}:${mun}:${ag}:${zona}:${pol}:${par}:${rec}`;
 
-  // ── LDG → campo AYUDA DIRECTAC.PRINCIPAL ──
   const ldg = raw('AYUDA_DIRECTAC_PRINCIPAL') || raw('AYUDA_DIRECTA_C_PRINCIPAL') ||
               raw('AYUDA_DIRECTA_CPRINCIPAL') || raw('AYUDA_DIRECTA') || null;
 
-  // ── SUPERFICIE → campo AYUDA_PDR ──
   const supRaw = raw('AYUDA_PDR') || raw('AYUDAPDR') || raw('PDR') || null;
   let supStr = null;
   if (supRaw) {
     const v = parseFloat(String(supRaw).replace(',', '.'));
     if (!isNaN(v)) supStr = (v > 100 ? v / 10000 : v).toFixed(4).replace('.', ',') + ' ha';
-    else supStr = supRaw; // mostrar tal cual si no es número
+    else supStr = supRaw;
   }
 
-  // ── CULTIVO → campo APROVECHAMIENTO ──
   const cultivo = raw('APROVECHAMIENTO') || raw('CULTIVO') || raw('USO') || null;
 
   qpIdEl.className = 'qp-id cultivo-id';
@@ -1637,7 +1804,6 @@ function showQueryPopupCultivo(d, latlng) {
   positionQueryPopup(latlng);
 }
 
-// ── HOVER HIGHLIGHT (subtle shade al pasar el ratón) ──
 map.on('mousemove', e => {
   if (queryMode === 'none') return;
   if (map.getZoom() < 12) return;
@@ -1679,11 +1845,10 @@ function clearHoverHighlight() {
   if (hoverHighlight) { map.removeLayer(hoverHighlight); hoverHighlight = null; }
 }
 
-// ── Highlight permanente (click) — blanco neutro y sutil, sin borde ──
 function drawHighlight(coords) {
   clearHighlight();
   highlightPoly = L.polygon(coords, {
-    color:       'rgba(255,255,255,0)',  // sin borde
+    color:       'rgba(255,255,255,0)',
     weight:      0,
     fillColor:   '#ffffff',
     fillOpacity: 0.28,
@@ -1721,13 +1886,12 @@ function extractData(html) {
   if (!doc.querySelector('table')) return null;
 
   const normKey = s => String(s).trim().toUpperCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')   // quitar tildes: ñ→N, á→A
-    .replace(/[^A-Z0-9]+/g,'_')                         // no alfanum → _
-    .replace(/^_|_$/g,'');                              // trim _
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^A-Z0-9]+/g,'_')
+    .replace(/^_|_$/g,'');
 
   const dataMap = {};
 
-  // Intentar tabla con cabeceras <th> en primera fila y valores <td> en segunda
   const allTh = [...doc.querySelectorAll('th')];
   const allTd = [...doc.querySelectorAll('td')];
   if (allTh.length && allTd.length) {
@@ -1737,7 +1901,6 @@ function extractData(html) {
     });
   }
 
-  // Si no hay th, asumir tabla de 2 columnas: <td>nombre</td><td>valor</td>
   if (!Object.keys(dataMap).length) {
     doc.querySelectorAll('tr').forEach(row => {
       const cells = [...row.querySelectorAll('td,th')];
@@ -1754,7 +1917,7 @@ function extractData(html) {
 // ═══════════════════════════════════════════════════════════════
 // 7b. SEARCH PANEL
 // ═══════════════════════════════════════════════════════════════
-let searchMode = null;  // 'recinto' | 'cultivo'
+let searchMode = null;
 let searchHighlight = null;
 
 const RECINTO_FIELDS = [
@@ -1766,7 +1929,6 @@ const RECINTO_FIELDS = [
   { id:'s_par',   label:'PARCELA',    required:true  },
   { id:'s_rec',   label:'RECINTO',    required:true  },
 ];
-// (búsqueda cultivo eliminada — servidor no tiene WFS operativo)
 
 function openSearchPanel(mode) {
   if (searchMode === mode) { closeSearchPanel(); return; }
@@ -1835,7 +1997,7 @@ let geoActive    = false;
 let geoWatchId   = null;
 let geoMarker    = null;
 let geoAccCircle = null;
-let geoFollowing = true; // mientras está activo, sigue la posición
+let geoFollowing = true;
 
 const geoBtn = document.getElementById('geolocate-btn');
 
@@ -1873,22 +2035,18 @@ function startGeo() {
     if (geoFollowing) map.setView([lat, lng], Math.max(map.getZoom(), 16));
   };
 
-  // Error en watchPosition (persistente) → parar todo
   const onWatchErr = err => {
     const msgs = { 1:'Permiso denegado', 2:'Posición no disponible', 3:'Sin señal GPS' };
     toast('GPS: ' + (msgs[err.code] || err.message), 'err');
     stopGeo();
   };
 
-  // Error en getCurrentPosition (primer fix rápido) → ignorar, el watch seguirá intentando
   const onInitErr = () => {};
 
-  // Paso 1: posición rápida sin alta precisión para respuesta inmediata
   navigator.geolocation.getCurrentPosition(onPos, onInitErr,
     { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
   );
 
-  // Paso 2: seguimiento continuo — timeout: 0 significa que el navegador decide
   geoWatchId = navigator.geolocation.watchPosition(onPos, onWatchErr,
     { enableHighAccuracy: true, maximumAge: 5000 }
   );
@@ -1914,11 +2072,9 @@ geoBtn.addEventListener('click', () => {
   if (!geoActive) {
     startGeo();
   } else if (!geoFollowing) {
-    // Recentrar y reactivar seguimiento
     geoFollowing = true;
     geoBtn.title = 'Desactivar localización';
     if (geoMarker) map.setView(geoMarker.getLatLng(), Math.max(map.getZoom(), 16));
-    // Registrar de nuevo el dragstart para pausar
     map.once('dragstart', () => {
       geoFollowing = false;
       geoBtn.title = 'Recentrar en mi posición (clic) / Desactivar (doble clic)';
@@ -1930,11 +2086,10 @@ geoBtn.addEventListener('click', () => {
   }
 });
 
-// Restore saved query mode now that closeQueryPopup + clearHighlight are defined
 applyQueryMode(queryMode);
 
 // ═══════════════════════════════════════════════════════════════
-// 8. CAPAS SHP
+// 8. CAPAS SHP / CLOUD SYNC
 // ═══════════════════════════════════════════════════════════════
 const shpLayers = [];
 const SHP_PALETTE = ['#e06c00','#1e8a4c','#9b27c8','#c8270e','#0e8ec8','#2f6fde','#d4a017','#666'];
@@ -1975,7 +2130,8 @@ async function handleShpFiles(files) {
         shp.parseDbf(dbfBuf)
       ]);
     }
-    addShpLayer(geojson, layerName);
+    // Añadimos y sincronizamos (el flag 'true' guardará automáticamente en Firebase si hay sesión activa)
+    addShpLayer(geojson, layerName, null, true);
     toast(`Capa "${layerName}" cargada`, 'ok');
   } catch(err) {
     console.error(err);
@@ -1985,7 +2141,6 @@ async function handleShpFiles(files) {
   }
 }
 
-// Umbral de zoom: por encima se muestran polígonos, por debajo map-pins
 const SHP_ZOOM_THRESHOLD = 14;
 
 function buildPinIcon(color) {
@@ -1998,7 +2153,6 @@ function buildPinIcon(color) {
 }
 
 function featureCentroid(feature) {
-  // Calcula el centroide aproximado de un Feature GeoJSON
   const geom = feature.geometry;
   if (!geom) return null;
   const collect = coords => {
@@ -2027,8 +2181,12 @@ function buildPopupHtml(properties) {
   return html;
 }
 
-function addShpLayer(geojson, name) {
-  const id    = Math.random().toString(36).slice(2, 11);
+// ── Agregar Capa Vectorial (Modificada con integración de base de datos) ──
+function addShpLayer(geojson, name, cloudId = null, shouldSaveToCloud = false) {
+  const id    = cloudId || Math.random().toString(36).slice(2, 11);
+  
+  if (shpLayers.some(l => l.id === id)) return;
+
   const color = SHP_PALETTE[shpLayers.length % SHP_PALETTE.length];
 
   const countFeatures = g => {
@@ -2040,7 +2198,6 @@ function addShpLayer(geojson, name) {
   };
   const featureCount = countFeatures(geojson);
 
-  // Normalizar a array de features
   const allFeatures = [];
   const collect = g => {
     if (!g) return;
@@ -2050,13 +2207,11 @@ function addShpLayer(geojson, name) {
   };
   collect(geojson);
 
-  // Capa de polígonos (visible a zoom alto)
   const polyLayer = L.geoJSON(geojson, {
     style: { color, weight: 2, fillOpacity: 0.25, fillColor: color },
     onEachFeature: (f, l) => { l.bindPopup(buildPopupHtml(f.properties)); }
   });
 
-  // Capa de pins (visible a zoom bajo)
   const pinLayer = L.layerGroup();
   allFeatures.forEach(f => {
     const c = featureCentroid(f);
@@ -2066,13 +2221,11 @@ function addShpLayer(geojson, name) {
       .addTo(pinLayer);
   });
 
-  // Decidir qué mostrar según zoom actual
   const zoom = map.getZoom();
   const showPins = zoom < SHP_ZOOM_THRESHOLD;
   if (showPins) pinLayer.addTo(map);
   else polyLayer.addTo(map);
 
-  // Listener de zoom para hacer el switch
   function onZoom() {
     if (!obj.visible) return;
     const z = map.getZoom();
@@ -2084,7 +2237,6 @@ function addShpLayer(geojson, name) {
   }
   map.on('zoomend', onZoom);
 
-  // leafletLayer es un proxy que delega visibilidad a ambas sublayers
   const leafletLayer = {
     _onZoom: onZoom,
     addTo(m) {
@@ -2095,7 +2247,6 @@ function addShpLayer(geojson, name) {
     getBounds() { return polyLayer.getBounds(); },
     setStyle(s) {
       polyLayer.setStyle(s);
-      // Recrear pins con nuevo color
       pinLayer.clearLayers();
       allFeatures.forEach(f => {
         const c = featureCentroid(f);
@@ -2110,7 +2261,6 @@ function addShpLayer(geojson, name) {
   const obj = { id, name, geojson, leafletLayer, polyLayer, pinLayer, color, visible: true, featureCount };
   shpLayers.push(obj);
 
-  // Fit bounds sin forzar zoom extremo: max zoom 15
   try {
     const bounds = polyLayer.getBounds();
     if (bounds.isValid()) map.fitBounds(bounds, { padding: [60, 60] });
@@ -2118,6 +2268,11 @@ function addShpLayer(geojson, name) {
 
   addShpToUnifiedList(obj);
   updateCounter();
+
+  // Guardar en la nube si Firebase está activo, el usuario está conectado y se solicita
+  if (shouldSaveToCloud && isFirebaseActive()) {
+    saveShpToCloud(obj);
+  }
 }
 
 function addShpToUnifiedList(layer) {
@@ -2150,7 +2305,6 @@ function addShpToUnifiedList(layer) {
       <button class="item-del" title="Eliminar">✕</button>
     </div>`;
 
-  // Color picker
   const dot     = item.querySelector('.shp-color-dot');
   const colorIn = item.querySelector('.shp-color-input');
   dot.addEventListener('click', e => { e.stopPropagation(); colorIn.click(); });
@@ -2158,9 +2312,13 @@ function addShpToUnifiedList(layer) {
     layer.color = e.target.value;
     dot.style.background = e.target.value;
     layer.leafletLayer.setStyle({ color: e.target.value, fillColor: e.target.value });
+    
+    // Si cambia el color y hay sincronización activa, se actualiza en Firestore
+    if (isFirebaseActive()) {
+      updateShpColorInCloud(layer.id, layer.color);
+    }
   });
 
-  // Checkbox visibilidad
   item.querySelector('.shp-vis').addEventListener('change', e => {
     e.stopPropagation();
     layer.visible = e.target.checked;
@@ -2173,19 +2331,14 @@ function addShpToUnifiedList(layer) {
     item.classList.toggle('hidden-photo', !e.target.checked);
   });
 
-  // Zoom al nombre
   item.querySelector('.item-name').addEventListener('click', e => {
     e.stopPropagation();
     try { map.fitBounds(layer.polyLayer.getBounds(), { padding: [60, 60] }); } catch(_) {}
   });
 
-  // KML
   item.querySelector('.shp-dl-btn.kml').addEventListener('click', e => { e.stopPropagation(); exportShpKML(layer.id); });
-
-  // SHP
   item.querySelector('.shp-dl-btn.shp-f').addEventListener('click', e => { e.stopPropagation(); exportShpZip(layer.id); });
 
-  // Eliminar
   item.querySelector('.item-del').addEventListener('click', e => {
     e.stopPropagation();
     map.removeLayer(layer.polyLayer);
@@ -2193,6 +2346,12 @@ function addShpToUnifiedList(layer) {
     if (layer.leafletLayer._onZoom) map.off('zoomend', layer.leafletLayer._onZoom);
     shpLayers.splice(shpLayers.findIndex(l => l.id === layer.id), 1);
     item.remove();
+    
+    // Si Firebase está activo, eliminar de la nube
+    if (isFirebaseActive()) {
+      deleteShpFromCloud(layer.id);
+    }
+    
     toast(`Capa "${layer.name}" eliminada`);
     updateCounter();
   });
@@ -2214,13 +2373,10 @@ function exportShpKML(id) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// SHP WRITER — generador SHP binario embebido (sin CDN externos)
-// Soporta Polygon, MultiPolygon, Point, MultiPoint, LineString, MultiLineString
-// Produce: .shp + .shx + .dbf + .prj en un .zip (JSZip via cdnjs)
+// SHP WRITER — generador SHP binario embebido
 // ═══════════════════════════════════════════════════════════════
 const SHP_PRJ_WGS84 = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]]';
 
-// ── Helpers de escritura binaria ──────────────────────────────
 function makeWriter(size) {
   const buf = new ArrayBuffer(size);
   const dv  = new DataView(buf);
@@ -2237,7 +2393,6 @@ function makeWriter(size) {
   };
 }
 
-// ── Calcular bbox de coordenadas planas [[x,y],...] ──────────
 function ringBbox(ring) {
   let xMin=Infinity,yMin=Infinity,xMax=-Infinity,yMax=-Infinity;
   for (const [x,y] of ring) {
@@ -2253,49 +2408,41 @@ function mergeBbox(a,b) {
   };
 }
 
-// ── Normalizar coordenadas de anillo (GeoJSON: [lng,lat]) ─────
 function flatRing(ring) { return ring.map(p => [p[0], p[1]]); }
 
-// ── Detector de tipo SHP ──────────────────────────────────────
 function shpType(fc) {
   const types = new Set(fc.features.map(f => f.geometry?.type).filter(Boolean));
-  if ([...types].every(t => t==='Point'||t==='MultiPoint'))        return 1;  // Point
-  if ([...types].every(t => t==='LineString'||t==='MultiLineString')) return 3; // PolyLine
-  return 5; // Polygon (default)
+  if ([...types].every(t => t==='Point'||t==='MultiPoint'))        return 1;
+  if ([...types].every(t => t==='LineString'||t==='MultiLineString')) return 3;
+  return 5;
 }
 
-// ── Extraer anillos de un feature según tipo ─────────────────
 function featureRings(geom, type) {
   if (!geom) return [];
-  if (type === 1) { // Point
+  if (type === 1) {
     const pts = geom.type==='MultiPoint' ? geom.coordinates : [geom.coordinates];
     return pts.map(p => [p]);
   }
-  if (type === 3) { // PolyLine
+  if (type === 3) {
     const lines = geom.type==='MultiLineString' ? geom.coordinates : [geom.coordinates];
     return lines;
   }
-  // Polygon / MultiPolygon
   const polys = geom.type==='MultiPolygon' ? geom.coordinates : [geom.coordinates];
-  return polys.flatMap(p => p); // array de anillos (exterior + huecos)
+  return polys.flatMap(p => p);
 }
 
-// ── Escribir un record SHP de tipo Polygon / PolyLine ─────────
 function writePolyRecord(rings) {
-  // rings = array de arrays de [x,y]
   const flat = rings.map(flatRing);
   const numParts  = flat.length;
   const numPoints = flat.reduce((s,r) => s+r.length, 0);
-  // content length in 16-bit words (without 8-byte record header)
   const contentLen = (4 + 32 + 4 + 4 + numParts*4 + numPoints*16) / 2;
   const w = makeWriter(8 + contentLen*2);
   let bbox = ringBbox(flat[0]);
   flat.slice(1).forEach(r => { bbox = mergeBbox(bbox, ringBbox(r)); });
 
-  // record header: recNum written by caller, content length
-  w.i32be(0); // placeholder recNum
+  w.i32be(0);
   w.i32be(contentLen);
-  w.i32le(5); // shape type polygon (or 3 for polyline — caller overrides)
+  w.i32le(5);
   w.f64le(bbox.xMin); w.f64le(bbox.yMin);
   w.f64le(bbox.xMax); w.f64le(bbox.yMax);
   w.i32le(numParts);
@@ -2307,23 +2454,21 @@ function writePolyRecord(rings) {
 }
 
 function writePointRecord(pt) {
-  // pt = [x,y]
-  const contentLen = (4 + 16) / 2; // 10 words
+  const contentLen = (4 + 16) / 2;
   const w = makeWriter(8 + 20);
-  w.i32be(0); // placeholder
+  w.i32be(0);
   w.i32be(contentLen);
   w.i32le(1);
   w.f64le(pt[0]); w.f64le(pt[1]);
   return { buf: w.buf(), contentLen, bbox:{xMin:pt[0],yMin:pt[1],xMax:pt[0],yMax:pt[1]} };
 }
 
-// ── DBF writer ────────────────────────────────────────────────
 function buildDbf(features) {
   if (!features.length) return new Uint8Array(32+1).buffer;
   const props = features[0].properties || {};
   const fieldNames = Object.keys(props).map(k => k.slice(0,10).toUpperCase());
   const numFields  = fieldNames.length;
-  const fieldLen   = 50; // caracteres por campo (C type)
+  const fieldLen   = 50;
   const recSize    = 1 + numFields * fieldLen;
   const headerSize = 32 + numFields * 32 + 1;
   const buf = new ArrayBuffer(headerSize + features.length * recSize + 1);
@@ -2331,8 +2476,7 @@ function buildDbf(features) {
   const u8  = new Uint8Array(buf);
   let p = 0;
 
-  // Header
-  u8[p++] = 3;           // version
+  u8[p++] = 3;
   const now = new Date();
   u8[p++] = now.getFullYear()-1900; u8[p++] = now.getMonth()+1; u8[p++] = now.getDate();
   dv.setUint32(4, features.length, true);
@@ -2340,36 +2484,33 @@ function buildDbf(features) {
   dv.setUint16(10, recSize, true);
   p = 32;
 
-  // Field descriptors
   const enc = new TextEncoder();
   for (let i=0; i<fieldNames.length; i++) {
     const nameBytes = enc.encode(fieldNames[i]);
     u8.set(nameBytes.subarray(0,Math.min(11,nameBytes.length)), p);
     p += 11;
-    u8[p++] = 67; // 'C' character
-    p += 4; // reserved
+    u8[p++] = 67;
+    p += 4;
     u8[p++] = fieldLen;
-    p += 15; // reserved
+    p += 15;
   }
-  u8[p++] = 0x0D; // header terminator
+  u8[p++] = 0x0D;
 
-  // Records
   const keys = Object.keys(props);
   for (const f of features) {
-    u8[p++] = 0x20; // not deleted
+    u8[p++] = 0x20;
     for (const k of keys) {
       const val = String(f.properties?.[k] ?? '').slice(0, fieldLen);
       const vb  = enc.encode(val);
-      u8.fill(0x20, p, p+fieldLen); // pad with spaces
+      u8.fill(0x20, p, p+fieldLen);
       u8.set(vb.subarray(0, Math.min(fieldLen, vb.length)), p);
       p += fieldLen;
     }
   }
-  u8[p] = 0x1A; // EOF
+  u8[p] = 0x1A;
   return buf;
 }
 
-// ── SHP + SHX builder ─────────────────────────────────────────
 function buildShpShx(fc, type) {
   const records = [];
   let totalContentWords = 0;
@@ -2380,24 +2521,22 @@ function buildShpShx(fc, type) {
 
     let rec;
     if (type === 1) {
-      // Point: one record per feature (first point only if multi handled above)
       const pts = f.geometry.type==='MultiPoint' ? f.geometry.coordinates : [f.geometry.coordinates];
       for (const pt of pts) {
         rec = writePointRecord(pt);
         records.push(rec);
-        totalContentWords += 4 + rec.contentLen; // 4 = header words
+        totalContentWords += 4 + rec.contentLen;
       }
     } else {
       rec = writePolyRecord(rings);
-      // Override shape type in record
       const dv = new DataView(rec.buf);
-      dv.setInt32(12, type, true); // offset 8 (header) + 4 = shapeType
+      dv.setInt32(12, type, true);
       records.push(rec);
       totalContentWords += 4 + rec.contentLen;
     }
   }
 
-  const fileLen   = 50 + totalContentWords; // in 16-bit words (50 = header)
+  const fileLen   = 50 + totalContentWords;
   const shpSize   = fileLen * 2;
   const shxSize   = (50 + records.length * 4) * 2;
 
@@ -2406,12 +2545,10 @@ function buildShpShx(fc, type) {
   const shpDv  = new DataView(shpBuf);
   const shxDv  = new DataView(shxBuf);
 
-  // Compute overall bbox
   let bbox = {xMin:Infinity,yMin:Infinity,xMax:-Infinity,yMax:-Infinity};
   for (const r of records) bbox = mergeBbox(bbox, r.bbox);
   if (!isFinite(bbox.xMin)) bbox = {xMin:0,yMin:0,xMax:0,yMax:0};
 
-  // Write SHP header
   function writeHeader(dv, fileLen, type, bbox) {
     dv.setInt32(0,  9994,    false);
     dv.setInt32(24, fileLen, false);
@@ -2423,17 +2560,13 @@ function buildShpShx(fc, type) {
   writeHeader(shpDv, fileLen, type, bbox);
   writeHeader(shxDv, 50 + records.length*4, type, bbox);
 
-  // Write records
   let shpOff = 100, shxOff = 100;
   for (let i=0; i<records.length; i++) {
     const r   = records[i];
     const src = new Uint8Array(r.buf);
-    // Record header: recNum (1-based) + contentLen in 16-bit words
     shpDv.setInt32(shpOff,   i+1,           false);
     shpDv.setInt32(shpOff+4, r.contentLen,  false);
-    // Copy content (skip the 8-byte placeholder header from writePolyRecord)
     new Uint8Array(shpBuf, shpOff+8).set(src.subarray(8, 8+r.contentLen*2));
-    // SHX record: offset and content length in 16-bit words
     shxDv.setInt32(shxOff,   shpOff/2,      false);
     shxDv.setInt32(shxOff+4, r.contentLen,  false);
     shpOff += 8 + r.contentLen*2;
@@ -2443,14 +2576,12 @@ function buildShpShx(fc, type) {
   return { shpBuf, shxBuf, dbfBuf: buildDbf(fc.features) };
 }
 
-// ── exportShpZip — entry point ────────────────────────────────
 async function exportShpZip(id) {
   const layer = shpLayers.find(l => l.id === id);
   if (!layer) return;
   toast('Generando SHP…');
 
   try {
-    // Normalizar a FeatureCollection
     const fc = (() => {
       const g = layer.geojson;
       if (!g) return { type:'FeatureCollection', features:[] };
@@ -2465,7 +2596,6 @@ async function exportShpZip(id) {
     const type = shpType(fc);
     const { shpBuf, shxBuf, dbfBuf } = buildShpShx(fc, type);
 
-    // JSZip desde cdnjs (muy fiable)
     if (!window.JSZip) {
       await new Promise((res, rej) => {
         const s = document.createElement('script');
@@ -2477,9 +2607,9 @@ async function exportShpZip(id) {
 
     const zip  = new window.JSZip();
     const name = layer.name
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // quitar tildes: Á→A, é→e
-      .replace(/[^\w\-]/g, '_')                           // no alfanum → _
-      .replace(/^_+|_+$/g, '')                            // trim _
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\-]/g, '_')
+      .replace(/^_+|_+$/g, '')
       .slice(0, 30) || 'capa';
     zip.file(name + '.shp', shpBuf);
     zip.file(name + '.shx', shxBuf);
@@ -2501,7 +2631,7 @@ async function exportShpZip(id) {
   }
 }
 
-// ── TRAMAS GPS ENCRIPTADAS (silencioso — sin referencia en UI) ──
+// ── TRAMAS GPS ──
 const trackGroup = L.layerGroup().addTo(map);
 const tracks = [];
 
@@ -2586,7 +2716,6 @@ function processTxtAsTrama(files) {
         popup.setLatLng([info.lat, info.lng]); popup.openOn(map);
       });
       tracks.push(info);
-      // Añadir al panel unificado silenciosamente
       addTrackToUnified(info);
       ok++;
       if (ok + fail === files.length && ok > 0) {
@@ -2643,10 +2772,7 @@ txtDropzone.addEventListener('drop', e => {
   if (e.dataTransfer.files[0]) handleTxtFile(e.dataTransfer.files[0]);
 });
 
-// Normaliza una línea del TXT a un objeto con los 7 campos SIGPAC.
-// Acepta separadores - o / y espacios extras.
 function parseSigpacLine(line) {
-  // Reemplazar / por - y limpiar espacios
   const normalized = line.trim().replace(/\s+/g, '').replace(/\//g, '-');
   if (!/^\d+-\d+-\d+-\d+-\d+-\d+-\d+$/.test(normalized)) return null;
   const parts = normalized.split('-').map(Number);
@@ -2665,9 +2791,7 @@ async function handleTxtFile(file) {
   if (!file) return;
   const text = await file.text();
 
-  // Detectar si es trama GPS encriptada (triple base64) o SIGPAC
   const trimmed = text.trim();
-  // Si tiene líneas NMEA o se puede desencriptar como NMEA, es una trama
   const decrypted = decryptGPS(trimmed);
   const isNMEA = str => /\$GP[A-Z]{3}|\$GN[A-Z]{3}/.test(str);
   if (isNMEA(trimmed) || (decrypted && isNMEA(decrypted))) {
@@ -2675,10 +2799,8 @@ async function handleTxtFile(file) {
     return;
   }
 
-  // Intentar como códigos SIGPAC
   const codes = parseSigpacCodes(text);
   if (!codes.length) {
-    // Último intento: quizás es trama sin poder desencriptar — intentar igualmente
     processTxtAsTrama([file]);
     return;
   }
@@ -2720,7 +2842,6 @@ async function handleTxtFile(file) {
       console.warn('Error recinto', c.code, err);
       failed.push(c.code);
     }
-    // Pausa para no saturar el servicio
     await new Promise(r => setTimeout(r, 150));
   }
 
@@ -2728,12 +2849,12 @@ async function handleTxtFile(file) {
   pbar.style.width = '0%';
 
   if (!features.length) {
-    toast('No se pudo obtener geometría de ningún recinto. Comprueba la conexión y los códigos.', 'err');
+    toast('No se pudo obtener geometría de ningún recinto.', 'err');
     return;
   }
 
   const geojson = { type: 'FeatureCollection', features };
-  addShpLayer(geojson, layerName);
+  addShpLayer(geojson, layerName, null, true);
 
   const msg = failed.length
     ? `${features.length} recintos importados (${failed.length} no encontrados: ${failed.slice(0,3).join(', ')}${failed.length>3?'…':''})`
@@ -2741,14 +2862,7 @@ async function handleTxtFile(file) {
   toast(msg, features.length ? 'ok' : 'err');
 }
 
-// ── Consulta la geometría de un recinto SIGPAC via ArcGIS REST API ──
-// El WMS está en:
-//   .../MapServer/WMSServer
-// El REST API está en:
-//   .../MapServer/0/query
-// y acepta WHERE con SQL estándar + outFields + returnGeometry=true&f=geojson
 async function fetchSigpacGeometry(c) {
-  // WHERE clause con los 7 campos del código SIGPAC
   const where = [
     `PROVINCIA=${c.prov}`,
     `MUNICIPIO=${c.mun}`,
@@ -2779,7 +2893,6 @@ async function fetchSigpacGeometry(c) {
   const feat = json.features?.[0];
   if (!feat?.geometry) return null;
 
-  // Extraer propiedades extra del servicio (superficie, uso, etc.)
   const { geometry, properties } = feat;
   const extraProps = {};
   for (const k in properties) {
@@ -2790,6 +2903,7 @@ async function fetchSigpacGeometry(c) {
 
   return { geometry, extraProps };
 }
+
 function esc(s) {
   return String(s).replace(/[&<>"']/g, c =>
     ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2808,14 +2922,13 @@ dropzone.addEventListener('dragover',  e => { e.preventDefault(); dropzone.class
 dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
 dropzone.addEventListener('drop', e => { e.preventDefault(); dropzone.classList.remove('drag-over'); processFiles([...e.dataTransfer.files]); });
 
-// ── HAMBURGER (móvil) ──
+// ── HAMBURGER ──
 const menuBtn   = document.getElementById('menu-btn');
 const sidebarEl = document.querySelector('.sidebar');
 menuBtn.addEventListener('click', () => {
   const open = sidebarEl.classList.toggle('mobile-open');
   menuBtn.classList.toggle('open', open);
 });
-// Cerrar sidebar al hacer clic en el mapa en móvil
 document.getElementById('map').addEventListener('click', () => {
   if (window.innerWidth <= 700 && sidebarEl.classList.contains('mobile-open')) {
     sidebarEl.classList.remove('mobile-open');
@@ -2824,7 +2937,7 @@ document.getElementById('map').addEventListener('click', () => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// DRAW TOOL — dibujar polígono y añadir como capa
+// DRAW TOOL
 // ═══════════════════════════════════════════════════════════════
 const drawBtn  = document.getElementById('draw-btn');
 const drawHint = document.getElementById('draw-hint');
@@ -2834,7 +2947,7 @@ let drawMarkers      = [];
 let drawPoly         = null;
 let drawPreview      = null;
 let drawCount        = 0;
-let drawSavedMode    = null;  // guarda el queryMode mientras se dibuja
+let drawSavedMode    = null;
 
 function startDraw() {
   drawActive = true;
@@ -2842,7 +2955,6 @@ function startDraw() {
   drawBtn.classList.add('active');
   drawHint.classList.add('show');
   map.getContainer().style.cursor = 'crosshair';
-  // Suspender consulta temporalmente para que los clics no abran popups
   drawSavedMode = queryMode;
   queryMode = 'none';
   map.on('click',     onDrawClick);
@@ -2862,14 +2974,12 @@ function stopDraw(save) {
   if (drawPreview) { map.removeLayer(drawPreview); drawPreview = null; }
   drawMarkers.forEach(m => map.removeLayer(m));
   drawMarkers = [];
-  // Restaurar el modo consulta que había antes de dibujar
   if (drawSavedMode !== null) { queryMode = drawSavedMode; drawSavedMode = null; }
 
   if (save && drawPoints.length >= 3) {
     drawCount++;
     const name = `Área dibujada ${drawCount}`;
     const ring = [...drawPoints.map(p => [p.lng, p.lat]), [drawPoints[0].lng, drawPoints[0].lat]];
-    const areaSqM = Math.abs(L.GeometryUtil ? 0 : ringAreaSqM(drawPoints));
     const areaM2  = ringAreaSqM(drawPoints);
     const areaHa  = (areaM2 / 10000).toFixed(4);
     const geojson = {
@@ -2878,25 +2988,21 @@ function stopDraw(save) {
         type: 'Polygon', coordinates: [ring]
       }, properties: { nombre: name, area_m2: Math.round(areaM2), area_ha: areaHa } }]
     };
-    addShpLayer(geojson, name);
+    addShpLayer(geojson, name, null, true);
     toast(`"${name}" añadida · ${areaHa} ha`, 'ok');
   }
   drawPoints = [];
 }
 
 function onDrawClick(e) {
-  // Ignorar el último clic del dblclick
   if (e.originalEvent._drawSkip) return;
-
   drawPoints.push(e.latlng);
 
-  // Vértice visual
   const marker = L.circleMarker(e.latlng, {
     radius: 5, color: '#e06c00', fillColor: '#e06c00',
     fillOpacity: 1, weight: 2, interactive: false
   }).addTo(map);
   drawMarkers.push(marker);
-
   refreshDrawLine();
 }
 
@@ -2904,14 +3010,13 @@ function onDrawMove(e) {
   if (!drawActive || drawPoints.length === 0) return;
   if (drawPreview) map.removeLayer(drawPreview);
   const pts = [...drawPoints, e.latlng];
-  if (drawPoints.length >= 2) pts.push(drawPoints[0]); // cerrar preview
+  if (drawPoints.length >= 2) pts.push(drawPoints[0]);
   drawPreview = L.polyline(pts, {
     color: '#e06c00', weight: 1.5, dashArray: '5,4', opacity: 0.7, interactive: false
   }).addTo(map);
 }
 
 function onDrawFinish(e) {
-  // Marcar el evento para que onDrawClick lo ignore
   e.originalEvent._drawSkip = true;
   stopDraw(true);
 }
@@ -2932,11 +3037,8 @@ drawBtn.addEventListener('click', () => {
   else startDraw();
 });
 
-// ═══════════════════════════════════════════════════════════════
-// ÁREA DE UN POLÍGONO (fórmula de Shoelace en coordenadas esféricas)
-// ═══════════════════════════════════════════════════════════════
+// ── ÁREA DE UN POLÍGONO ──
 function ringAreaSqM(latlngs) {
-  // Aproximación esférica (error <0.5% para parcelas agrícolas)
   const R = 6378137;
   const n = latlngs.length;
   if (n < 3) return 0;
@@ -2969,16 +3071,14 @@ function fmtDist(m) {
   return m.toFixed(1) + ' m';
 }
 
-// ═══════════════════════════════════════════════════════════════
-// MEASURE TOOLS
-// ═══════════════════════════════════════════════════════════════
+// ── MEASURE TOOLS ──
 const measureAreaBtn = document.getElementById('measure-area-btn');
 const measureLineBtn = document.getElementById('measure-line-btn');
 const measurePopup   = document.getElementById('measure-popup');
 const measureValue   = document.getElementById('measure-value');
 const measureSub     = document.getElementById('measure-sub');
 
-let measureMode    = null; // 'area' | 'line' | null
+let measureMode    = null;
 let measurePoints  = [];
 let measureMarkers = [];
 let measureLine    = null;
@@ -2991,7 +3091,6 @@ function showMeasurePopup(main, sub, latlng) {
   measureValue.textContent = main;
   measureSub.textContent   = sub || '';
   measurePopup.style.display = 'block';
-  // Position above click
   const W = measurePopup.offsetWidth || 160;
   const H = measurePopup.offsetHeight || 50;
   let x = mapRect.left + cp.x - W/2;
@@ -3005,9 +3104,7 @@ function showMeasurePopup(main, sub, latlng) {
 function hideMeasurePopup() { measurePopup.style.display = 'none'; }
 
 function startMeasure(mode) {
-  // Cancel draw if active
   if (drawActive) stopDraw(false);
-  // Toggle off if same mode
   if (measureMode === mode) { stopMeasure(); return; }
   stopMeasure();
   measureMode = mode;
@@ -3070,7 +3167,6 @@ function onMeasureMove(e) {
 function onMeasureFinish(e) {
   e.originalEvent._drawSkip = true;
   updateMeasureResult(measurePoints[measurePoints.length-1] || e.latlng, false, true);
-  // Keep the result visible — user clicks elsewhere to dismiss
   map.off('click',    onMeasureClick);
   map.off('mousemove',onMeasureMove);
   map.off('dblclick', onMeasureFinish);
@@ -3078,7 +3174,6 @@ function onMeasureFinish(e) {
   map.getContainer().style.cursor = '';
   drawHint.classList.remove('show');
   if (measureSavedQM !== null) { queryMode = measureSavedQM; measureSavedQM = null; }
-  // Click anywhere to dismiss
   map.once('click', () => {
     if (measureLine)    { map.removeLayer(measureLine);    measureLine    = null; }
     measureMarkers.forEach(m => map.removeLayer(m)); measureMarkers = []; measurePoints = [];
@@ -3120,20 +3215,17 @@ function updateMeasureResult(latlng, isMove, isFinal) {
 measureAreaBtn.addEventListener('click', () => startMeasure('area'));
 measureLineBtn.addEventListener('click', () => startMeasure('line'));
 
-// ESC cancela la herramienta activa (medida o dibujo)
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
-  if (measureMode) { stopMeasure(); toast('Medición cancelada'); }
+  if (typeof globeActive !== 'undefined' && globeActive) { stopGlobeTool(); toast('Coordenadas desactivadas'); }
+  if (measureMode)  { stopMeasure();    toast('Medición cancelada'); }
   else if (drawActive) { stopDraw(false); toast('Dibujo cancelado'); }
 });
 
-// ═══════════════════════════════════════════════════════════════
-// IMPORTAR XML (SIGPAC) — parsea <WKT> + atributos
-// ═══════════════════════════════════════════════════════════════
+// ── IMPORTAR XML ──
 function parseWkt(wkt) {
   if (!wkt || !wkt.trim()) return null;
   const s = wkt.trim();
-  // Solo Polygon por ahora (el XML SIGPAC usa POLYGON)
   const m = s.match(/^POLYGON\s*\(\((.+)\)\)$/i);
   if (!m) return null;
   const coords = m[1].split(',').map(pair => {
@@ -3141,7 +3233,6 @@ function parseWkt(wkt) {
     return [lng, lat];
   });
   if (coords.length < 3) return null;
-  // Cerrar anillo
   if (coords[0][0] !== coords[coords.length-1][0] || coords[0][1] !== coords[coords.length-1][1])
     coords.push(coords[0]);
   return { type: 'Polygon', coordinates: [coords] };
@@ -3169,7 +3260,6 @@ async function handleXmlFile(file) {
       const val = child.textContent.trim();
       if (val) props[child.tagName] = isNaN(val) ? val : Number(val);
     }
-    // Calcular área en ha a partir del WKT
     const ring = geom.coordinates[0].map(([lng, lat]) => L.latLng(lat, lng));
     const m2   = ringAreaSqM(ring);
     props.area_ha  = (m2 / 10000).toFixed(4);
@@ -3182,19 +3272,16 @@ async function handleXmlFile(file) {
 
   const layerName = file.name.replace(/\.xml$/i, '');
   const fc = { type: 'FeatureCollection', features };
-  addShpLayer(fc, layerName);
+  addShpLayer(fc, layerName, null, true);
   toast(`XML: ${features.length} recinto(s) importado(s)`, 'ok');
 }
 
-// ═══════════════════════════════════════════════════════════════
-// IMPORTAR KML / KMZ
-// ═══════════════════════════════════════════════════════════════
+// ── IMPORTAR KML / KMZ ──
 async function handleKmlFile(file) {
   let kmlText;
   const ext = file.name.split('.').pop().toLowerCase();
 
   if (ext === 'kmz') {
-    // KMZ es un ZIP con un doc.kml dentro
     if (!window.JSZip) {
       await new Promise((res, rej) => {
         const s = document.createElement('script');
@@ -3216,7 +3303,7 @@ async function handleKmlFile(file) {
   if (!fc.features.length) { toast('El KML no contiene geometrías válidas', 'err'); return; }
 
   const layerName = file.name.replace(/\.(kml|kmz)$/i, '');
-  addShpLayer(fc, layerName);
+  addShpLayer(fc, layerName, null, true);
   toast(`KML: ${fc.features.length} elemento(s) importado(s)`, 'ok');
 }
 
@@ -3224,27 +3311,23 @@ function kmlToGeoJson(kmlText) {
   const doc   = new DOMParser().parseFromString(kmlText, 'application/xml');
   const feats = [];
 
-  // Parsear coordenadas KML (lng,lat,alt separados por espacios)
   const parseKmlCoords = str => str.trim().split(/\s+/).map(t => {
     const [lng, lat] = t.split(',').map(Number);
     return [lng, lat];
   }).filter(p => !isNaN(p[0]) && !isNaN(p[1]));
 
-  // Nombre del placemark
   const getName = pm => pm.querySelector('name')?.textContent.trim() || '';
 
   for (const pm of doc.querySelectorAll('Placemark')) {
     const name = getName(pm);
     const props = { name };
 
-    // ExtendedData
     for (const data of pm.querySelectorAll('Data')) {
       const k = data.getAttribute('name');
       const v = data.querySelector('value')?.textContent.trim();
       if (k && v) props[k] = v;
     }
 
-    // Point
     const point = pm.querySelector('Point coordinates');
     if (point) {
       const [lng, lat] = point.textContent.trim().split(',').map(Number);
@@ -3252,7 +3335,6 @@ function kmlToGeoJson(kmlText) {
       continue;
     }
 
-    // LineString
     const line = pm.querySelector('LineString coordinates');
     if (line) {
       const coords = parseKmlCoords(line.textContent);
@@ -3260,7 +3342,6 @@ function kmlToGeoJson(kmlText) {
       continue;
     }
 
-    // Polygon (puede tener MultiGeometry)
     const polys = pm.querySelectorAll('Polygon');
     if (polys.length === 1) {
       const outer = polys[0].querySelector('outerBoundaryIs coordinates');
@@ -3285,10 +3366,6 @@ function kmlToGeoJson(kmlText) {
   return { type:'FeatureCollection', features: feats };
 }
 
-// ═══════════════════════════════════════════════════════════════
-// EXTENDER handleShpFiles para enrutar XML y KML/KMZ
-// ═══════════════════════════════════════════════════════════════
-// Guardar referencia original y envolver
 const _origHandleShpFiles = handleShpFiles;
 async function handleShpFiles(files) {
   const xmlFiles = files.filter(f => f.name.toLowerCase().endsWith('.xml'));
@@ -3298,6 +3375,359 @@ async function handleShpFiles(files) {
   for (const f of xmlFiles) await handleXmlFile(f);
   for (const f of kmlFiles) await handleKmlFile(f);
   if (shpFiles.length) await _origHandleShpFiles(shpFiles);
+}
+
+// ── GLOBE TOOL ──
+const globeBtn    = document.getElementById('globe-btn');
+const globePopup  = document.getElementById('globe-popup');
+const gpCoords    = document.getElementById('gp-coords');
+const gpEarthLink = document.getElementById('gp-earth-link');
+const gpMapsLink  = document.getElementById('gp-maps-link');
+let   globeActive  = false;
+let   globeSavedQM = null;
+
+function openGlobePopup(latlng) {
+  const lat = latlng.lat.toFixed(6);
+  const lng = latlng.lng.toFixed(6);
+  const utm = utmLabel(latlng.lat, latlng.lng);
+  gpCoords.innerHTML = `${lat}, ${lng}<br><span>UTM: ${esc(utm)}</span>`;
+  gpEarthLink.href = `https://earth.google.com/web/@${lat},${lng},0a,1000d,35y,0h,0t,0r`;
+  gpMapsLink.href  = `https://www.google.com/maps?q=${lat},${lng}&z=17`;
+
+  const mapEl   = document.getElementById('map');
+  const mapRect = mapEl.getBoundingClientRect();
+  const cp      = map.latLngToContainerPoint(latlng);
+  globePopup.style.display = 'block';
+  const W = globePopup.offsetWidth  || 240;
+  const H = globePopup.offsetHeight || 130;
+  let x = mapRect.left + cp.x - W / 2;
+  let y = mapRect.top  + cp.y - H - 48;
+  if (y < mapRect.top + 8) y = mapRect.top + cp.y + 20;
+  if (x < 8) x = 8;
+  if (x + W > window.innerWidth - 8) x = window.innerWidth - W - 8;
+  globePopup.style.left = x + 'px';
+  globePopup.style.top  = y + 'px';
+}
+
+function startGlobeTool() {
+  if (drawActive)  stopDraw(false);
+  if (measureMode) stopMeasure();
+  globeActive = true;
+  globeBtn.classList.add('active');
+  map.getContainer().style.cursor = 'crosshair';
+  globeSavedQM = queryMode; queryMode = 'none';
+  map.on('click', onGlobeClick);
+}
+
+function stopGlobeTool() {
+  globeActive = false;
+  globeBtn.classList.remove('active');
+  map.getContainer().style.cursor = '';
+  if (globeSavedQM !== null) { queryMode = globeSavedQM; globeSavedQM = null; }
+  map.off('click', onGlobeClick);
+  globePopup.style.display = 'none';
+}
+
+function onGlobeClick(e) {
+  if (e.originalEvent._drawSkip) return;
+  openGlobePopup(e.latlng);
+}
+
+globeBtn.addEventListener('click', () => {
+  if (globeActive) stopGlobeTool();
+  else             startGlobeTool();
+});
+document.getElementById('gp-close-btn').addEventListener('click', () => {
+  globePopup.style.display = 'none';
+});
+
+// ═══════════════════════════════════════════════════════════════
+// 10. CONTROLADOR Y CONFIGURACIÓN FIREBASE (SANDBOX DE FALLO SEGURO)
+// ═══════════════════════════════════════════════════════════════
+// Las claves están inicialmente vacías para que el usuario las asigne.
+const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+  apiKey: "AIzaSyCoNgpA1XNQoY1mI4l80pQtGvQ3fChNPpw",
+  authDomain: "geacam-maps.firebaseapp.com",
+  projectId: "geacam-maps",
+  storageBucket: "geacam-maps.firebasestorage.app",
+  messagingSenderId: "508179845697",
+  appId: "1:508179845697:web:d53ee01c3b4580a324acc0"
+};
+
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+// Referencias de servicios de Firebase vacías por defecto (Modo local)
+let appFirebase = null;
+let auth = null;
+let db = null;
+let shpUnsubscribe = null;
+
+// Verifica si la base de datos y la conexión a Firebase están activas
+function isFirebaseActive() {
+  return (appFirebase !== null && auth !== null && db !== null && auth.currentUser !== null);
+}
+
+// Inicialización de Firebase encapsulada en bloque seguro (para evitar que rompa el visor)
+try {
+  // Comprobar que la configuración no sea la vacía por defecto
+  if (firebaseConfig && firebaseConfig.apiKey && firebaseConfig.apiKey !== "" && !firebaseConfig.apiKey.startsWith("TU_")) {
+    appFirebase = firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.firestore();
+
+    // Habilitar la persistencia offline nativa de Firestore (Caché local en IndexedDB)
+    db.enablePersistence({ synchronizeTabs: true })
+      .catch((err) => {
+        if (err.code == 'failed-precondition') {
+          console.warn("Soporte multi-pestaña offline no disponible.");
+        } else if (err.code == 'unimplemented') {
+          console.warn("Este navegador no admite persistencia offline.");
+        }
+      });
+      
+    console.log("Firebase & Firestore Offline inicializados con éxito.");
+  } else {
+    setupModoLocalNoConfigured();
+  }
+} catch (e) {
+  console.error("Firebase no se pudo conectar o inicializar:", e);
+  setupModoLocalNoConfigured();
+}
+
+// Configura la UI para avisar que Firebase está en modo local
+function setupModoLocalNoConfigured() {
+  appFirebase = null;
+  auth = null;
+  db = null;
+  console.log("Corriendo GEOfotos en Modo Local (Sincronización Cloud desactivada).");
+  
+  // Modificar el botón de cabecera de cuenta para avisar de forma nativa
+  document.addEventListener("DOMContentLoaded", () => {
+    const cloudBtn = document.getElementById('cloud-auth-btn');
+    if (cloudBtn) {
+      cloudBtn.classList.add('disabled-cloud');
+      cloudBtn.title = "Sincronización inactiva. Configura Firebase en el código HTML de tu visor para activar esta función.";
+      cloudBtn.querySelector('span').textContent = "Cuenta (Modo Local)";
+      
+      // Mostrar toast en lugar de abrir modal vacío
+      cloudBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toast("Firebase sin configurar. Edita el HTML de tu visor y añade tu apiKey de Google Firebase.", "err");
+      });
+    }
+  });
+}
+
+// ── Sincronización en la Nube con Firestore (Conforme a las reglas de rutas) ──
+async function saveShpToCloud(layer) {
+  if (!isFirebaseActive()) return;
+  const user = auth.currentUser;
+  if (!user) return;
+
+  // RULE 1: Ruta exacta para datos de usuario privado
+  const docRef = db.doc(`artifacts/${appId}/users/${user.uid}/capas_vectoriales/${layer.id}`);
+
+  try {
+    const serializedGeoJson = JSON.stringify(layer.geojson);
+    await docRef.set({
+      id: layer.id,
+      name: layer.name,
+      geojson: serializedGeoJson,
+      color: layer.color,
+      featureCount: layer.featureCount,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    console.log(`Capa "${layer.name}" respaldada en la nube.`);
+  } catch (error) {
+    console.error("Error al sincronizar con Firestore:", error);
+  }
+}
+
+async function updateShpColorInCloud(layerId, color) {
+  if (!isFirebaseActive()) return;
+  const user = auth.currentUser;
+  if (!user) return;
+  const docRef = db.doc(`artifacts/${appId}/users/${user.uid}/capas_vectoriales/${layerId}`);
+  try {
+    await docRef.update({ color });
+  } catch (_) {}
+}
+
+async function deleteShpFromCloud(layerId) {
+  if (!isFirebaseActive()) return;
+  const user = auth.currentUser;
+  if (!user) return;
+  const docRef = db.doc(`artifacts/${appId}/users/${user.uid}/capas_vectoriales/${layerId}`);
+  try {
+    await docRef.delete();
+    console.log(`Capa eliminada del espacio Cloud.`);
+  } catch (_) {}
+}
+
+// Sincronización en tiempo real de Firestore (Modo Colaborativo)
+function setupRealtimeCloudSync(user) {
+  if (shpUnsubscribe) shpUnsubscribe();
+  if (!db || !user) return;
+
+  // RULE 1 & RULE 2: Colección privada de usuario sin queries complejas
+  const colRef = db.collection(`artifacts/${appId}/users/${user.uid}/capas_vectoriales`);
+
+  // Escuchador de Firestore en tiempo real con callback de error obligatorio
+  shpUnsubscribe = colRef.onSnapshot((snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+      const data = change.doc.data();
+      if (change.type === "added") {
+        try {
+          const geojson = JSON.parse(data.geojson);
+          // Dibujar la capa que viene de la nube en el mapa local (sin volver a subirla)
+          addShpLayer(geojson, data.name, data.id, false);
+        } catch (e) {
+          console.error("Error al procesar capa sincronizada:", e);
+        }
+      } else if (change.type === "modified") {
+        const layer = shpLayers.find(l => l.id === data.id);
+        if (layer && layer.color !== data.color) {
+          layer.color = data.color;
+          layer.leafletLayer.setStyle({ color: data.color, fillColor: data.color });
+          const dot = document.querySelector(`[data-id="${data.id}"] .shp-color-dot`);
+          if (dot) dot.style.background = data.color;
+        }
+      } else if (change.type === "removed") {
+        const layerIdx = shpLayers.findIndex(l => l.id === data.id);
+        if (layerIdx >= 0) {
+          const layer = shpLayers[layerIdx];
+          map.removeLayer(layer.polyLayer);
+          map.removeLayer(layer.pinLayer);
+          if (layer.leafletLayer._onZoom) map.off('zoomend', layer.leafletLayer._onZoom);
+          shpLayers.splice(layerIdx, 1);
+          document.querySelector(`.list-item[data-id="${data.id}"]`)?.remove();
+          updateCounter();
+        }
+      }
+    });
+  }, (error) => {
+    console.error("Error en conexión en tiempo real Firestore:", error);
+  });
+}
+
+// ── Controladores de la interfaz modal de login ──
+if (auth !== null) {
+  const cloudBtn          = document.getElementById('cloud-auth-btn');
+  const authModal         = document.getElementById('authModal');
+  const authModalClose    = document.getElementById('authModalClose');
+  const authModalTitle    = document.getElementById('authModalTitle');
+  const authForm          = document.getElementById('authForm');
+  const authEmail         = document.getElementById('authEmail');
+  const authPassword      = document.getElementById('authPassword');
+  const authPrimaryBtn    = document.getElementById('authPrimaryBtn');
+  const authToggleAction  = document.getElementById('authToggleAction');
+  const authResetPassword = document.getElementById('authResetPassword');
+  const authViewUser      = document.getElementById('authViewUser');
+  const authViewForm      = document.getElementById('authViewForm');
+  const authActiveEmail   = document.getElementById('authActiveEmail');
+  const authLogoutBtn     = document.getElementById('authLogoutBtn');
+
+  let authMode = 'login'; // 'login' | 'register'
+
+  // Mostrar / Ocultar modal de forma nativa
+  cloudBtn.addEventListener('click', () => authModal.classList.add('open'));
+  authModalClose.addEventListener('click', () => authModal.classList.remove('open'));
+  authModal.addEventListener('click', e => { if (e.target === authModal) authModal.classList.remove('open'); });
+
+  // Cambiar entre Login y Registro
+  authToggleAction.addEventListener('click', () => {
+    if (authMode === 'login') {
+      authMode = 'register';
+      authModalTitle.textContent = 'Crear Cuenta Nueva';
+      authPrimaryBtn.textContent = 'Registrarse';
+      authToggleAction.textContent = '¿Ya tienes una cuenta? Inicia sesión';
+      authResetPassword.style.display = 'none';
+    } else {
+      authMode = 'login';
+      authModalTitle.textContent = 'Sincronización en la Nube';
+      authPrimaryBtn.textContent = 'Iniciar Sesión';
+      authToggleAction.textContent = '¿No tienes cuenta? Regístrate gratis';
+      authResetPassword.style.display = 'block';
+    }
+  });
+
+  // Enviar correo de restablecimiento de contraseña
+  authResetPassword.addEventListener('click', async () => {
+    const email = authEmail.value.trim();
+    if (!email) {
+      toast('Escribe tu correo en el campo correspondiente para restablecer la contraseña', 'err');
+      return;
+    }
+    try {
+      await auth.sendPasswordResetEmail(email);
+      toast('Correo de restablecimiento enviado correctamente', 'ok');
+    } catch (error) {
+      toast(`Error: ${error.message}`, 'err');
+    }
+  });
+
+  // Procesar Login y Registro
+  authPrimaryBtn.addEventListener('click', async () => {
+    const email = authEmail.value.trim();
+    const password = authPassword.value;
+    
+    if (!email || password.length < 6) {
+      toast('Por favor, ingresa un correo y contraseña (mínimo 6 caracteres)', 'err');
+      return;
+    }
+
+    toast('Procesando datos...');
+    try {
+      if (authMode === 'login') {
+        await auth.signInWithEmailAndPassword(email, password);
+        toast('Sesión iniciada correctamente', 'ok');
+      } else {
+        await auth.createUserWithEmailAndPassword(email, password);
+        toast('Cuenta creada y conectada', 'ok');
+      }
+      authModal.classList.remove('open');
+    } catch (error) {
+      toast(`Error: ${error.message}`, 'err');
+    }
+  });
+
+  // Salir de la cuenta
+  authLogoutBtn.addEventListener('click', async () => {
+    try {
+      await auth.signOut();
+      toast('Sesión cerrada de forma segura');
+      authModal.classList.remove('open');
+    } catch (error) {
+      toast(`Error al desconectar: ${error.message}`, 'err');
+    }
+  });
+
+  // Escuchador de estado de sesión de Firebase (RULE 3)
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      cloudBtn.classList.add('logged-in');
+      cloudBtn.querySelector('span').textContent = 'Sincronizado';
+      authActiveEmail.textContent = user.email;
+      authViewForm.style.display = 'none';
+      authViewUser.style.display = 'block';
+      
+      // Iniciar el listener de Firestore en tiempo real para traer datos de la nube
+      setupRealtimeCloudSync(user);
+      
+      // Sincronizar capas locales actuales que se hayan cargado antes de loguearse
+      shpLayers.forEach(layer => saveShpToCloud(layer));
+    } else {
+      cloudBtn.classList.remove('logged-in');
+      cloudBtn.querySelector('span').textContent = 'Mi Cuenta';
+      authViewForm.style.display = 'block';
+      authViewUser.style.display = 'none';
+      
+      if (shpUnsubscribe) {
+        shpUnsubscribe();
+        shpUnsubscribe = null;
+      }
+    }
+  });
 }
 </script>
 </body>
