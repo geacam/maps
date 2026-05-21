@@ -2103,7 +2103,8 @@ shpDropzone.addEventListener('dragover',  e => { e.preventDefault(); shpDropzone
 shpDropzone.addEventListener('dragleave', () => shpDropzone.classList.remove('drag-over'));
 shpDropzone.addEventListener('drop', e => { e.preventDefault(); shpDropzone.classList.remove('drag-over'); handleShpFiles([...e.dataTransfer.files]); });
 
-async function handleShpFiles(files) {
+// Función principal corregida para el procesamiento de SHP (evitamos colisiones por elevación de variables)
+async function processGenericShpFiles(files) {
   if (!files.length) return;
   shpLoading.style.display = 'flex';
   try {
@@ -3238,6 +3239,7 @@ function parseWkt(wkt) {
   return { type: 'Polygon', coordinates: [coords] };
 }
 
+// xml data extractor helper
 function getXmlText(el, tag) {
   const node = el.querySelector(tag);
   return node ? node.textContent.trim() : null;
@@ -3366,7 +3368,7 @@ function kmlToGeoJson(kmlText) {
   return { type:'FeatureCollection', features: feats };
 }
 
-const _origHandleShpFiles = handleShpFiles;
+// Función wrapper de enrutamiento principal (Modificada para llamar a processGenericShpFiles)
 async function handleShpFiles(files) {
   const xmlFiles = files.filter(f => f.name.toLowerCase().endsWith('.xml'));
   const kmlFiles = files.filter(f => /\.(kml|kmz)$/i.test(f.name));
@@ -3374,7 +3376,7 @@ async function handleShpFiles(files) {
 
   for (const f of xmlFiles) await handleXmlFile(f);
   for (const f of kmlFiles) await handleKmlFile(f);
-  if (shpFiles.length) await _origHandleShpFiles(shpFiles);
+  if (shpFiles.length) await processGenericShpFiles(shpFiles);
 }
 
 // ── GLOBE TOOL ──
