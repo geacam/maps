@@ -327,18 +327,89 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 .year-sel:hover, .year-sel:focus { border-color: var(--blue); }
 
 /* ── SHP DOWNLOAD BUTTONS ── */
-.shp-dl-wrap { display: flex; gap: 3px; }
-.shp-dl-btn {
-  font-family: 'Space Mono', monospace; font-size: 7.5px; font-weight: 700;
-  letter-spacing: .05em; text-transform: uppercase;
-  border: 1px solid rgba(47,111,222,.25); border-radius: 4px; padding: 3px 5px;
-  cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 2px;
-  white-space: nowrap;
+.shp-dl-wrap { position: relative; display: flex; }
+.shp-icon-btn {
+  width: 22px; height: 22px; border-radius: 5px;
+  border: 1px solid var(--border2); background: var(--s2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2); transition: all .15s;
+  padding: 0;
 }
-.shp-dl-btn.kml { background: var(--blue-lt); color: var(--blue); }
-.shp-dl-btn.kml:hover { background: var(--blue); color: #fff; }
-.shp-dl-btn.shp-f { background: var(--green-lt); color: var(--green); border-color: rgba(30,138,76,.25); }
-.shp-dl-btn.shp-f:hover { background: var(--green); color: #fff; }
+.shp-icon-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+.shp-icon-btn svg { width: 12px; height: 12px; }
+.shp-dl-menu {
+  position: absolute; top: calc(100% + 4px); right: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; box-shadow: var(--shadow);
+  display: none; flex-direction: column; min-width: 90px; z-index: 100;
+  overflow: hidden;
+}
+.shp-dl-menu.open { display: flex; }
+.shp-dl-menu button {
+  background: none; border: none; padding: 7px 12px;
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  color: var(--text2); cursor: pointer; text-align: left;
+  display: flex; align-items: center; gap: 6px;
+  transition: background .12s;
+}
+.shp-dl-menu button:hover { background: var(--blue-lt); color: var(--blue); }
+.shp-dl-menu button + button { border-top: 1px solid var(--border); }
+.layer-cloud-off {
+  width: 18px; height: 18px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--danger);
+}
+.layer-cloud-off svg { width: 14px; height: 14px; }
+
+/* ── SHARE MODAL ── */
+.share-modal, .incoming-modal {
+  position: fixed; inset: 0; background: rgba(15,20,30,.55);
+  backdrop-filter: blur(6px); z-index: 10000;
+  display: none; align-items: center; justify-content: center; padding: 16px;
+}
+.share-modal.open, .incoming-modal.open { display: flex; }
+.share-card {
+  background: var(--surface); border-radius: 14px; padding: 22px;
+  width: 100%; max-width: 360px; box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.share-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px;
+  color: var(--text); margin-bottom: 4px;
+}
+.share-sub {
+  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted);
+  margin-bottom: 16px;
+}
+.share-input {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border2);
+  border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 12px;
+  background: var(--s2); color: var(--text); margin-bottom: 14px;
+}
+.share-input:focus { outline: none; border-color: var(--blue); background: #fff; }
+.share-actions { display: flex; gap: 8px; }
+.share-btn {
+  flex: 1; padding: 9px 12px; border-radius: 8px; border: none;
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+}
+.share-btn.primary { background: var(--blue); color: #fff; }
+.share-btn.primary:hover { background: #2257b8; }
+.share-btn.secondary { background: var(--s3); color: var(--text2); }
+.share-btn.secondary:hover { background: var(--border2); }
+.share-btn.danger { background: var(--danger); color: #fff; }
+.incoming-list { display: flex; flex-direction: column; gap: 10px; max-height: 360px; overflow-y: auto; }
+.incoming-item {
+  border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  background: var(--s2);
+}
+.incoming-from {
+  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 3px;
+}
+.incoming-layer {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+  color: var(--text); margin-bottom: 10px;
+}
 
 /* ── PARCEL TOOLTIP ── */
 #parcel-tooltip {
@@ -406,7 +477,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 #lightbox-name { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.15); padding: 5px 15px; border-radius: 20px; font-size: 11px; font-family: 'Space Mono', monospace; color: #fff; white-space: nowrap; max-width: 80vw; overflow: hidden; text-overflow: ellipsis; }
 
 /* TOAST */
-#toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--glass); border: 1px solid var(--border); color: var(--text); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-family: 'Space Mono', monospace; z-index: 9998; transition: transform .3s; white-space: nowrap; box-shadow: 0 2px 10px rgba(0,0,0,.1); backdrop-filter: blur(8px); }
+#toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--glass); border: 1px solid var(--border); color: var(--text); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-family: 'Space Mono', monospace; z-index: 10010; transition: transform .3s; white-space: nowrap; box-shadow: 0 2px 10px rgba(0,0,0,.1); backdrop-filter: blur(8px); }
 #toast.show { transform: translateX(-50%) translateY(0); }
 #toast.err { border-color: var(--danger); color: var(--danger); }
 #toast.ok  { border-color: var(--green);  color: var(--green);  }
@@ -900,6 +971,33 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   <div id="imagery-date">Google Earth</div>
 </div>
 
+<!-- Modal Compartir Capa -->
+<div class="share-modal" id="shareModal">
+  <div class="share-card">
+    <div class="share-title">Compartir capa</div>
+    <div class="share-sub" id="shareSub">Introduce el correo del usuario destinatario</div>
+    <input type="email" class="share-input" id="shareEmail" placeholder="usuario@correo.com" autocomplete="off">
+    <div class="share-actions">
+      <button class="share-btn secondary" id="shareCancel">Cancelar</button>
+      <button class="share-btn primary" id="shareSend">Enviar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Invitaciones entrantes -->
+<div class="incoming-modal" id="incomingModal">
+  <div class="share-card">
+    <div class="share-title">Capas compartidas contigo</div>
+    <div class="share-sub">Acepta para añadirlas a tu proyecto o recházalas</div>
+    <div class="incoming-list" id="incomingList"></div>
+    <div class="share-actions" style="margin-top:16px;">
+      <button class="share-btn secondary" id="incomingClose">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- Modal de Autenticación en la Nube -->
 <div class="auth-modal" id="authModal">
   <div class="auth-card">
@@ -937,8 +1035,8 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
           </div>
           <div class="auth-actions-row">
             <button class="auth-main-btn" id="authPrimaryBtn">Iniciar Sesión</button>
-            <a class="auth-sub-link" id="authToggleAction">¿No tienes cuenta? Regístrate gratis</a>
-            <a class="auth-sub-link" id="authResetPassword" style="color:var(--muted);font-size:9px;">¿Olvidaste tu contraseña?</a>
+            <a class="auth-sub-link" id="authResetPassword" style="color:var(--muted);font-size:10px;">¿Olvidaste tu contraseña?</a>
+            <p style="font-size:9px;color:var(--muted);font-family:'Space Mono';text-align:center;margin-top:4px;line-height:1.4;">Las cuentas son creadas por el administrador. Si no tienes acceso, contacta con él.</p>
           </div>
         </div>
       </form>
@@ -2292,17 +2390,24 @@ function addShpToUnifiedList(layer) {
       <div class="item-sub">${layer.featureCount} recintos · SHP</div>
     </div>
     <div class="item-actions">
+      <div class="layer-cloud-off" title="Capa no sincronizada (sólo local)" style="display:${layer.synced === false ? 'flex' : 'none'};">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l20 20"/><path d="M5.78 5.78A7 7 0 0 0 9 19h8.5a4.5 4.5 0 0 0 1.5-.27"/><path d="M9.5 6.5A7 7 0 0 1 22 13a4.5 4.5 0 0 1-1.5 3.5"/></svg>
+      </div>
       <div class="shp-color-dot" title="Cambiar color" style="background:${layer.color}">
         <input class="shp-color-input" type="color" value="${layer.color}">
       </div>
       <div class="shp-dl-wrap">
-        <button class="shp-dl-btn kml" title="Descargar KML">
-          <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>KML
+        <button class="shp-icon-btn shp-dl-trigger" title="Descargar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
         </button>
-        <button class="shp-dl-btn shp-f" title="Descargar SHP (zip)">
-          <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>SHP
-        </button>
+        <div class="shp-dl-menu">
+          <button class="shp-dl-kml">KML</button>
+          <button class="shp-dl-shp">SHP</button>
+        </div>
       </div>
+      <button class="shp-icon-btn shp-share" title="Compartir capa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+      </button>
       <button class="item-del" title="Eliminar">✕</button>
     </div>`;
 
@@ -2337,22 +2442,39 @@ function addShpToUnifiedList(layer) {
     try { map.fitBounds(layer.polyLayer.getBounds(), { padding: [60, 60] }); } catch(_) {}
   });
 
-  item.querySelector('.shp-dl-btn.kml').addEventListener('click', e => { e.stopPropagation(); exportShpKML(layer.id); });
-  item.querySelector('.shp-dl-btn.shp-f').addEventListener('click', e => { e.stopPropagation(); exportShpZip(layer.id); });
+  // Dropdown de descarga (KML / SHP)
+  const dlTrigger = item.querySelector('.shp-dl-trigger');
+  const dlMenu    = item.querySelector('.shp-dl-menu');
+  dlTrigger.addEventListener('click', e => {
+    e.stopPropagation();
+    document.querySelectorAll('.shp-dl-menu.open').forEach(m => { if (m !== dlMenu) m.classList.remove('open'); });
+    dlMenu.classList.toggle('open');
+  });
+  item.querySelector('.shp-dl-kml').addEventListener('click', e => { e.stopPropagation(); dlMenu.classList.remove('open'); exportShpKML(layer.id); });
+  item.querySelector('.shp-dl-shp').addEventListener('click', e => { e.stopPropagation(); dlMenu.classList.remove('open'); exportShpZip(layer.id); });
+
+  // Compartir capa
+  item.querySelector('.shp-share').addEventListener('click', e => {
+    e.stopPropagation();
+    openShareModal(layer);
+  });
 
   item.querySelector('.item-del').addEventListener('click', e => {
     e.stopPropagation();
+    if (!confirm(`¿Eliminar la capa "${layer.name}"?\n\nEsta acción no se puede deshacer y la capa también se borrará de la nube si está sincronizada.`)) {
+      return;
+    }
     map.removeLayer(layer.polyLayer);
     map.removeLayer(layer.pinLayer);
     if (layer.leafletLayer._onZoom) map.off('zoomend', layer.leafletLayer._onZoom);
     shpLayers.splice(shpLayers.findIndex(l => l.id === layer.id), 1);
     item.remove();
-    
+
     // Si Firebase está activo, eliminar de la nube
     if (isFirebaseActive()) {
       deleteShpFromCloud(layer.id);
     }
-    
+
     toast(`Capa "${layer.name}" eliminada`);
     updateCounter();
   });
@@ -2951,6 +3073,8 @@ let drawCount        = 0;
 let drawSavedMode    = null;
 
 function startDraw() {
+  if (typeof globeActive !== 'undefined' && globeActive) stopGlobeTool();
+  if (measureMode) stopMeasure();
   drawActive = true;
   drawPoints = []; drawMarkers = []; drawPoly = null; drawPreview = null;
   drawBtn.classList.add('active');
@@ -3105,6 +3229,7 @@ function showMeasurePopup(main, sub, latlng) {
 function hideMeasurePopup() { measurePopup.style.display = 'none'; }
 
 function startMeasure(mode) {
+  if (typeof globeActive !== 'undefined' && globeActive) stopGlobeTool();
   if (drawActive) stopDraw(false);
   if (measureMode === mode) { stopMeasure(); return; }
   stopMeasure();
@@ -3531,6 +3656,10 @@ async function saveShpToCloud(layer) {
 
   try {
     const serializedGeoJson = JSON.stringify(layer.geojson);
+    // Firestore limita cada documento a ~1MB; si la capa es demasiado grande, marcamos como no sincronizada
+    if (serializedGeoJson.length > 950000) {
+      throw new Error('Capa demasiado grande para sincronizar en la nube');
+    }
     await docRef.set({
       id: layer.id,
       name: layer.name,
@@ -3539,10 +3668,20 @@ async function saveShpToCloud(layer) {
       featureCount: layer.featureCount,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
+    layer.synced = true;
+    updateLayerSyncIcon(layer);
     console.log(`Capa "${layer.name}" respaldada en la nube.`);
   } catch (error) {
+    layer.synced = false;
+    updateLayerSyncIcon(layer);
     console.error("Error al sincronizar con Firestore:", error);
+    toast(`"${layer.name}": disponible sólo en local (no sincronizada)`, 'err');
   }
+}
+
+function updateLayerSyncIcon(layer) {
+  const el = document.querySelector(`.list-item[data-id="${layer.id}"] .layer-cloud-off`);
+  if (el) el.style.display = (layer.synced === false) ? 'flex' : 'none';
 }
 
 async function updateShpColorInCloud(layerId, color) {
@@ -3565,6 +3704,147 @@ async function deleteShpFromCloud(layerId) {
     console.log(`Capa eliminada del espacio Cloud.`);
   } catch (_) {}
 }
+
+// ── SISTEMA DE COMPARTIR CAPAS ──
+let shareUnsubscribe = null;
+let currentShareLayer = null;
+
+// Registrar el correo del usuario actual para que otros puedan encontrarlo al compartir
+async function registerUserEmail(user) {
+  if (!isFirebaseActive() || !user || !user.email) return;
+  try {
+    await db.doc(`artifacts/${appId}/users_index/${user.email.toLowerCase()}`)
+      .set({ uid: user.uid, email: user.email.toLowerCase() }, { merge: true });
+  } catch (e) { console.warn('No se pudo registrar el índice de correo:', e); }
+}
+
+function openShareModal(layer) {
+  if (!isFirebaseActive()) {
+    toast('Inicia sesión para compartir capas', 'err');
+    return;
+  }
+  currentShareLayer = layer;
+  document.getElementById('shareSub').textContent = `Compartir "${layer.name}" con otro usuario`;
+  document.getElementById('shareEmail').value = '';
+  document.getElementById('shareModal').classList.add('open');
+  setTimeout(() => document.getElementById('shareEmail').focus(), 50);
+}
+
+async function sendShareRequest() {
+  const layer = currentShareLayer;
+  if (!layer) return;
+  const email = document.getElementById('shareEmail').value.trim().toLowerCase();
+  if (!email || !email.includes('@')) {
+    toast('Introduce un correo válido', 'err');
+    return;
+  }
+  const user = auth.currentUser;
+  if (email === user.email.toLowerCase()) {
+    toast('No puedes compartirte una capa a ti mismo', 'err');
+    return;
+  }
+
+  toast('Buscando usuario…');
+  try {
+    const snap = await db.doc(`artifacts/${appId}/users_index/${email}`).get();
+    if (!snap.exists) {
+      toast(`El usuario "${email}" no existe en la plataforma`, 'err');
+      return;
+    }
+    const recipientUid = snap.data().uid;
+    const serialized = JSON.stringify(layer.geojson);
+    if (serialized.length > 950000) {
+      toast('La capa es demasiado grande para compartirla', 'err');
+      return;
+    }
+    const reqId = `share_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+    await db.doc(`artifacts/${appId}/users/${recipientUid}/share_requests/${reqId}`).set({
+      id: reqId,
+      fromUid: user.uid,
+      fromEmail: user.email,
+      layerId: layer.id,
+      layerName: layer.name,
+      color: layer.color,
+      featureCount: layer.featureCount,
+      geojson: serialized,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    document.getElementById('shareModal').classList.remove('open');
+    toast(`Invitación enviada a ${email}`, 'ok');
+  } catch (e) {
+    console.error(e);
+    toast('Error al compartir: ' + e.message, 'err');
+  }
+}
+
+function setupIncomingShareListener(user) {
+  if (shareUnsubscribe) shareUnsubscribe();
+  if (!db || !user) return;
+  const colRef = db.collection(`artifacts/${appId}/users/${user.uid}/share_requests`);
+  shareUnsubscribe = colRef.onSnapshot((snap) => {
+    const list = document.getElementById('incomingList');
+    const modal = document.getElementById('incomingModal');
+    if (snap.empty) { modal.classList.remove('open'); list.innerHTML = ''; return; }
+    list.innerHTML = '';
+    snap.forEach(doc => {
+      const r = doc.data();
+      const div = document.createElement('div');
+      div.className = 'incoming-item';
+      div.innerHTML = `
+        <div class="incoming-from">De: ${esc(r.fromEmail || '—')}</div>
+        <div class="incoming-layer">${esc(r.layerName)} · ${r.featureCount || 0} recintos</div>
+        <div class="share-actions">
+          <button class="share-btn danger" data-reject>Rechazar</button>
+          <button class="share-btn primary" data-accept>Aceptar</button>
+        </div>`;
+      div.querySelector('[data-accept]').addEventListener('click', () => acceptShare(r, doc.id));
+      div.querySelector('[data-reject]').addEventListener('click', () => rejectShare(doc.id));
+      list.appendChild(div);
+    });
+    modal.classList.add('open');
+  }, (err) => console.error('Error listener share_requests:', err));
+}
+
+async function acceptShare(req, reqId) {
+  const user = auth.currentUser;
+  if (!user) return;
+  try {
+    const newId = `shared_${Date.now()}_${Math.random().toString(36).slice(2,6)}`;
+    await db.doc(`artifacts/${appId}/users/${user.uid}/capas_vectoriales/${newId}`).set({
+      id: newId,
+      name: req.layerName + ' (compartida)',
+      geojson: req.geojson,
+      color: req.color || '#2f6fde',
+      featureCount: req.featureCount || 0,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    await db.doc(`artifacts/${appId}/users/${user.uid}/share_requests/${reqId}`).delete();
+    toast(`Capa "${req.layerName}" añadida a tu proyecto`, 'ok');
+  } catch (e) { toast('Error al aceptar: ' + e.message, 'err'); }
+}
+
+async function rejectShare(reqId) {
+  const user = auth.currentUser;
+  if (!user) return;
+  try {
+    await db.doc(`artifacts/${appId}/users/${user.uid}/share_requests/${reqId}`).delete();
+    toast('Invitación rechazada');
+  } catch (e) { toast('Error: ' + e.message, 'err'); }
+}
+
+// Cerrar dropdown de descarga al hacer clic fuera + listeners de modales
+document.addEventListener('click', () => {
+  document.querySelectorAll('.shp-dl-menu.open').forEach(m => m.classList.remove('open'));
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const sm = document.getElementById('shareModal');
+  document.getElementById('shareCancel').addEventListener('click', () => sm.classList.remove('open'));
+  document.getElementById('shareSend').addEventListener('click', sendShareRequest);
+  sm.addEventListener('click', e => { if (e.target === sm) sm.classList.remove('open'); });
+  document.getElementById('shareEmail').addEventListener('keydown', e => { if (e.key === 'Enter') sendShareRequest(); });
+  document.getElementById('incomingClose').addEventListener('click', () => document.getElementById('incomingModal').classList.remove('open'));
+});
+
 
 // Sincronización en tiempo real de Firestore (Modo Colaborativo)
 function setupRealtimeCloudSync(user) {
@@ -3622,36 +3902,16 @@ if (auth !== null) {
   const authEmail         = document.getElementById('authEmail');
   const authPassword      = document.getElementById('authPassword');
   const authPrimaryBtn    = document.getElementById('authPrimaryBtn');
-  const authToggleAction  = document.getElementById('authToggleAction');
   const authResetPassword = document.getElementById('authResetPassword');
   const authViewUser      = document.getElementById('authViewUser');
   const authViewForm      = document.getElementById('authViewForm');
   const authActiveEmail   = document.getElementById('authActiveEmail');
   const authLogoutBtn     = document.getElementById('authLogoutBtn');
 
-  let authMode = 'login'; // 'login' | 'register'
-
   // Mostrar / Ocultar modal de forma nativa
   cloudBtn.addEventListener('click', () => authModal.classList.add('open'));
   authModalClose.addEventListener('click', () => authModal.classList.remove('open'));
   authModal.addEventListener('click', e => { if (e.target === authModal) authModal.classList.remove('open'); });
-
-  // Cambiar entre Login y Registro
-  authToggleAction.addEventListener('click', () => {
-    if (authMode === 'login') {
-      authMode = 'register';
-      authModalTitle.textContent = 'Crear Cuenta Nueva';
-      authPrimaryBtn.textContent = 'Registrarse';
-      authToggleAction.textContent = '¿Ya tienes una cuenta? Inicia sesión';
-      authResetPassword.style.display = 'none';
-    } else {
-      authMode = 'login';
-      authModalTitle.textContent = 'Sincronización en la Nube';
-      authPrimaryBtn.textContent = 'Iniciar Sesión';
-      authToggleAction.textContent = '¿No tienes cuenta? Regístrate gratis';
-      authResetPassword.style.display = 'block';
-    }
-  });
 
   // Enviar correo de restablecimiento de contraseña
   authResetPassword.addEventListener('click', async () => {
@@ -3668,11 +3928,11 @@ if (auth !== null) {
     }
   });
 
-  // Procesar Login y Registro
+  // Procesar Login (registro deshabilitado: las altas las gestiona el administrador)
   authPrimaryBtn.addEventListener('click', async () => {
     const email = authEmail.value.trim();
     const password = authPassword.value;
-    
+
     if (!email || password.length < 6) {
       toast('Por favor, ingresa un correo y contraseña (mínimo 6 caracteres)', 'err');
       return;
@@ -3680,13 +3940,8 @@ if (auth !== null) {
 
     toast('Procesando datos...');
     try {
-      if (authMode === 'login') {
-        await auth.signInWithEmailAndPassword(email, password);
-        toast('Sesión iniciada correctamente', 'ok');
-      } else {
-        await auth.createUserWithEmailAndPassword(email, password);
-        toast('Cuenta creada y conectada', 'ok');
-      }
+      await auth.signInWithEmailAndPassword(email, password);
+      toast('Sesión iniciada correctamente', 'ok');
       authModal.classList.remove('open');
     } catch (error) {
       toast(`Error: ${error.message}`, 'err');
@@ -3715,7 +3970,11 @@ if (auth !== null) {
       
       // Iniciar el listener de Firestore en tiempo real para traer datos de la nube
       setupRealtimeCloudSync(user);
-      
+      // Registrar este correo en el índice global para que otros usuarios puedan compartir conmigo
+      registerUserEmail(user);
+      // Escuchar invitaciones de capas compartidas entrantes
+      setupIncomingShareListener(user);
+
       // Sincronizar capas locales actuales que se hayan cargado antes de loguearse
       shpLayers.forEach(layer => saveShpToCloud(layer));
     } else {
@@ -3723,11 +3982,9 @@ if (auth !== null) {
       cloudBtn.querySelector('span').textContent = 'Mi Cuenta';
       authViewForm.style.display = 'block';
       authViewUser.style.display = 'none';
-      
-      if (shpUnsubscribe) {
-        shpUnsubscribe();
-        shpUnsubscribe = null;
-      }
+
+      if (shpUnsubscribe) { shpUnsubscribe(); shpUnsubscribe = null; }
+      if (shareUnsubscribe) { shareUnsubscribe(); shareUnsubscribe = null; }
     }
   });
 }
