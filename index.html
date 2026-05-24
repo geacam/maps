@@ -17,7 +17,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap');
 
 :root {
   --bg:      #e8edf2;
@@ -44,7 +44,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; overflow: hidden; }
-body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; }
 
 /* HEADER */
 header {
@@ -65,9 +65,9 @@ header {
 .logo-text .geo   { color: var(--blue); }
 .logo-text .fotos { color: var(--text); }
 .logo-text .dot   { color: var(--blue); font-size: 22px; line-height: 0; vertical-align: -3px; }
-.logo-sub { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 2px; line-height: 1; }
+.logo-sub { font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 2px; line-height: 1; }
 .header-sep { flex: 1; }
-.status-pill { font-family: 'Space Mono', monospace; font-size: 9px; padding: 4px 10px; border-radius: 20px; background: var(--green-lt); border: 1px solid #a8ddc0; color: var(--green); display: flex; align-items: center; gap: 5px; }
+.status-pill { font-family: 'DM Sans', sans-serif; font-size: 9px; padding: 4px 10px; border-radius: 20px; background: var(--green-lt); border: 1px solid #a8ddc0; color: var(--green); display: flex; align-items: center; gap: 5px; }
 .status-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
 
@@ -76,7 +76,7 @@ header {
   display: flex; align-items: center; gap: 6px;
   padding: 6px 12px; border-radius: 8px;
   background: rgba(255,255,255,.75); border: 1.5px solid var(--border2);
-  color: var(--text2); font-family: 'Syne', sans-serif;
+  color: var(--text2); font-family: 'DM Sans', sans-serif;
   font-size: 11px; font-weight: 700; cursor: pointer; transition: all .2s;
 }
 #cloud-auth-btn:hover { background: var(--blue-lt); border-color: var(--blue); color: var(--blue); }
@@ -87,7 +87,7 @@ header {
   display: flex; align-items: center; gap: 7px;
   padding: 7px 14px; border-radius: 8px;
   background: rgba(255,255,255,.7); border: 1px solid var(--border2);
-  color: var(--text2); font-family: 'Syne', sans-serif;
+  color: var(--text2); font-family: 'DM Sans', sans-serif;
   font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s; white-space: nowrap;
 }
 #hover-btn:hover { background: var(--blue-lt); border-color: var(--blue); color: var(--blue); }
@@ -127,26 +127,26 @@ header {
 .mini-drop input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 .mini-drop-icon { font-size: 18px; line-height: 1; }
 .mini-drop-title { font-size: 10px; font-weight: 700; color: var(--text); }
-.mini-drop-sub { font-size: 8px; color: var(--muted); font-family: 'Space Mono', monospace; line-height: 1.3; }
+.mini-drop-sub { font-size: 8px; color: var(--muted); font-family: 'DM Sans', sans-serif; line-height: 1.3; }
 
 /* SIGPAC card */
 .sigpac-card { padding: 10px 12px; }
-.sec-label { font-family: 'Space Mono', monospace; font-size: 8.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.sec-label { font-family: 'DM Sans', sans-serif; font-size: 8.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .layer-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
 .layer-color { width: 10px; height: 10px; flex-shrink: 0; border-radius: 2px; }
 .layer-texts { flex: 1; min-width: 0; }
 .layer-name { font-size: 11px; font-weight: 700; color: var(--text); }
-.layer-sub { font-size: 9px; color: var(--muted); font-family: 'Space Mono', monospace; }
+.layer-sub { font-size: 9px; color: var(--muted); font-family: 'DM Sans', sans-serif; }
 .toggle-wrap input { display: none; }
 .toggle-wrap label { display: block; width: 34px; height: 18px; border-radius: 9px; background: var(--border2); cursor: pointer; position: relative; transition: background .2s; }
 .toggle-wrap label::after { content: ''; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: all .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
 .toggle-wrap input:checked + label { background: var(--blue); }
 .toggle-wrap input:checked + label::after { transform: translateX(16px); }
 .op-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; margin-left: 18px; }
-.op-label { font-size: 9px; color: var(--muted); font-family: 'Space Mono', monospace; width: 54px; }
+.op-label { font-size: 9px; color: var(--muted); font-family: 'DM Sans', sans-serif; width: 54px; }
 input[type=range] { flex: 1; -webkit-appearance: none; height: 3px; border-radius: 2px; background: var(--border); outline: none; cursor: pointer; }
 input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--blue); cursor: pointer; }
-.op-val { font-size: 9px; color: var(--blue); font-family: 'Space Mono', monospace; width: 28px; text-align: right; }
+.op-val { font-size: 9px; color: var(--blue); font-family: 'DM Sans', sans-serif; width: 28px; text-align: right; }
 
 /* PANEL unificado fotos+SHP */
 .layers-card {
@@ -161,9 +161,9 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   flex-shrink: 0;
 }
 .layers-card-header .sec-label { margin-bottom: 0; }
-.layers-count { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--blue); font-weight: 700; background: var(--blue-lt); border-radius: 10px; padding: 2px 8px; }
+.layers-count { font-family: 'DM Sans', sans-serif; font-size: 9px; color: var(--blue); font-weight: 700; background: var(--blue-lt); border-radius: 10px; padding: 2px 8px; }
 
-.shp-loading { display: flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace; font-size: 9px; color: var(--blue); padding: 6px 12px; flex-shrink: 0; }
+.shp-loading { display: flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 9px; color: var(--blue); padding: 6px 12px; flex-shrink: 0; }
 .shp-spin { width: 12px; height: 12px; border: 2px solid var(--blue-lt); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -181,35 +181,123 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 .photo-thumb { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: var(--s3); cursor: zoom-in; border: 1px solid var(--border); }
 .item-info { flex: 1; min-width: 0; }
 .item-name { font-size: 10px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
-.item-sub { font-size: 8.5px; color: var(--muted); font-family: 'Space Mono', monospace; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-sub { font-size: 8.5px; color: var(--muted); font-family: 'DM Sans', sans-serif; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .az-badge { color: var(--blue); }
 
 /* SHP item dentro del panel unificado */
-.shp-color-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; cursor: pointer; border: 1.5px solid rgba(0,0,0,.12); position: relative; }
+.shp-edit-btn {
+  width: 22px; height: 22px; border-radius: 5px; border: 1px solid var(--border2);
+  background: var(--s2); cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); transition: all .15s;
+}
+.shp-edit-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
+.shp-color-dot { display: none; } /* kept for JS compat but hidden */
 .shp-color-input { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
-.shp-badge { font-family: 'Space Mono', monospace; font-size: 7.5px; color: var(--muted); background: var(--s3); border-radius: 4px; padding: 1px 4px; flex-shrink: 0; }
+.shp-badge { font-family: 'DM Sans', sans-serif; font-size: 7.5px; color: var(--muted); background: var(--s3); border-radius: 4px; padding: 1px 4px; flex-shrink: 0; }
+
+/* Modal edición de capa */
+#layer-edit-modal {
+  display: none; position: fixed; inset: 0; z-index: 10200;
+  background: rgba(0,0,0,.45); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+#layer-edit-modal.open { display: flex !important; }
+.layer-edit-card {
+  background: var(--surface); border-radius: 14px; padding: 22px;
+  width: 100%; max-width: 320px; box-shadow: var(--shadow);
+  border: 1px solid var(--border); display: flex; flex-direction: column; gap: 16px;
+}
+.layer-edit-title {
+  font-weight: 800; font-size: 15px; color: var(--text);
+}
+.layer-edit-field { display: flex; flex-direction: column; gap: 5px; }
+.layer-edit-label {
+  font-family: 'DM Sans', sans-serif; font-size: 9px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--muted); font-weight: 700;
+}
+.layer-edit-input {
+  width: 100%; padding: 8px 10px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px;
+  color: var(--text); outline: none; transition: border-color .15s;
+}
+.layer-edit-input:focus { border-color: var(--blue); }
+.layer-edit-color-row {
+  display: flex; align-items: center; gap: 10px; position: relative;
+}
+.layer-edit-color-preview {
+  width: 32px; height: 32px; border-radius: 8px; border: 2px solid rgba(0,0,0,.1);
+  flex-shrink: 0; cursor: pointer; transition: transform .15s;
+}
+.layer-edit-color-preview:hover { transform: scale(1.08); }
+.layer-edit-color-hint {
+  font-size: 11px; color: var(--muted); flex: 1;
+}
+.layer-edit-color-input { display: none; }
+/* Popover paleta */
+#layer-edit-color-pop {
+  display: none; position: absolute; top: 42px; left: 0; z-index: 10;
+  background: var(--surface); border: 1px solid var(--border2); border-radius: 10px;
+  padding: 10px; box-shadow: var(--shadow); width: 220px; flex-direction: column; gap: 8px;
+}
+#layer-edit-color-pop.open { display: flex; }
+.lec-swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.lec-swatch {
+  width: 100%; aspect-ratio: 1; border-radius: 6px; border: 2px solid transparent;
+  cursor: pointer; transition: transform .12s;
+}
+.lec-swatch:hover { transform: scale(1.12); }
+.lec-swatch.selected { border-color: var(--text); box-shadow: 0 0 0 2px var(--surface) inset; }
+.lec-pop-row { display: flex; gap: 6px; align-items: center; }
+.lec-hex {
+  flex: 1; padding: 6px 8px; border: 1.5px solid var(--border); border-radius: 6px;
+  font-family: 'DM Sans', sans-serif; font-size: 11px; outline: none; text-transform: uppercase;
+}
+.lec-hex:focus { border-color: var(--blue); }
+.lec-ok {
+  padding: 6px 12px; border: none; border-radius: 6px; background: var(--blue);
+  color: #fff; font-weight: 700; font-size: 11px; cursor: pointer;
+}
+.lec-ok:hover { background: #1e55bb; }
+.lec-more {
+  padding: 6px 8px; border: 1.5px solid var(--border); border-radius: 6px;
+  background: var(--s2); color: var(--text2); font-size: 10px; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
+}
+.layer-edit-actions { display: flex; gap: 8px; }
+.layer-edit-cancel {
+  flex: 1; padding: 9px; border-radius: 8px; border: 1.5px solid var(--border2);
+  background: var(--s3); color: var(--text2); font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+}
+.layer-edit-save {
+  flex: 1; padding: 9px; border-radius: 8px; border: none;
+  background: var(--blue); color: #fff; font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer; transition: background .15s;
+}
+.layer-edit-save:hover { background: #1e55bb; }
 
 /* Botones de acción item */
 .item-actions { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
-.shp-kml-btn { font-family: 'Space Mono', monospace; font-size: 7.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: var(--blue-lt); border: 1px solid rgba(47,111,222,.25); color: var(--blue); border-radius: 4px; padding: 3px 6px; cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
+.shp-kml-btn { font-family: 'DM Sans', sans-serif; font-size: 7.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: var(--blue-lt); border: 1px solid rgba(47,111,222,.25); color: var(--blue); border-radius: 4px; padding: 3px 6px; cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
 .shp-kml-btn:hover { background: var(--blue); color: #fff; }
 .item-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 12px; padding: 3px 4px; border-radius: 4px; transition: all .15s; line-height: 1; }
 .item-del:hover { color: var(--danger); background: rgba(217,48,37,.08); }
 
 /* Separador de tipo en la lista */
-.list-group-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); padding: 6px 7px 3px; opacity: .7; }
+.list-group-label { font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); padding: 6px 7px 3px; opacity: .7; }
 
-.empty-unified { text-align: center; padding: 28px 12px; color: var(--muted); font-size: 11px; font-family: 'Space Mono', monospace; line-height: 1.9; }
+.empty-unified { text-align: center; padding: 28px 12px; color: var(--muted); font-size: 11px; font-family: 'DM Sans', sans-serif; line-height: 1.9; }
 
 /* TXT SIGPAC import panel */
 .sigpac-import-card { padding: 10px 12px; }
 .sigpac-import-card .sec-label { margin-bottom: 6px; }
-.txt-hint { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--muted); background: var(--s2); border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; margin-bottom: 8px; line-height: 1.7; }
+.txt-hint { font-family: 'DM Sans', sans-serif; font-size: 8px; color: var(--muted); background: var(--s2); border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; margin-bottom: 8px; line-height: 1.7; }
 .txt-hint code { color: var(--blue); font-size: 9px; }
 .sigpac-progress { display: none; margin-top: 6px; }
 .sigpac-progress-bar-wrap { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin: 4px 0; }
 .sigpac-progress-bar { height: 100%; background: var(--blue); border-radius: 2px; width: 0%; transition: width .3s; }
-.sigpac-progress-label { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--muted); }
+.sigpac-progress-label { font-family: 'DM Sans', sans-serif; font-size: 8px; color: var(--muted); }
 
 /* SHP pin markers */
 .shp-pin-icon { position: relative; }
@@ -224,7 +312,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 .qs-btn {
   flex: 1;
   padding: 5px 8px; border-radius: 7px; border: none; cursor: pointer;
-  font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 700;
   letter-spacing: .06em; text-transform: uppercase;
   transition: all .18s; color: var(--text2); background: transparent; white-space: nowrap;
 }
@@ -249,14 +337,14 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 }
 #query-popup .qp-close:hover { color: var(--danger); background: rgba(217,48,37,.08); }
 #query-popup .qp-id {
-  font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
   line-height: 1.35; margin-bottom: 6px; margin-right: 18px;
   word-break: break-all;
 }
 #query-popup .qp-id.recinto-id { color: var(--blue); }
 #query-popup .qp-id.cultivo-id { color: var(--green); }
 #query-popup .qp-detail {
-  font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2);
+  font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text2);
   line-height: 1.65; border-top: 1px solid var(--border); padding-top: 7px; margin-top: 2px;
 }
 #query-popup .qp-row { display: flex; gap: 5px; }
@@ -281,26 +369,26 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 12px 8px; border-bottom: 1px solid rgba(220,225,232,.6); flex-shrink: 0;
 }
-.search-card-title { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.search-card-title { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .search-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; padding: 2px 5px; border-radius: 4px; }
 .search-close:hover { color: var(--danger); }
 .search-fields { flex: 1; overflow-y: auto; padding: 10px 12px; display: flex; flex-direction: column; gap: 7px; }
 .search-fields::-webkit-scrollbar { width: 3px; }
 .search-fields::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 .sf-row { display: flex; flex-direction: column; gap: 3px; }
-.sf-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sf-label { font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .sf-input {
   width: 100%; padding: 6px 9px; border: 1.5px solid var(--border); border-radius: 6px;
-  font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text);
   background: rgba(255,255,255,.7); outline: none; transition: border-color .15s;
 }
 .sf-input:focus { border-color: var(--blue); background: #fff; }
 .search-footer { padding: 10px 12px; border-top: 1px solid rgba(220,225,232,.6); display: flex; flex-direction: column; gap: 7px; flex-shrink: 0; }
 .search-add-row { display: flex; align-items: center; gap: 7px; }
-.search-add-label { font-family: 'Space Mono', monospace; font-size: 8.5px; color: var(--text2); flex: 1; line-height: 1.3; }
+.search-add-label { font-family: 'DM Sans', sans-serif; font-size: 8.5px; color: var(--text2); flex: 1; line-height: 1.3; }
 .search-btn {
   width: 100%; padding: 8px; border-radius: 7px; border: none; cursor: pointer;
-  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: .06em;
+  font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .06em;
   background: var(--blue); color: #fff; transition: all .18s;
 }
 .search-btn:hover { background: #1e55bb; }
@@ -318,7 +406,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 
 /* ── YEAR SELECTOR ── */
 .year-sel {
-  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
   color: var(--blue); background: var(--blue-lt);
   border: 1px solid rgba(47,111,222,.25); border-radius: 5px;
   padding: 3px 4px; cursor: pointer; outline: none;
@@ -347,7 +435,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 .shp-dl-menu.open { display: flex; }
 .shp-dl-menu button {
   background: none; border: none; padding: 7px 12px;
-  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700;
   color: var(--text2); cursor: pointer; text-align: left;
   display: flex; align-items: center; gap: 6px;
   transition: background .12s;
@@ -374,23 +462,23 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   border: 1px solid var(--border);
 }
 .share-title {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px;
+  font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 16px;
   color: var(--text); margin-bottom: 4px;
 }
 .share-sub {
-  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted);
+  font-family: 'DM Sans', sans-serif; font-size: 10px; color: var(--muted);
   margin-bottom: 16px;
 }
 .share-input {
   width: 100%; padding: 10px 12px; border: 1px solid var(--border2);
-  border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 12px;
+  border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 12px;
   background: var(--s2); color: var(--text); margin-bottom: 14px;
 }
 .share-input:focus { outline: none; border-color: var(--blue); background: #fff; }
 .share-actions { display: flex; gap: 8px; }
 .share-btn {
   flex: 1; padding: 9px 12px; border-radius: 8px; border: none;
-  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
   cursor: pointer; transition: all .15s;
 }
 .share-btn.primary { background: var(--blue); color: #fff; }
@@ -404,10 +492,10 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   background: var(--s2);
 }
 .incoming-from {
-  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 3px;
+  font-family: 'DM Sans', sans-serif; font-size: 10px; color: var(--muted); margin-bottom: 3px;
 }
 .incoming-layer {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+  font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 13px;
   color: var(--text); margin-bottom: 10px;
 }
 
@@ -431,7 +519,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   position: fixed;
   background: var(--glass); border: 1.5px solid var(--blue);
   border-radius: 10px; padding: 8px 12px;
-  font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 10px; color: var(--text);
   pointer-events: none; z-index: 1200; max-width: 380px; line-height: 1.5;
   display: none; box-shadow: 0 4px 16px rgba(47,111,222,.15), 0 2px 6px rgba(0,0,0,.08);
   backdrop-filter: blur(8px);
@@ -440,17 +528,17 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 #parcel-tooltip .tt-detail { color: var(--muted); font-size: 9px; }
 
 /* LEAFLET POPUP */
-.leaflet-popup-content-wrapper { background: var(--surface) !important; border: 1px solid var(--border) !important; border-radius: var(--r) !important; padding: 0 !important; color: var(--text) !important; box-shadow: 0 4px 20px rgba(0,0,0,.12) !important; }
+.leaflet-popup-content-wrapper { background: var(--surface) !important; border: 1px solid var(--border) !important; border-radius: var(--r) !important; padding: 0 !important; color: var(--text) !important; box-shadow: 0 4px 20px rgba(0,0,0,.12) !important; font-family: 'DM Sans', sans-serif !important; }
 .leaflet-popup-tip { background: var(--surface) !important; }
-.leaflet-popup-content { margin: 0 !important; }
+.leaflet-popup-content { margin: 0 !important; font-family: 'DM Sans', sans-serif !important; }
 
 .popup-inner { padding: 12px; width: 200px; }
 .popup-img { width: 100%; border-radius: 5px; object-fit: cover; max-height: 140px; margin-bottom: 8px; display: block; cursor: zoom-in; border: 1px solid var(--border); }
 .popup-name { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; color: var(--text); }
-.popup-coord { font-size: 9px; color: var(--muted); font-family: 'Space Mono', monospace; line-height: 1.7; display: flex; flex-direction: column; gap: 1px; }
+.popup-coord { font-size: 9px; color: var(--muted); font-family: 'DM Sans', sans-serif; line-height: 1.7; display: flex; flex-direction: column; gap: 1px; }
 .popup-coord-row { display: block; }
 .popup-coord-utm { display: block; color: var(--blue); font-size: 8.5px; font-weight: 700; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2px 0; margin: 2px 0; }
-.popup-open-btn { margin-top: 8px; width: 100%; background: var(--blue-lt); border: 1px solid rgba(47,111,222,.3); border-radius: 5px; color: var(--blue); font-size: 10px; font-family: 'Space Mono', monospace; padding: 6px; cursor: pointer; transition: all .15s; text-align: center; display: block; font-weight: 700; }
+.popup-open-btn { margin-top: 8px; width: 100%; background: var(--blue-lt); border: 1px solid rgba(47,111,222,.3); border-radius: 5px; color: var(--blue); font-size: 10px; font-family: 'DM Sans', sans-serif; padding: 6px; cursor: pointer; transition: all .15s; text-align: center; display: block; font-weight: 700; }
 .popup-open-btn:hover { background: var(--blue); color: #fff; }
 
 /* Popup cluster */
@@ -461,12 +549,12 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 .cluster-item:hover { border-color: var(--blue); }
 .cluster-item.selected { border-color: var(--blue); box-shadow: 0 0 0 2px rgba(47,111,222,.25); }
 .cluster-item img { width: 56px; height: 56px; object-fit: cover; display: block; border-radius: 3px; }
-.cluster-item-az { position: absolute; bottom: 0; right: 0; background: var(--blue); color: #fff; font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700; padding: 1px 4px; border-radius: 3px 0 0 0; line-height: 1.4; }
+.cluster-item-az { position: absolute; bottom: 0; right: 0; background: var(--blue); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 700; padding: 1px 4px; border-radius: 3px 0 0 0; line-height: 1.4; }
 .cluster-detail { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); display: none; }
 .cluster-detail.visible { display: block; }
 .cluster-detail-name { font-size: 10px; font-weight: 700; margin-bottom: 3px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cluster-detail-coord { font-size: 9px; color: var(--muted); font-family: 'Space Mono', monospace; line-height: 1.6; }
-.cluster-detail-btn { margin-top: 7px; width: 100%; background: var(--blue-lt); border: 1px solid rgba(47,111,222,.3); border-radius: 4px; color: var(--blue); font-size: 10px; font-family: 'Space Mono', monospace; padding: 5px; cursor: pointer; font-weight: 700; }
+.cluster-detail-coord { font-size: 9px; color: var(--muted); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
+.cluster-detail-btn { margin-top: 7px; width: 100%; background: var(--blue-lt); border: 1px solid rgba(47,111,222,.3); border-radius: 4px; color: var(--blue); font-size: 10px; font-family: 'DM Sans', sans-serif; padding: 5px; cursor: pointer; font-weight: 700; }
 .cluster-detail-btn:hover { background: var(--blue); color: #fff; }
 
 /* LIGHTBOX */
@@ -474,10 +562,10 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 #lightbox.open { opacity: 1; pointer-events: all; }
 #lightbox-img { max-width: 92vw; max-height: 90vh; border-radius: 6px; object-fit: contain; display: block; }
 #lightbox-close { position: absolute; top: 18px; right: 20px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2); color: #fff; font-size: 16px; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1; }
-#lightbox-name { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.15); padding: 5px 15px; border-radius: 20px; font-size: 11px; font-family: 'Space Mono', monospace; color: #fff; white-space: nowrap; max-width: 80vw; overflow: hidden; text-overflow: ellipsis; }
+#lightbox-name { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.15); padding: 5px 15px; border-radius: 20px; font-size: 11px; font-family: 'DM Sans', sans-serif; color: #fff; white-space: nowrap; max-width: 80vw; overflow: hidden; text-overflow: ellipsis; }
 
 /* TOAST */
-#toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--glass); border: 1px solid var(--border); color: var(--text); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-family: 'Space Mono', monospace; z-index: 10010; transition: transform .3s; white-space: nowrap; box-shadow: 0 2px 10px rgba(0,0,0,.1); backdrop-filter: blur(8px); }
+#toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--glass); border: 1px solid var(--border); color: var(--text); padding: 7px 15px; border-radius: 8px; font-size: 10px; font-family: 'DM Sans', sans-serif; z-index: 10010; transition: transform .3s; white-space: nowrap; box-shadow: 0 2px 10px rgba(0,0,0,.1); backdrop-filter: blur(8px); }
 #toast.show { transform: translateX(-50%) translateY(0); }
 #toast.err { border-color: var(--danger); color: var(--danger); }
 #toast.ok  { border-color: var(--green);  color: var(--green);  }
@@ -493,14 +581,14 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 }
 .bm-btn {
   padding: 5px 13px; border-radius: 7px; border: none; cursor: pointer;
-  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
   transition: all .18s; color: var(--text2); background: transparent;
 }
 
 /* ── GEOLOCATION BUTTON ── */
 #geolocate-btn {
-  position: absolute; bottom: 130px; right: 12px; z-index: 999;
+  position: absolute; bottom: 86px; right: 12px; z-index: 999;
   width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
   background: var(--glass); border: 1px solid var(--glass-border);
   box-shadow: var(--shadow); backdrop-filter: blur(14px);
@@ -526,14 +614,13 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   transition: all .2s; color: var(--text2);
 }
 .measure-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
-.measure-btn.active { background: #9b27c8; color: #fff; border-color: #9b27c8; box-shadow: 0 0 0 3px rgba(155,39,200,.2), var(--shadow); }
+.measure-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47,111,222,.2), var(--shadow); }
 
-#measure-line-btn { bottom: 262px; }
-#measure-area-btn { bottom: 218px; }
+/* measure-line-btn and measure-area-btn removed */
 
 /* ── GLOBE / COORDINATES BUTTON ── */
 #globe-btn {
-  position: absolute; bottom: 306px; right: 12px; z-index: 999;
+  position: absolute; bottom: 262px; right: 12px; z-index: 999;
   width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
   background: var(--glass); border: 1px solid var(--glass-border);
   box-shadow: var(--shadow); backdrop-filter: blur(14px);
@@ -550,7 +637,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   border-radius: 12px; padding: 12px 14px 10px;
   box-shadow: var(--shadow); backdrop-filter: blur(16px);
   min-width: 220px; display: none;
-  font-family: 'Space Mono', monospace;
+  font-family: 'DM Sans', sans-serif;
 }
 #globe-popup .gp-close {
   position: absolute; top: 7px; right: 8px;
@@ -565,7 +652,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 #globe-popup .gp-link {
   flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px;
   padding: 6px 8px; border-radius: 7px; border: none; cursor: pointer;
-  font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
   text-decoration: none; transition: all .15s;
 }
 #globe-popup .gp-link.earth { background: #e6f4ec; color: #1e8a4c; border: 1px solid rgba(30,138,76,.25); }
@@ -575,7 +662,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 
 /* ── DRAW BUTTON ── */
 #draw-btn {
-  position: absolute; bottom: 174px; right: 12px; z-index: 999;
+  position: absolute; bottom: 130px; right: 12px; z-index: 999;
   width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
   background: var(--glass); border: 1px solid var(--glass-border);
   box-shadow: var(--shadow); backdrop-filter: blur(14px);
@@ -583,26 +670,116 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   transition: all .2s; color: var(--text2);
 }
 #draw-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
-#draw-btn.active { background: #e06c00; color: #fff; border-color: #e06c00; box-shadow: 0 0 0 3px rgba(224,108,0,.25), var(--shadow); }
-#draw-btn.active:hover { background: #b85700; }
+#draw-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47,111,222,.25), var(--shadow); }
+#draw-btn.active:hover { background: #1e55bb; }
+
+/* Sub-botones antiguos de dibujo eliminados (sustituidos por barra superior unificada) */
+#draw-sub-area, #draw-sub-line { display: none !important; }
+
+/* ── DESKTOP QUERY BUTTON ── */
+#desktop-query-btn {
+  position: absolute; bottom: 306px; right: 12px; z-index: 999;
+  width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow); backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; color: var(--text2);
+}
+#desktop-query-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
+#desktop-query-btn.active-recinto { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47,111,222,.25), var(--shadow); }
+#desktop-query-btn.active-cultivo { background: var(--green); color: #fff; border-color: var(--green); box-shadow: 0 0 0 3px rgba(30,138,76,.2), var(--shadow); }
+
+/* Desktop query submenu */
+#desktop-query-submenu {
+  position: absolute; bottom: 346px; right: 12px; z-index: 998;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 10px; padding: 4px; box-shadow: var(--shadow); backdrop-filter: blur(14px);
+  flex-direction: column; gap: 2px; min-width: 140px; display: none;
+}
+#desktop-query-submenu.open { display: flex; }
+.dqs-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 7px; border: none; cursor: pointer;
+  background: transparent; color: var(--text2); font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 600; transition: all .15s; text-align: left;
+}
+.dqs-btn:hover { background: var(--blue-lt); color: var(--blue); }
+.dqs-btn.active-recinto { background: var(--blue); color: #fff; }
+.dqs-btn.active-cultivo { background: var(--green); color: #fff; }
+
+/* Hide old query-switcher on desktop and mobile */
+#query-switcher { display: none !important; }
+
+/* Botón herramienta selección (desktop) */
+#select-tool-btn {
+  position: absolute; bottom: 218px; right: 12px; z-index: 999;
+  width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow); backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; color: var(--text2);
+}
+#select-tool-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
+#select-tool-btn.active { background: #9b27c8; color: #fff; border-color: #9b27c8; box-shadow: 0 0 0 3px rgba(155,39,200,.25), var(--shadow); }
+@media (max-width: 700px) { #select-tool-btn { display: none !important; } }
+
+/* Barra de selección */
+#sel-tool-bar {
+  display: none;
+  position: absolute;
+  top: 60px; left: 12px; right: 12px; z-index: 1050;
+  background: var(--glass); border: 1px solid rgba(155,39,200,.4);
+  border-radius: 12px; padding: 8px 10px;
+  box-shadow: var(--shadow); backdrop-filter: blur(16px);
+  max-width: 620px; margin: 0 auto;
+}
+@media (min-width: 701px) {
+  #sel-tool-bar { left: 50%; right: auto; transform: translateX(-50%); top: 64px; width: 620px; }
+}
+#sel-tool-bar.open { display: block !important; }
+.sel-bar-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.sel-bar-label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .08em; }
+.sel-bar-select {
+  flex: 1; min-width: 120px; height: 30px; padding: 0 8px;
+  border: 1.5px solid var(--border2); border-radius: 7px;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; background: #fff; color: var(--text); cursor: pointer;
+}
+.sel-bar-count { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700; color: #9b27c8; margin-right: 4px; }
+#sel-tool-save { background: var(--green); color: #fff; }
+#sel-tool-save:hover { background: #166038; }
+#sel-tool-close { background: rgba(217,48,37,.1); color: var(--danger); }
+#sel-tool-close:hover { background: var(--danger); color: #fff; }
+#sel-tool-back  { background: var(--s3); color: var(--text2); }
+#sel-tool-back:hover  { background: var(--border2); }
+body:has(#sel-tool-bar.open) #measure-popup { display: none !important; }
 
 /* Popup de medida */
 #measure-popup {
-  position: absolute; z-index: 1100;
-  background: var(--glass); border: 1.5px solid #9b27c8;
-  border-radius: 10px; padding: 10px 14px;
-  font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
-  color: #9b27c8; box-shadow: var(--shadow); backdrop-filter: blur(14px);
-  pointer-events: none; display: none; white-space: nowrap;
+  position: fixed; z-index: 1100;
+  top: 58px; left: 50%; transform: translateX(-50%);
+  background: var(--glass); border: 1.5px solid var(--blue);
+  border-radius: 10px; padding: 8px 36px 8px 14px;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700;
+  color: var(--blue); box-shadow: var(--shadow); backdrop-filter: blur(14px);
+  pointer-events: all; display: none; white-space: nowrap;
+  display: none; align-items: center; gap: 10px;
 }
-#measure-popup .mp-sub { font-size: 9px; color: var(--muted); font-weight: 400; margin-top: 2px; display: block; }
+#measure-popup.visible { display: flex !important; }
+#measure-popup .mp-text { display: flex; flex-direction: column; }
+#measure-popup .mp-sub { font-size: 9px; color: var(--muted); font-weight: 400; margin-top: 1px; display: block; }
+#measure-popup .mp-close {
+  position: absolute; right: 7px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--blue); cursor: pointer;
+  font-size: 14px; padding: 2px 4px; border-radius: 4px; line-height: 1; opacity: .7;
+}
+#measure-popup .mp-close:hover { opacity: 1; background: var(--blue-lt); }
 
-/* Draw hint tooltip */
+/* Draw hint tooltip - centered bottom */
 #draw-hint {
-  position: absolute; bottom: 178px; right: 58px; z-index: 999;
-  background: var(--glass); border: 1px solid var(--glass-border);
-  border-radius: 8px; padding: 6px 10px;
-  font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text2);
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 999;
+  background: var(--glass); border: 1px solid rgba(47,111,222,.4);
+  border-radius: 8px; padding: 6px 14px;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; color: var(--blue);
   box-shadow: var(--shadow); backdrop-filter: blur(14px);
   white-space: nowrap; display: none; pointer-events: none;
 }
@@ -627,16 +804,16 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 }
 .auth-title { font-weight: 800; font-size: 18px; color: var(--text); }
 .auth-input-group { display: flex; flex-direction: column; gap: 4px; }
-.auth-input-group label { font-family: 'Space Mono', monospace; font-size: 9px; text-transform: uppercase; color: var(--muted); }
+.auth-input-group label { font-family: 'DM Sans', sans-serif; font-size: 9px; text-transform: uppercase; color: var(--muted); }
 .auth-input {
   width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px;
-  font-family: 'Space Mono', monospace; font-size: 11px; outline: none; transition: border-color .15s;
+  font-family: 'DM Sans', sans-serif; font-size: 11px; outline: none; transition: border-color .15s;
 }
 .auth-input:focus { border-color: var(--blue); }
 .auth-actions-row { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
 .auth-main-btn {
   width: 100%; padding: 10px; border-radius: 8px; border: none; font-weight: 700;
-  font-family: 'Space Mono', monospace; font-size: 11px; background: var(--blue); color: #fff;
+  font-family: 'DM Sans', sans-serif; font-size: 11px; background: var(--blue); color: #fff;
   cursor: pointer; transition: background .15s;
 }
 .auth-main-btn:hover { background: #1e55bb; }
@@ -646,7 +823,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 }
 .auth-sub-link:hover { text-decoration: underline; }
 .auth-user-info { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 4px; }
-.auth-user-email { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); word-break: break-all; }
+.auth-user-email { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text2); word-break: break-all; }
 
 /* ── ELEMENTOS SOLO MÓVIL (ocultos en escritorio) ── */
 #mob-gps-btn,
@@ -655,16 +832,14 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 #mob-raster-btn,
 #mob-raster-panel,
 #mob-tools-zone,
-#mob-delete-confirm,
 #mobile-refresh-btn { display: none; }
 
 /* Mobile: ocultar botones de escritorio que serán reemplazados */
 @media (max-width: 700px) {
-  #measure-line-btn,
-  #measure-area-btn,
   #draw-btn,
   #geolocate-btn,
   #globe-btn,
+  #desktop-gps-btn,
   #menu-btn,
   #basemap-switcher { display: none !important; }
 }
@@ -679,7 +854,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 /* Marca de agua de fecha de imagen */
 #imagery-date {
   position: absolute; top: 46px; right: 12px; z-index: 998;
-  font-family: 'Space Mono', monospace; font-size: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 8px;
   color: rgba(255,255,255,0.75); text-shadow: 0 1px 3px rgba(0,0,0,.7);
   pointer-events: none; letter-spacing: .04em;
 }
@@ -715,14 +890,14 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   /* Search panel desktop: oculto */
   #search-panel { display: none !important; }
 
-  /* Query popup: ancho completo */
+  /* Query popup: top position on mobile, below header area */
   #query-popup {
     min-width: 0;
     max-width: calc(100vw - 24px);
     width: calc(100vw - 24px);
     left: 12px !important;
-    bottom: 100px;
-    top: auto !important;
+    top: 116px !important;
+    bottom: auto !important;
   }
 
   /* Zoom control */
@@ -783,7 +958,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
     padding: 12px 14px 8px; border-bottom: 1px solid rgba(220,225,232,.6); flex-shrink: 0;
   }
   .mob-panel-title {
-    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: .16em;
+    font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: .16em;
     text-transform: uppercase; color: var(--muted); font-weight: 700;
   }
   .mob-panel-close {
@@ -799,7 +974,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   /* SIGPAC section en panel móvil */
   .mob-sigpac-section { margin-bottom: 12px; }
   .mob-sec-label {
-    font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: .16em;
+    font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: .16em;
     text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: block;
   }
   .mob-layer-row {
@@ -808,7 +983,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   .mob-layer-color { width: 10px; height: 10px; flex-shrink: 0; border-radius: 2px; }
   .mob-layer-name { flex: 1; font-size: 11px; font-weight: 700; color: var(--text); }
   .mob-year-sel {
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
     color: var(--blue); background: var(--blue-lt); border: 1px solid rgba(47,111,222,.25);
     border-radius: 5px; padding: 3px 4px; cursor: pointer; outline: none;
   }
@@ -833,7 +1008,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   /* Capas del proyecto en móvil */
   .mob-project-section {}
   .mob-layers-count {
-    font-family: 'Space Mono', monospace; font-size: 9px; color: var(--blue);
+    font-family: 'DM Sans', sans-serif; font-size: 9px; color: var(--blue);
     font-weight: 700; background: var(--blue-lt); border-radius: 10px; padding: 2px 8px;
   }
   .mob-project-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -846,16 +1021,19 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   }
   .mob-layer-item:hover { background: rgba(47,111,222,.05); border-color: rgba(47,111,222,.1); }
   .mob-layer-dot {
-    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
-    cursor: pointer; border: 1.5px solid rgba(0,0,0,.12); position: relative;
+    width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+    cursor: pointer; border: 1px solid var(--border2); background: var(--s2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); transition: all .15s; position: relative;
   }
+  .mob-layer-dot:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
   .mob-layer-dot input[type=color] { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
   .mob-layer-info { flex: 1; min-width: 0; }
   .mob-layer-item-name {
     font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden;
     text-overflow: ellipsis; color: var(--text); cursor: pointer;
   }
-  .mob-layer-item-sub { font-size: 9px; color: var(--muted); font-family: 'Space Mono', monospace; }
+  .mob-layer-item-sub { font-size: 9px; color: var(--muted); font-family: 'DM Sans', sans-serif; }
   .mob-layer-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .mob-layer-share {
     width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border2);
@@ -875,13 +1053,13 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   #mob-raster-btn {
     display: flex !important;
     position: absolute;
-    bottom: 16px; right: 12px; z-index: 999;
+    bottom: 6px; right: 12px; z-index: 999;
     height: 36px; padding: 0 12px;
     border-radius: 18px; border: 1px solid var(--glass-border);
     background: var(--glass); backdrop-filter: blur(14px);
     box-shadow: var(--shadow); cursor: pointer; color: var(--text2);
     align-items: center; gap: 6px;
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
     white-space: nowrap;
   }
   #mob-raster-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
@@ -889,7 +1067,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   #mob-raster-panel {
     display: none;
     position: absolute;
-    bottom: 60px; right: 12px; z-index: 998;
+    bottom: 50px; right: 12px; z-index: 998;
     background: var(--glass); border: 1px solid var(--glass-border);
     border-radius: 12px; padding: 6px; box-shadow: var(--shadow); backdrop-filter: blur(14px);
     flex-direction: column; gap: 2px; min-width: 130px;
@@ -897,14 +1075,14 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   #mob-raster-panel.open { display: flex !important; }
   .mob-raster-opt {
     padding: 7px 12px; border-radius: 7px; border: none; cursor: pointer;
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
     text-align: left; background: transparent; color: var(--text2); transition: all .15s;
     display: flex; align-items: center; justify-content: space-between; gap: 8px;
   }
   .mob-raster-opt:hover { background: var(--blue-lt); color: var(--blue); }
   .mob-raster-opt.active { background: var(--blue); color: #fff; }
   .mob-raster-year {
-    font-family: 'Space Mono', monospace; font-size: 8px; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 700;
     color: var(--blue); background: var(--blue-lt); border: 1px solid rgba(47,111,222,.25);
     border-radius: 4px; padding: 2px 5px; cursor: pointer; outline: none;
   }
@@ -914,13 +1092,14 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   #mob-tools-zone {
     display: flex !important;
     position: absolute;
-    bottom: 16px; left: 12px; z-index: 999;
-    align-items: flex-end; gap: 8px;
+    bottom: 6px; left: 12px; z-index: 999;
+    align-items: flex-end; gap: 6px;
+    flex-direction: row;
   }
 
-  /* Botón principal herramientas (llave inglesa) */
+  /* Botón herramientas móvil (mismo estilo que desktop) */
   .mob-tool-btn {
-    width: 44px; height: 44px; border-radius: 12px; border: none; cursor: pointer;
+    width: 36px; height: 36px; border-radius: 8px; border: none; cursor: pointer;
     background: var(--glass); border: 1px solid var(--glass-border);
     box-shadow: var(--shadow); backdrop-filter: blur(14px);
     display: flex; align-items: center; justify-content: center;
@@ -929,55 +1108,39 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   .mob-tool-btn:hover { background: var(--blue-lt); color: var(--blue); }
   .mob-tool-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
 
-  /* Submenú herramientas (wrench) */
+  /* Submenú herramientas (wrench) - hidden in new layout */
   #mob-tools-submenu {
-    display: none;
-    position: absolute; bottom: 52px; left: 0;
-    background: var(--glass); border: 1px solid var(--glass-border);
-    border-radius: 12px; padding: 6px; box-shadow: var(--shadow); backdrop-filter: blur(14px);
-    flex-direction: column; gap: 2px; min-width: 170px;
+    display: none !important;
   }
-  #mob-tools-submenu.open { display: flex !important; }
-  .mob-submenu-btn {
-    display: flex; align-items: center; gap: 9px;
-    padding: 9px 11px; border-radius: 8px; border: none; cursor: pointer;
-    background: transparent; color: var(--text2); font-family: 'Syne', sans-serif;
-    font-size: 12px; font-weight: 600; transition: all .15s; text-align: left;
-  }
-  .mob-submenu-btn:hover { background: var(--blue-lt); color: var(--blue); }
-  .mob-submenu-btn.active { background: var(--blue); color: #fff; }
-  .mob-submenu-btn svg { flex-shrink: 0; }
+  .mob-submenu-btn { display: none; }
 
   /* Botón GPS medición */
   #mob-gpsmeasure-btn { position: relative; }
   /* Submenú GPS medición */
+  /* GPS submenu now shown as top bar popup (like draw bar) */
   #mob-gpsmeasure-submenu {
     display: none;
-    position: absolute; bottom: 52px; left: 0;
-    background: var(--glass); border: 1px solid var(--glass-border);
-    border-radius: 12px; padding: 8px; box-shadow: var(--shadow); backdrop-filter: blur(14px);
-    flex-direction: column; gap: 6px; min-width: 140px;
   }
-  #mob-gpsmeasure-submenu.open { display: flex !important; }
+  #mob-gpsmeasure-submenu.open { display: none !important; }
   .mob-gps-state {
-    font-family: 'Space Mono', monospace; font-size: 8px; color: var(--muted);
+    font-family: 'DM Sans', sans-serif; font-size: 8px; color: var(--muted);
     text-align: center; padding: 2px 0; letter-spacing: .06em; text-transform: uppercase;
   }
-  .mob-gps-state.recording { color: var(--danger); }
-  .mob-gps-state.paused { color: #e06c00; }
+  .mob-gps-state.recording { color: var(--blue); }
+  .mob-gps-state.paused { color: var(--blue); }
   .mob-gps-controls { display: flex; gap: 6px; }
   .mob-gps-ctrl-btn {
     flex: 1; height: 38px; border-radius: 8px; border: none; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
     gap: 4px; transition: all .2s;
   }
-  #mob-gps-play-btn { background: var(--green); color: #fff; }
-  #mob-gps-play-btn:hover { background: #166038; }
-  #mob-gps-pause-btn { background: #e06c00; color: #fff; }
-  #mob-gps-pause-btn:hover { background: #b85700; }
-  #mob-gps-stop-btn { background: var(--danger); color: #fff; }
-  #mob-gps-stop-btn:hover { background: #b02520; }
+  #mob-gps-play-btn { background: var(--s3); color: var(--text2); border: 1px solid var(--border2); }
+  #mob-gps-play-btn:hover, #mob-gps-play-btn:not(:disabled).active-state { background: var(--blue); color: #fff; border-color: var(--blue); }
+  #mob-gps-pause-btn { background: var(--s3); color: var(--text2); border: 1px solid var(--border2); }
+  #mob-gps-pause-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+  #mob-gps-stop-btn { background: var(--s3); color: var(--text2); border: 1px solid var(--border2); }
+  #mob-gps-stop-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
   #mob-gps-play-btn:disabled,
   #mob-gps-pause-btn:disabled,
   #mob-gps-stop-btn:disabled { opacity: .35; cursor: not-allowed; }
@@ -985,50 +1148,265 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   /* Botón consulta (lupa) */
   #mob-query-btn { position: relative; }
   /* Submenú consultas */
+  /* Query submenu: hidden (shown via desktop-style submenu below button) */
   #mob-query-submenu {
     display: none;
-    position: absolute; bottom: 52px; left: 0;
+    position: absolute; bottom: 46px; left: 0;
     background: var(--glass); border: 1px solid var(--glass-border);
     border-radius: 12px; padding: 6px; box-shadow: var(--shadow); backdrop-filter: blur(14px);
-    flex-direction: column; gap: 2px; min-width: 160px;
+    flex-direction: column; gap: 2px; min-width: 130px; z-index: 1100;
   }
   #mob-query-submenu.open { display: flex !important; }
   .mob-query-opt {
     display: flex; align-items: center; gap: 8px;
     padding: 9px 11px; border-radius: 8px; border: none; cursor: pointer;
-    background: transparent; color: var(--text2); font-family: 'Syne', sans-serif;
+    background: transparent; color: var(--text2); font-family: 'DM Sans', sans-serif;
     font-size: 12px; font-weight: 600; transition: all .15s; text-align: left;
   }
   .mob-query-opt:hover { background: var(--blue-lt); color: var(--blue); }
   .mob-query-opt.active-recinto { background: var(--blue); color: #fff; }
-  .mob-query-opt.active-cultivo { background: var(--green); color: #fff; }
+  .mob-query-opt.active-cultivo { background: var(--blue); color: #fff; }
   .mob-query-opt.active-none    { background: var(--s3); color: var(--text2); }
 
-  /* Panel confirmación eliminación móvil */
-  #mob-delete-confirm {
+
+  /* ── YEAR PILLS (reemplaza select nativo en móvil) ── */
+  .mob-year-pills {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    margin: 4px 0 6px 18px;
+  }
+  .mob-year-pill {
+    padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border2);
+    background: var(--s3); color: var(--text2);
+    font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+    cursor: pointer; transition: all .15s;
+  }
+  .mob-year-pill:hover { background: var(--blue-lt); color: var(--blue); border-color: var(--blue); }
+  .mob-year-pill.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* (Barra de dibujo y modal de eliminación movidos fuera del @media para usarse también en escritorio) */
+}
+
+/* ── BARRA DIBUJO UNIFICADA (desktop + móvil) ── */
+#mob-draw-bar {
+  display: none;
+  position: absolute;
+  top: 60px; left: 12px; right: 12px; z-index: 1050;
+  background: var(--glass); border: 1px solid rgba(47,111,222,.4);
+  border-radius: 12px; padding: 8px 10px;
+  box-shadow: var(--shadow); backdrop-filter: blur(16px);
+  flex-direction: column; gap: 8px;
+  max-width: 520px; margin: 0 auto;
+}
+@media (min-width: 701px) {
+  #mob-draw-bar { left: 50%; right: auto; transform: translateX(-50%); top: 64px; width: 520px; }
+}
+#mob-draw-bar.open { display: flex !important; }
+.mob-draw-bar-row { display: flex; align-items: center; gap: 6px; }
+.mob-draw-bar-row:first-child { justify-content: space-between; }
+.mob-draw-type-btn {
+  flex: 1; height: 32px; border-radius: 8px; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  background: var(--s3); color: var(--text2); transition: all .15s;
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.mob-draw-type-btn.active { background: var(--blue); color: #fff; }
+.mob-draw-type-btn:disabled { opacity: .4; cursor: not-allowed; }
+#mob-draw-measure {
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--blue); flex: 1; text-align: center; min-height: 16px;
+}
+.mob-draw-action {
+  height: 36px; padding: 0 12px; border-radius: 8px; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; gap: 4px; transition: all .15s;
+}
+#mob-draw-bar-back  { background: var(--s3); color: var(--text2); }
+#mob-draw-bar-back:hover  { background: var(--border2); }
+#mob-draw-bar-close { background: rgba(217,48,37,.1); color: var(--danger); }
+#mob-draw-bar-close:hover { background: var(--danger); color: #fff; }
+#mob-draw-bar-save  { background: var(--green); color: #fff; }
+#mob-draw-bar-save:hover  { background: #166038; }
+body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
+
+/* ── MODAL ELIMINAR CAPA UNIFICADO (desktop + móvil) ── */
+#mob-delete-confirm {
+  display: none;
+  position: fixed; inset: 0; z-index: 10100;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+#mob-delete-confirm.open { display: flex !important; }
+.mob-confirm-card {
+  background: var(--surface); border-radius: 14px; padding: 22px;
+  width: 100%; max-width: 360px; box-shadow: var(--shadow);
+  border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;
+}
+.mob-confirm-title { font-weight: 800; font-size: 16px; color: var(--text); }
+.mob-confirm-sub { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--muted); line-height: 1.5; }
+.mob-confirm-actions { display: flex; gap: 8px; }
+.mob-confirm-cancel {
+  flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer;
+  background: var(--s3); color: var(--text2); font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700;
+}
+.mob-confirm-delete {
+  flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer;
+  background: var(--danger); color: #fff; font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700;
+}
+
+/* Hide desktop query button on mobile; hide draw-hint on mobile */
+@media (max-width: 700px) {
+  #desktop-query-btn, #desktop-query-submenu { display: none !important; }
+  #draw-hint { display: none !important; }
+}
+
+/* ── DESKTOP GPS MEASURE BUTTON ── */
+#desktop-gps-btn {
+  position: absolute; bottom: 174px; right: 12px; z-index: 999;
+  width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow); backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; color: var(--text2);
+}
+#desktop-gps-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
+#desktop-gps-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47,111,222,.25), var(--shadow); }
+
+/* ── GPS MEASURE POPUP (desktop + mobile) ── */
+#desktop-gps-bar {
+  display: none;
+  position: fixed;
+  top: 60px; left: 50%; transform: translateX(-50%); z-index: 1050;
+  background: var(--glass); border: 1px solid rgba(47,111,222,.4);
+  border-radius: 12px; padding: 8px 10px;
+  box-shadow: var(--shadow); backdrop-filter: blur(16px);
+  flex-direction: column; gap: 8px;
+  width: 520px;
+}
+#desktop-gps-bar.open { display: flex !important; }
+@media (max-width: 700px) {
+  #desktop-gps-bar {
+    left: 12px; right: 12px; transform: none;
+    width: auto; gap: 6px;
+  }
+  /* Mobile GPS bar: top row = all buttons, bottom row = info */
+  #desktop-gps-bar .dsk-gps-bar-row {
+    flex-wrap: nowrap; gap: 5px; width: 100%;
+  }
+  /* Row 1: type buttons + control buttons */
+  #desktop-gps-bar .dsk-gps-bar-row:first-child {
+    display: flex; align-items: center; gap: 5px;
+  }
+  #desktop-gps-bar .dsk-gps-type-btn {
+    flex: 1; min-width: 0; height: 34px; font-size: 8.5px;
+  }
+  #desktop-gps-bar .dsk-gps-ctrl-btn {
+    padding: 0 10px; font-size: 8.5px; height: 34px; flex-shrink: 0;
+  }
+  #desktop-gps-bar #dsk-gps-reset-btn {
+    padding: 0 10px; font-size: 8.5px; height: 34px;
+  }
+  /* Ocultar labels de info de la fila de botones en móvil */
+  #desktop-gps-bar #desktop-gps-state-label,
+  #desktop-gps-bar #dsk-gps-pts-label {
     display: none;
-    position: fixed; inset: 0; z-index: 10100;
-    background: rgba(0,0,0,.5); backdrop-filter: blur(4px);
-    align-items: center; justify-content: center; padding: 20px;
   }
-  #mob-delete-confirm.open { display: flex !important; }
-  .mob-confirm-card {
-    background: var(--surface); border-radius: 14px; padding: 22px;
-    width: 100%; max-width: 320px; box-shadow: var(--shadow);
-    border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;
+  /* Medición: siempre visible en móvil, en su propia fila */
+  #desktop-gps-bar #desktop-gps-measure {
+    display: flex !important;
+    flex-direction: row; align-items: center; justify-content: center;
+    gap: 10px; font-size: 11px;
+    width: 100%; text-align: center; padding: 2px 0;
   }
-  .mob-confirm-title { font-weight: 800; font-size: 16px; color: var(--text); }
-  .mob-confirm-sub { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); line-height: 1.5; }
-  .mob-confirm-actions { display: flex; gap: 8px; }
-  .mob-confirm-cancel {
-    flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer;
-    background: var(--s3); color: var(--text2); font-family: 'Space Mono', monospace;
-    font-size: 11px; font-weight: 700;
+}
+.dsk-gps-bar-row { display: flex; align-items: center; gap: 6px; }
+.dsk-gps-type-btn {
+  flex: 1; height: 32px; border-radius: 8px; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  background: var(--s3); color: var(--text2); transition: all .15s;
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.dsk-gps-type-btn.active { background: var(--blue); color: #fff; }
+.dsk-gps-type-btn:disabled { opacity: .4; cursor: not-allowed; }
+#desktop-gps-state-label {
+  font-family: 'DM Sans', sans-serif; font-size: 9px;
+  color: var(--muted); text-align: center; letter-spacing: .06em;
+  text-transform: uppercase; min-width: 80px;
+}
+#desktop-gps-state-label.recording { color: var(--blue); }
+#desktop-gps-measure {
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--blue); flex: 1; text-align: center; min-height: 16px;
+}
+.dsk-gps-ctrl-btn {
+  height: 36px; padding: 0 12px; border-radius: 8px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; gap: 4px; transition: all .15s;
+  background: var(--s3); color: var(--text2); border: 1px solid var(--border2);
+}
+.dsk-gps-ctrl-btn:hover:not(:disabled) { background: var(--blue); color: #fff; border-color: var(--blue); }
+.dsk-gps-ctrl-btn:disabled { opacity: .35; cursor: not-allowed; }
+/* Highlight persistente cuando play/pause están activos */
+.dsk-gps-ctrl-btn.gps-active-state {
+  background: var(--blue) !important; color: #fff !important;
+  border-color: var(--blue) !important;
+  box-shadow: 0 0 0 2px rgba(47,111,222,.35) !important;
+}
+#dsk-gps-pts-label { font-family: 'DM Sans', sans-serif; font-size: 9px; color: var(--muted); min-width: 60px; text-align: center; }
+
+/* Mostrar label en móvil para claridad */
+@media (max-width: 700px) {
+  /* Mostrar fila de info contextual en móvil */
+  #dsk-gps-mob-info { display: block !important; }
+  /* Ocultar labels de info de la fila de botones en móvil */
+  #desktop-gps-bar #desktop-gps-state-label,
+  #desktop-gps-bar #dsk-gps-pts-label { display: none !important; }
+}
+
+/* ── ZOOM CONTROL: bottom-left, right of sidebar panel ── */
+.leaflet-bottom.leaflet-right .leaflet-control-zoom {
+  margin-right: 12px;
+  margin-bottom: 12px;
+}
+.leaflet-control-zoom a {
+  background: var(--glass) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--text2) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(14px);
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  font-size: 16px !important;
+  border-radius: 0 !important;
+}
+.leaflet-control-zoom a:first-child {
+  border-radius: 8px 8px 0 0 !important;
+}
+.leaflet-control-zoom a:last-child {
+  border-radius: 0 0 8px 8px !important;
+  border-top: none !important;
+}
+.leaflet-control-zoom a:hover {
+  background: var(--blue-lt) !important;
+  color: var(--blue) !important;
+}
+
+/* Hide Leaflet attribution */
+.leaflet-control-attribution { display: none !important; }
+
+@media (max-width: 700px) {
+  #toast {
+    bottom: 56px !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+    opacity: 0;
+    transition: opacity .3s !important;
   }
-  .mob-confirm-delete {
-    flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer;
-    background: var(--danger); color: #fff; font-family: 'Space Mono', monospace;
-    font-size: 11px; font-weight: 700;
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) !important;
   }
 }
 </style>
@@ -1139,8 +1517,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
           onchange="setRecintoYear(this.value)">
           <option value="2026">2026</option>
           <option value="2025">2025</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
         </select>
         <button class="layer-search-btn" id="search-recinto-btn" title="Buscar recinto">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -1214,24 +1590,99 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
       </a>
     </div>
   </div>
-  <button class="measure-btn" id="measure-area-btn" title="Medir área">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/>
-    </svg>
-  </button>
-  <button class="measure-btn" id="measure-line-btn" title="Medir distancia">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M2 12h20M2 12l4-4M2 12l4 4M22 12l-4-4M22 12l-4 4"/>
-    </svg>
-  </button>
-  <div id="measure-popup"><span id="measure-value"></span><span class="mp-sub" id="measure-sub"></span></div>
-  <button id="draw-btn" title="Dibujar área">
+
+  <div id="measure-popup"><div class="mp-text"><span id="measure-value"></span><span class="mp-sub" id="measure-sub"></span></div><button class="mp-close" id="measure-popup-close" title="Cerrar medición">✕</button></div>
+  <button id="draw-btn" title="Medir / Dibujar">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-      <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <polyline points="7 7 2 12 7 17"/>
+      <polyline points="17 7 22 12 17 17"/>
     </svg>
   </button>
+
+  <!-- Draw sub-buttons: área y línea (desktop) -->
+  <button id="draw-sub-area" title="Dibujar área (polígono)">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+    Área
+  </button>
+  <button id="draw-sub-line" title="Dibujar línea">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 12l4-4M3 12l4 4"/></svg>
+    Línea
+  </button>
+
+  <!-- Botón de consulta desktop (lupa) -->
+  <button id="desktop-query-btn" title="Consultas">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+  </button>
+  <div id="desktop-query-submenu">
+    <button class="dqs-btn" id="dqs-recinto" data-mode="recinto">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Recinto
+    </button>
+    <button class="dqs-btn" id="dqs-cultivo" data-mode="cultivo">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22V12M12 12C12 7 7 3 2 3c0 5 3 9 10 9zM12 12c0-5 5-9 10-9-0 5-3 9-10 9z"/></svg>
+      Cultivo
+    </button>
+  </div>
+
+  <!-- Botón herramienta selección (desktop) -->
+  <button id="select-tool-btn" title="Seleccionar geometrías para nuevo SHP">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="3"/>
+      <polyline points="7 13 10.5 16.5 17 9"/>
+    </svg>
+  </button>
+
   <div id="draw-hint">Clic para añadir vértices · Doble clic para cerrar</div>
+
+  <!-- Desktop GPS Measure button -->
+  <button id="desktop-gps-btn" title="Medición GPS">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+  </button>
+
+  <!-- Desktop GPS Measure Bar (popup) -->
+  <div id="desktop-gps-bar">
+    <!-- Fila 1: Tipo + botones de control (en móvil, todos en una fila) -->
+    <div class="dsk-gps-bar-row" id="dsk-gps-btn-row">
+      <button class="dsk-gps-type-btn active" id="dsk-gps-type-area">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        Área
+      </button>
+      <button class="dsk-gps-type-btn" id="dsk-gps-type-line">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h18"/></svg>
+        Línea
+      </button>
+      <!-- Info labels: visibles en escritorio dentro de la misma fila -->
+      <div id="desktop-gps-state-label">Sin iniciar</div>
+      <div id="dsk-gps-pts-label"></div>
+      <!-- Botones de control -->
+      <button class="dsk-gps-ctrl-btn" id="dsk-gps-play-btn" title="Iniciar / Reanudar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+
+      </button>
+      <button class="dsk-gps-ctrl-btn" id="dsk-gps-pause-btn" title="Pausar" disabled>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+
+      </button>
+      <button class="dsk-gps-ctrl-btn" id="dsk-gps-stop-btn" title="Finalizar y guardar" disabled>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        Guardar
+      </button>
+      <button class="mob-draw-action" id="dsk-gps-reset-btn" title="Borrar último punto (solo en pausa)" style="background:rgba(47,111,222,.1);color:var(--blue);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg>
+      </button>
+    </div>
+    <!-- Fila 2: medición + info contextual -->
+    <div id="desktop-gps-measure" style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Sans',monospace;font-size:11px;font-weight:700;color:var(--blue);min-height:16px;width:100%;text-align:center;"></div>
+    <!-- Fila info extra en móvil (estado + pts) -->
+    <div id="dsk-gps-mob-info" style="display:none;font-family:'DM Sans',monospace;font-size:9px;color:var(--muted);text-align:center;letter-spacing:.06em;text-transform:uppercase;"></div>
+  </div>
+
   <button id="geolocate-btn" title="Mi ubicación">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
@@ -1318,17 +1769,12 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
       <div class="mob-layer-row">
         <div class="mob-layer-color" style="background:var(--magenta);"></div>
         <div class="mob-layer-name" id="mob-recinto-year-label">Recintos 2026</div>
-        <select class="mob-year-sel" id="mob-recinto-year-sel" onchange="setRecintoYear(this.value)">
-          <option value="2026">2026</option>
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-        </select>
         <div class="mob-toggle-wrap">
           <input type="checkbox" id="mob-tog-recinto" checked>
           <label for="mob-tog-recinto"></label>
         </div>
       </div>
+
       <div class="mob-layer-row" style="margin-top:6px;">
         <div class="mob-layer-color" style="background:var(--green);"></div>
         <div class="mob-layer-name">Cultivo Declarado</div>
@@ -1348,7 +1794,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
         <span class="mob-layers-count" id="mob-layers-count">0</span>
       </div>
       <div id="mob-project-list">
-        <div id="mob-project-empty" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);text-align:center;padding:16px 0;">Sin capas de proyecto</div>
+        <div id="mob-project-empty" style="font-family:'DM Sans',monospace;font-size:9px;color:var(--muted);text-align:center;padding:16px 0;">Sin capas de proyecto</div>
       </div>
     </div>
   </div>
@@ -1379,85 +1825,55 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 <!-- Zona herramientas inferior izquierda -->
 <div id="mob-tools-zone" style="display:none;">
 
-  <!-- Botón 1: herramientas (llave inglesa) -->
+  <!-- Botón 1: medir/dibujar en pantalla -->
   <div style="position:relative;">
-    <button class="mob-tool-btn" id="mob-wrench-btn" title="Herramientas" aria-label="Herramientas">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+    <button class="mob-tool-btn" id="mob-draw-direct-btn" title="Medir / Dibujar" aria-label="Medir / Dibujar">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <polyline points="7 7 2 12 7 17"/>
+        <polyline points="17 7 22 12 17 17"/>
       </svg>
     </button>
-    <div id="mob-tools-submenu">
-      <button class="mob-submenu-btn" id="mob-sub-globe">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-          <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-        </svg>
-        Coordenadas
-      </button>
-      <button class="mob-submenu-btn" id="mob-sub-area">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/>
-        </svg>
-        Medir área
-      </button>
-      <button class="mob-submenu-btn" id="mob-sub-line">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 12h20M2 12l4-4M2 12l4 4M22 12l-4-4M22 12l-4 4"/>
-        </svg>
-        Medir distancia
-      </button>
-      <button class="mob-submenu-btn" id="mob-sub-draw">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-          <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-        </svg>
-        Dibujar área
-      </button>
-    </div>
   </div>
 
   <!-- Botón 2: medición GPS -->
-  <div style="position:relative;" id="mob-gpsmeasure-btn">
+  <div style="position:relative;">
     <button class="mob-tool-btn" id="mob-gpsmeasure-toggle" title="Medición GPS" aria-label="Medición GPS">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/>
         <circle cx="12" cy="10" r="3"/>
       </svg>
     </button>
-    <div id="mob-gpsmeasure-submenu">
-      <div class="mob-gps-state" id="mob-gps-state">Sin iniciar</div>
-      <!-- Selector tipo: área o línea -->
-      <div style="display:flex;background:var(--s3);border-radius:8px;padding:3px;gap:2px;margin-bottom:2px;">
-        <button id="mob-gps-type-area" style="flex:1;padding:5px 4px;border:none;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;background:var(--blue);color:#fff;transition:all .15s;">Área</button>
-        <button id="mob-gps-type-line" style="flex:1;padding:5px 4px;border:none;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;background:transparent;color:var(--muted);transition:all .15s;">Línea</button>
-      </div>
-      <div class="mob-gps-controls">
-        <button class="mob-gps-ctrl-btn" id="mob-gps-play-btn">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        </button>
-        <button class="mob-gps-ctrl-btn" id="mob-gps-pause-btn" disabled>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-        </button>
-        <button class="mob-gps-ctrl-btn" id="mob-gps-stop-btn" disabled>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-        </button>
-      </div>
-      <div id="mob-gps-pts-label" style="font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);text-align:center;"></div>
-    </div>
   </div>
 
-  <!-- Botón 3: consultas (lupa) -->
+  <!-- Botón 3: selección geometrías -->
+  <div style="position:relative;">
+    <button class="mob-tool-btn" id="mob-select-btn" title="Seleccionar geometrías" aria-label="Seleccionar geometrías">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="3"/>
+        <polyline points="7 13 10.5 16.5 17 9"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Botón 4: consulta coordenadas (globo) -->
+  <div style="position:relative;">
+    <button class="mob-tool-btn" id="mob-globe-direct-btn" title="Coordenadas" aria-label="Coordenadas">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Botón 5: consultas SIGPAC (lupa) -->
   <div style="position:relative;" id="mob-query-btn">
     <button class="mob-tool-btn" id="mob-query-toggle" title="Consultas" aria-label="Consultas">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
     </button>
     <div id="mob-query-submenu">
-      <button class="mob-query-opt" id="mob-qs-none" data-mode="none">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-        Sin consulta
-      </button>
       <button class="mob-query-opt" id="mob-qs-recinto" data-mode="recinto">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
         Recinto
@@ -1466,10 +1882,80 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22V12M12 12C12 7 7 3 2 3c0 5 3 9 10 9zM12 12c0-5 5-9 10-9-0 5-3 9-10 9z"/></svg>
         Cultivo
       </button>
+      <button class="mob-query-opt" id="mob-qs-none" data-mode="none" style="display:none;"></button>
+    </div>
+  </div>
+
+
+  <!-- Hidden compat elements for old JS references -->
+  <div style="display:none;">
+    <div id="mob-gpsmeasure-btn"></div>
+    <button id="mob-wrench-btn"></button>
+    <div id="mob-tools-submenu">
+      <button class="mob-submenu-btn" id="mob-sub-globe"></button>
+      <button class="mob-submenu-btn" id="mob-sub-area"></button>
+      <button class="mob-submenu-btn" id="mob-sub-line"></button>
+      <button class="mob-submenu-btn" id="mob-sub-draw"></button>
+    </div>
+    <!-- Old GPS submenu elements kept for JS compat -->
+    <div id="mob-gpsmeasure-submenu">
+      <div class="mob-gps-state" id="mob-gps-state">Sin iniciar</div>
+      <div><button id="mob-gps-type-area"></button><button id="mob-gps-type-line"></button></div>
+      <div class="mob-gps-controls">
+        <button class="mob-gps-ctrl-btn" id="mob-gps-play-btn"></button>
+        <button class="mob-gps-ctrl-btn" id="mob-gps-pause-btn" disabled></button>
+        <button class="mob-gps-ctrl-btn" id="mob-gps-stop-btn" disabled></button>
+      </div>
+      <div id="mob-gps-pts-label"></div>
     </div>
   </div>
 
 </div>
+
+<!-- Barra de dibujo móvil (aparece en la parte superior del mapa) -->
+<div id="mob-draw-bar">
+  <div class="mob-draw-bar-row">
+    <button class="mob-draw-type-btn active" id="mob-draw-bar-area">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+      Área
+    </button>
+    <button class="mob-draw-type-btn" id="mob-draw-bar-line">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h18"/></svg>
+      Línea
+    </button>
+    <button class="mob-draw-action" id="mob-draw-bar-back" title="Borrar último punto">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg>
+    </button>
+    <button class="mob-draw-action" id="mob-draw-bar-close" title="Cancelar dibujo">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button class="mob-draw-action" id="mob-draw-bar-save" title="Guardar y añadir a capas">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Guardar
+    </button>
+  </div>
+  <div id="mob-draw-measure"></div>
+</div>
+
+<!-- Barra de selección (escritorio + móvil) -->
+<div id="sel-tool-bar">
+  <div class="sel-bar-row">
+    <label class="sel-bar-label">Capa:</label>
+    <select id="sel-tool-layer" class="sel-bar-select"></select>
+    <span id="sel-tool-count" class="sel-bar-count">0 seleccionadas</span>
+    <button class="mob-draw-action" id="sel-tool-back" title="Deshacer última selección">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg>
+    </button>
+    <button class="mob-draw-action" id="sel-tool-close" title="Cancelar">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button class="mob-draw-action" id="sel-tool-save" title="Guardar selección como capa">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Guardar
+    </button>
+  </div>
+</div>
+
 
 <!-- Confirm delete modal móvil -->
 <div id="mob-delete-confirm">
@@ -1493,12 +1979,12 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
     <div id="authViewUser" style="display:none;">
       <div class="auth-user-info">
         <div>
-          <span style="font-size:9px;color:var(--muted);font-family:'Space Mono';display:block;">CONECTADO COMO</span>
+          <span style="font-size:9px;color:var(--muted);font-family:'DM Sans';display:block;">CONECTADO COMO</span>
           <span class="auth-user-email" id="authActiveEmail">usuario@correo.com</span>
         </div>
         <span style="font-size:18px;">☁️</span>
       </div>
-      <p style="font-size:10px;color:var(--muted);line-height:1.4;margin-bottom:12px;font-family:'Space Mono';">
+      <p style="font-size:10px;color:var(--muted);line-height:1.4;margin-bottom:12px;font-family:'DM Sans';">
         Tus capas SHP, KML y XML del proyecto se sincronizarán y descargarán automáticamente en este y cualquier otro dispositivo en el que inicies sesión.
       </p>
       <div class="auth-actions-row">
@@ -1521,7 +2007,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
           <div class="auth-actions-row">
             <button class="auth-main-btn" id="authPrimaryBtn">Iniciar Sesión</button>
             <a class="auth-sub-link" id="authResetPassword" style="color:var(--muted);font-size:10px;">¿Olvidaste tu contraseña?</a>
-            <p style="font-size:12px;color:var(--muted);font-family:'Space Mono';text-align:center;margin-top:4px;line-height:1.4;">Las cuentas son creadas por el administrador. Si no tienes acceso, contacta con él. sgonzalez@geacam.com</p>
+            <p style="font-size:12px;color:var(--muted);font-family:'DM Sans';text-align:center;margin-top:4px;line-height:1.4;">Las cuentas son creadas por el administrador. Si no tienes acceso, contacta con él. sgonzalez@geacam.com</p>
           </div>
         </div>
       </form>
@@ -1682,8 +2168,6 @@ document.addEventListener('DOMContentLoaded', () => {
 const RECINTOS_WMS = {
   '2026': 'https://geoservicios.castillalamancha.es/arcgis/services/Vector/Recintos_sigpac/MapServer/WMSServer',
   '2025': 'https://geoservicios.castillalamancha.es/arcgis/services/Vector/Recintos_sigpac_2025/MapServer/WMSServer',
-  '2024': 'https://geoservicios.castillalamancha.es/arcgis/services/Vector/Recintos_sigpac_2024/MapServer/WMSServer',
-  '2023': 'https://geoservicios.castillalamancha.es/arcgis/services/Vector/Recintos_sigpac_2023/MapServer/WMSServer',
 };
 const CULTIVO_WMS   = 'https://sigpac-hubcloud.es/wms';
 const CULTIVO_LAYER = 'cultivo_declarado';
@@ -1905,7 +2389,7 @@ function buildCamIcon(photoList, selectedIdx) {
     <circle cx="${CX+13}" cy="${CY-14}" r="${BADGE_R}"
       fill="${isSelected ? CAM_ORANGE : CAM_BLUE}" stroke="white" stroke-width="1.2"/>
     <text x="${CX+13}" y="${CY-14}" text-anchor="middle" dominant-baseline="central"
-      font-family="monospace" font-size="8" font-weight="bold" fill="white">${photoList.length}</text>` : '';
+      font-family="DM Sans, sans-serif" font-size="8" font-weight="bold" fill="white">${photoList.length}</text>` : '';
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg"
     width="80" height="80" viewBox="0 0 80 80"
@@ -2387,8 +2871,42 @@ function showQueryPopupCultivo(d, latlng) {
   positionQueryPopup(latlng);
 }
 
+// Obtiene la geometría de un recinto SIGPAC via ArcGIS REST identify
+// (el WMS de ArcGIS CLM no devuelve coordenadas en GetFeatureInfo GML)
+async function fetchRecintoGeom(latlng, size, bounds) {
+  const mapPt = map.options.crs.project(latlng);
+  const sw    = map.options.crs.project(bounds.getSouthWest());
+  const ne    = map.options.crs.project(bounds.getNorthEast());
+  const tol   = Math.max(1, (ne.x - sw.x) / size.x * 6);
+  const identifyUrl = WMS_URL.replace('/WMSServer', '/identify').replace('/services/', '/rest/services/');
+  const rp = new URLSearchParams({
+    f: 'json',
+    geometry: JSON.stringify({ x: mapPt.x, y: mapPt.y, spatialReference: { wkid: 102100 } }),
+    geometryType: 'esriGeometryPoint', inSR: '102100',
+    spatialRel: 'esriSpatialRelIntersects',
+    outFields: '*', returnGeometry: 'true',
+    tolerance: tol,
+    mapExtent: `${sw.x},${sw.y},${ne.x},${ne.y}`,
+    imageDisplay: `${size.x},${size.y},96`,
+    layers: 'all:0',
+  });
+  const rj  = await (await fetch(`${identifyUrl}?${rp}`)).json();
+  const r0  = (rj.results || [])[0];
+  if (!r0?.geometry?.rings?.[0]) return null;
+  return r0.geometry.rings[0].map(p => {
+    const x = p[0], y = p[1];
+    return Math.abs(x) > 180 || Math.abs(y) > 90
+      ? L.CRS.EPSG3857.unproject(L.point(x, y))
+      : L.latLng(y, x);
+  });
+}
+
 map.on('mousemove', e => {
-  if (queryMode === 'none') return;
+  const selToolActive = (typeof window._selActive !== 'undefined' && window._selActive);
+  const hoverMode = queryMode !== 'none' ? queryMode
+    : (selToolActive && typeof window._selSource !== 'undefined' && (window._selSource === 'recinto' || window._selSource === 'cultivo')) ? window._selSource
+    : null;
+  if (!hoverMode) return;
   if (map.getZoom() < 12) return;
   clearTimeout(hoverDebounce);
   hoverDebounce = setTimeout(async () => {
@@ -2400,14 +2918,21 @@ map.on('mousemove', e => {
     if (key === lastHoverKey) return;
     lastHoverKey = key;
 
-    const wmsUrl = queryMode === 'recinto' ? WMS_URL : CULTIVO_WMS;
-    const params = buildGFIParams(queryMode, point, size, bounds, 'application/vnd.ogc.gml');
-
     try {
-      const res    = await fetch(`${wmsUrl}?${params}`);
-      const text   = await res.text();
-      const coords = parseGmlCoords(text);
-      if (coords && coords.length >= 3) drawHoverHighlight(coords, queryMode);
+      let coords = null;
+
+      if (hoverMode === 'recinto') {
+        // Recintos: el WMS no devuelve GML, usar ArcGIS REST identify
+        coords = await fetchRecintoGeom(e.latlng, size, bounds);
+      } else {
+        // Cultivos: usar GML via WMS
+        const wmsUrl = CULTIVO_WMS;
+        const params = buildGFIParams(hoverMode, point, size, bounds, 'application/vnd.ogc.gml');
+        const res  = await fetch(`${wmsUrl}?${params}`);
+        coords = parseGmlCoords(await res.text());
+      }
+
+      if (coords && coords.length >= 3) drawHoverHighlight(coords, hoverMode);
       else clearHoverHighlight();
     } catch(_) { clearHoverHighlight(); }
   }, 80);
@@ -2419,6 +2944,18 @@ function drawHoverHighlight(coords, mode) {
   clearHoverHighlight();
   const color = mode === 'cultivo' ? 'rgba(30,138,76,0.18)' : 'rgba(47,111,222,0.14)';
   const stroke= mode === 'cultivo' ? 'rgba(30,138,76,0.5)'  : 'rgba(47,111,222,0.4)';
+  // No pintar hover si las coords corresponden a un recinto ya seleccionado
+  const _sf = window._selFeatures;
+  if (_sf && _sf.length) {
+    const center = coords.reduce((acc, p) => ({ lat: acc.lat + p.lat / coords.length, lng: acc.lng + p.lng / coords.length }), { lat: 0, lng: 0 });
+    const alreadySel = _sf.some(s => {
+      try {
+        const b = s.hl.getBounds();
+        return b && b.contains(L.latLng(center.lat, center.lng));
+      } catch(_) { return false; }
+    });
+    if (alreadySel) return;
+  }
   hoverHighlight = L.polygon(coords, {
     color: stroke, weight: 1.5, dashArray: '4,3',
     fillColor: color, fillOpacity: 1, interactive: false,
@@ -2444,22 +2981,42 @@ function clearHighlight() {
 
 function parseGmlCoords(gml) {
   try {
-    const doc   = new DOMParser().parseFromString(gml, 'text/xml');
-    const nodes = doc.querySelectorAll('coordinates, posList');
-    for (const node of nodes) {
-      const raw = node.textContent.trim().replace(/,/g, ' ').split(/\s+/);
-      if (raw.length < 6) continue;
+    const doc = new DOMParser().parseFromString(gml, 'text/xml');
+
+    // Helper: convierte array plano de números en LatLng[]
+    function flatToLatLngs(nums) {
       const pts = [];
-      for (let i = 0; i + 1 < raw.length; i += 2) {
-        const x = parseFloat(raw[i]), y = parseFloat(raw[i+1]);
+      for (let i = 0; i + 1 < nums.length; i += 2) {
+        const x = nums[i], y = nums[i + 1];
         if (isNaN(x) || isNaN(y)) continue;
         const ll = Math.abs(x) > 180
           ? L.CRS.EPSG3857.unproject(L.point(x, y))
           : L.latLng(y, x);
         pts.push(ll);
       }
+      return pts;
+    }
+
+    // 1) <coordinates> (GML 2) y <posList> (GML 3)
+    const nodes = doc.querySelectorAll('coordinates, posList');
+    for (const node of nodes) {
+      const raw  = node.textContent.trim().replace(/,/g, ' ').split(/\s+/).map(Number);
+      if (raw.length < 6) continue;
+      const pts = flatToLatLngs(raw);
       if (pts.length >= 3) return pts;
     }
+
+    // 2) <pos> individuales (GML 3 — algunos WMS devuelven un <pos> por vértice)
+    const posNodes = doc.querySelectorAll('pos');
+    if (posNodes.length >= 3) {
+      const nums = [];
+      posNodes.forEach(n => {
+        n.textContent.trim().split(/\s+/).forEach(v => nums.push(Number(v)));
+      });
+      const pts = flatToLatLngs(nums);
+      if (pts.length >= 3) return pts;
+    }
+
   } catch(_) {}
   return null;
 }
@@ -2759,14 +3316,14 @@ function featureCentroid(feature) {
 
 function buildPopupHtml(properties) {
   if (!properties) return '<i style="font-size:10px;color:#aaa">Sin atributos</i>';
-  let html = '<div style="font-family:monospace;font-size:10px;max-height:160px;overflow:auto;padding:2px 0;">';
+  let html = '<div style="font-family:DM Sans,sans-serif;font-size:10px;max-height:160px;overflow:auto;padding:2px 0;">';
   for (const k in properties) html += `<b>${esc(k)}:</b> ${esc(String(properties[k] ?? ''))}<br>`;
   html += '</div>';
   return html;
 }
 
 // ── Agregar Capa Vectorial (Modificada con integración de base de datos) ──
-function addShpLayer(geojson, name, cloudId = null, shouldSaveToCloud = false) {
+function addShpLayer(geojson, name, cloudId = null, shouldSaveToCloud = false, shouldZoom = true) {
   const id    = cloudId || Math.random().toString(36).slice(2, 11);
   
   if (shpLayers.some(l => l.id === id)) return;
@@ -2845,10 +3402,12 @@ function addShpLayer(geojson, name, cloudId = null, shouldSaveToCloud = false) {
   const obj = { id, name, geojson, leafletLayer, polyLayer, pinLayer, color, visible: true, featureCount };
   shpLayers.push(obj);
 
-  try {
-    const bounds = polyLayer.getBounds();
-    if (bounds.isValid()) map.fitBounds(bounds, { padding: [60, 60] });
-  } catch(_) {}
+  if (shouldZoom) {
+    try {
+      const bounds = polyLayer.getBounds();
+      if (bounds.isValid()) map.fitBounds(bounds, { padding: [60, 60] });
+    } catch(_) {}
+  }
 
   addShpToUnifiedList(obj);
   updateCounter();
@@ -2878,7 +3437,10 @@ function addShpToUnifiedList(layer) {
       <div class="layer-cloud-off" title="Capa no sincronizada (sólo local)" style="display:${layer.synced === false ? 'flex' : 'none'};">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l20 20"/><path d="M5.78 5.78A7 7 0 0 0 9 19h8.5a4.5 4.5 0 0 0 1.5-.27"/><path d="M9.5 6.5A7 7 0 0 1 22 13a4.5 4.5 0 0 1-1.5 3.5"/></svg>
       </div>
-      <div class="shp-color-dot" title="Cambiar color" style="background:${layer.color}">
+      <button class="shp-edit-btn" title="Editar nombre y color">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button>
+      <div class="shp-color-dot" style="background:${layer.color}">
         <input class="shp-color-input" type="color" value="${layer.color}">
       </div>
       <div class="shp-dl-wrap">
@@ -2896,18 +3458,9 @@ function addShpToUnifiedList(layer) {
       <button class="item-del" title="Eliminar">✕</button>
     </div>`;
 
-  const dot     = item.querySelector('.shp-color-dot');
-  const colorIn = item.querySelector('.shp-color-input');
-  dot.addEventListener('click', e => { e.stopPropagation(); colorIn.click(); });
-  colorIn.addEventListener('input', e => {
-    layer.color = e.target.value;
-    dot.style.background = e.target.value;
-    layer.leafletLayer.setStyle({ color: e.target.value, fillColor: e.target.value });
-    
-    // Si cambia el color y hay sincronización activa, se actualiza en Firestore
-    if (isFirebaseActive()) {
-      updateShpColorInCloud(layer.id, layer.color);
-    }
+  item.querySelector('.shp-edit-btn').addEventListener('click', e => {
+    e.stopPropagation();
+    openLayerEditModal(layer, item);
   });
 
   item.querySelector('.shp-vis').addEventListener('change', e => {
@@ -2946,22 +3499,21 @@ function addShpToUnifiedList(layer) {
 
   item.querySelector('.item-del').addEventListener('click', e => {
     e.stopPropagation();
-    if (!confirm(`¿Eliminar la capa "${layer.name}"?\n\nEsta acción no se puede deshacer y la capa también se borrará de la nube si está sincronizada.`)) {
-      return;
+    const doDelete = () => {
+      map.removeLayer(layer.polyLayer);
+      map.removeLayer(layer.pinLayer);
+      if (layer.leafletLayer._onZoom) map.off('zoomend', layer.leafletLayer._onZoom);
+      shpLayers.splice(shpLayers.findIndex(l => l.id === layer.id), 1);
+      item.remove();
+      if (isFirebaseActive()) deleteShpFromCloud(layer.id);
+      toast(`Capa "${layer.name}" eliminada`);
+      updateCounter();
+    };
+    if (typeof window.showDeleteConfirm === 'function') {
+      window.showDeleteConfirm(layer.name, doDelete);
+    } else if (confirm(`¿Eliminar la capa "${layer.name}"?\n\nEsta acción no se puede deshacer y la capa también se borrará de la nube si está sincronizada.`)) {
+      doDelete();
     }
-    map.removeLayer(layer.polyLayer);
-    map.removeLayer(layer.pinLayer);
-    if (layer.leafletLayer._onZoom) map.off('zoomend', layer.leafletLayer._onZoom);
-    shpLayers.splice(shpLayers.findIndex(l => l.id === layer.id), 1);
-    item.remove();
-
-    // Si Firebase está activo, eliminar de la nube
-    if (isFirebaseActive()) {
-      deleteShpFromCloud(layer.id);
-    }
-
-    toast(`Capa "${layer.name}" eliminada`);
-    updateCounter();
   });
 
   list.appendChild(item);
@@ -3294,7 +3846,7 @@ function buildTrackIcon() {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28" style="overflow:visible;display:block;">
     <path d="M11 0C5 0 1 5 1 10c0 7 10 18 10 18S21 17 21 10C21 5 17 0 11 0z" fill="#e06c00" stroke="white" stroke-width="1.5"/>
     <circle cx="11" cy="10" r="4" fill="white" opacity="0.9"/>
-    <text x="11" y="13" text-anchor="middle" font-family="monospace" font-size="5.5" font-weight="bold" fill="#e06c00">GPS</text>
+    <text x="11" y="13" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="5.5" font-weight="bold" fill="#e06c00">GPS</text>
   </svg>`;
   return L.divIcon({ html: svg, className: 'cam-wrap', iconSize: [22, 28], iconAnchor: [11, 28], popupAnchor: [0, -30] });
 }
@@ -3316,11 +3868,11 @@ function processTxtAsTrama(files) {
       marker.on('click', ev2 => {
         L.DomEvent.stopPropagation(ev2);
         const utm = utmLabel(info.lat, info.lng);
-        popup.setContent(`<div style="font-family:monospace;font-size:11px;padding:8px;">
+        popup.setContent(`<div style="font-family:DM Sans,sans-serif;font-size:11px;padding:8px;">
           <div style="font-weight:700;margin-bottom:4px;">📡 ${esc(info.fileName)}</div>
           <div>${[info.fecha,info.hora].filter(Boolean).join(' ')}</div>
           <div>${info.lat.toFixed(6)}, ${info.lng.toFixed(6)}</div>
-          <div style="color:#e06c00;">${utm}</div></div>`);
+          <div style="color:var(--blue);">${utm}</div></div>`);
         popup.setLatLng([info.lat, info.lng]); popup.openOn(map);
       });
       tracks.push(info);
@@ -3348,7 +3900,7 @@ function addTrackToUnified(info) {
     <div style="width:32px;height:32px;border-radius:5px;background:var(--s3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;">📡</div>
     <div class="item-info">
       <div class="item-name">${esc(info.fileName)}</div>
-      <div class="item-sub" style="color:#e06c00;">${dt} · ${utm}</div>
+      <div class="item-sub" style="color:var(--blue);">${dt} · ${utm}</div>
     </div>
     <div class="item-actions"><button class="item-del" title="Eliminar">✕</button></div>`;
   card.querySelector('.photo-vis').addEventListener('change', e => {
@@ -3520,7 +4072,7 @@ let toastTimer;
 function toast(msg, type) {
   const el = document.getElementById('toast');
   el.textContent = msg; el.className = 'show' + (type ? ' '+type : '');
-  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.className = '', 3200);
+  clearTimeout(toastTimer); const _dur = window.innerWidth <= 700 ? 1800 : 3200; toastTimer = setTimeout(() => el.className = '', _dur);
 }
 
 const fileInput = document.getElementById('fileInput');
@@ -3547,26 +4099,40 @@ document.getElementById('map').addEventListener('click', () => {
 // ═══════════════════════════════════════════════════════════════
 // DRAW TOOL
 // ═══════════════════════════════════════════════════════════════
-const drawBtn  = document.getElementById('draw-btn');
-const drawHint = document.getElementById('draw-hint');
+const drawBtn      = document.getElementById('draw-btn');
+const drawSubArea  = document.getElementById('draw-sub-area'); // legacy, oculto vía CSS
+const drawSubLine  = document.getElementById('draw-sub-line'); // legacy, oculto vía CSS
+const drawHint     = document.getElementById('draw-hint');
 let drawActive       = false;
+let drawMode         = 'area'; // 'area' | 'line'
 let drawPoints       = [];
 let drawMarkers      = [];
 let drawPoly         = null;
 let drawPreview      = null;
 let drawCount        = 0;
-let drawSavedMode    = null;
+
+function setDrawMode(mode) {
+  if (drawActive && drawPoints.length > 0) return; // no cambiar tras empezar a marcar puntos
+  drawMode = mode;
+  // Sync barra unificada
+  const a = document.getElementById('mob-draw-bar-area');
+  const l = document.getElementById('mob-draw-bar-line');
+  if (a) a.classList.toggle('active', mode === 'area');
+  if (l) l.classList.toggle('active', mode === 'line');
+}
 
 function startDraw() {
   if (typeof globeActive !== 'undefined' && globeActive) stopGlobeTool();
   if (measureMode) stopMeasure();
+  if (queryMode !== 'none') applyQueryMode('none');
   drawActive = true;
   drawPoints = []; drawMarkers = []; drawPoly = null; drawPreview = null;
   drawBtn.classList.add('active');
+  drawHint.textContent = drawMode === 'area'
+    ? 'Clic para añadir vértices · Doble clic para cerrar · Retroceso = borrar último'
+    : 'Clic para añadir puntos · Doble clic para finalizar · Retroceso = borrar último';
   drawHint.classList.add('show');
   map.getContainer().style.cursor = 'crosshair';
-  drawSavedMode = queryMode;
-  queryMode = 'none';
   map.on('click',     onDrawClick);
   map.on('mousemove', onDrawMove);
   map.on('dblclick',  onDrawFinish);
@@ -3584,24 +4150,71 @@ function stopDraw(save) {
   if (drawPreview) { map.removeLayer(drawPreview); drawPreview = null; }
   drawMarkers.forEach(m => map.removeLayer(m));
   drawMarkers = [];
-  if (drawSavedMode !== null) { queryMode = drawSavedMode; drawSavedMode = null; }
+  hideMeasurePopup();
+  // Cerrar barra unificada si está abierta
+  const bar = document.getElementById('mob-draw-bar');
+  if (bar && !save) bar.classList.remove('open');
 
-  if (save && drawPoints.length >= 3) {
-    drawCount++;
-    const name = `Área dibujada ${drawCount}`;
-    const ring = [...drawPoints.map(p => [p.lng, p.lat]), [drawPoints[0].lng, drawPoints[0].lat]];
-    const areaM2  = ringAreaSqM(drawPoints);
-    const areaHa  = (areaM2 / 10000).toFixed(4);
-    const geojson = {
-      type: 'FeatureCollection',
-      features: [{ type: 'Feature', geometry: {
-        type: 'Polygon', coordinates: [ring]
-      }, properties: { nombre: name, area_m2: Math.round(areaM2), area_ha: areaHa } }]
-    };
-    addShpLayer(geojson, name, null, true);
-    toast(`"${name}" añadida · ${areaHa} ha`, 'ok');
+  if (save) {
+    if (drawMode === 'area' && drawPoints.length >= 3) {
+      drawCount++;
+      const name = `Área dibujada ${drawCount}`;
+      const ring = [...drawPoints.map(p => [p.lng, p.lat]), [drawPoints[0].lng, drawPoints[0].lat]];
+      const areaM2  = ringAreaSqM(drawPoints);
+      const areaHa  = (areaM2 / 10000).toFixed(4);
+      const geojson = {
+        type: 'FeatureCollection',
+        features: [{ type: 'Feature', geometry: {
+          type: 'Polygon', coordinates: [ring]
+        }, properties: { nombre: name, area_m2: Math.round(areaM2), area_ha: areaHa } }]
+      };
+      addShpLayer(geojson, name, null, true);
+      toast(`"${name}" añadida · ${areaHa} ha`, 'ok');
+    } else if (drawMode === 'line' && drawPoints.length >= 2) {
+      drawCount++;
+      const name = `Línea dibujada ${drawCount}`;
+      const coords = drawPoints.map(p => [p.lng, p.lat]);
+      let totalM = 0;
+      for (let i = 1; i < drawPoints.length; i++) totalM += haversineM(drawPoints[i-1], drawPoints[i]);
+      const geojson = {
+        type: 'FeatureCollection',
+        features: [{ type: 'Feature', geometry: {
+          type: 'LineString', coordinates: coords
+        }, properties: { nombre: name, distancia_m: Math.round(totalM), distancia: fmtDist(totalM) } }]
+      };
+      addShpLayer(geojson, name, null, true);
+      toast(`"${name}" añadida · ${fmtDist(totalM)}`, 'ok');
+    }
   }
   drawPoints = [];
+}
+
+function drawUndoLastPoint() {
+  if (!drawActive || drawPoints.length === 0) return;
+  map.removeLayer(drawMarkers.pop());
+  drawPoints.pop();
+  refreshDrawLine();
+  refreshDrawMeasure();
+}
+
+function refreshDrawMeasure() {
+  if (!drawActive) return;
+  let label = '';
+  if (drawMode === 'area' && drawPoints.length >= 3) {
+    const m2 = ringAreaSqM(drawPoints);
+    label = fmtArea(m2);
+    showMeasurePopup(label, drawPoints.length + ' vértices');
+  } else if (drawMode === 'line' && drawPoints.length >= 2) {
+    let total = 0;
+    for (let i=1; i<drawPoints.length; i++) total += haversineM(drawPoints[i-1], drawPoints[i]);
+    label = fmtDist(total);
+    showMeasurePopup(label, drawPoints.length - 1 + ' segmento' + (drawPoints.length > 2 ? 's' : ''));
+  } else {
+    hideMeasurePopup();
+  }
+  // Actualizar también la barra móvil si está abierta
+  const mobMeasure = document.getElementById('mob-draw-measure');
+  if (mobMeasure) mobMeasure.textContent = label;
 }
 
 function onDrawClick(e) {
@@ -3609,42 +4222,55 @@ function onDrawClick(e) {
   drawPoints.push(e.latlng);
 
   const marker = L.circleMarker(e.latlng, {
-    radius: 5, color: '#e06c00', fillColor: '#e06c00',
+    radius: 5, color: '#2f6fde', fillColor: '#2f6fde',
     fillOpacity: 1, weight: 2, interactive: false
   }).addTo(map);
   drawMarkers.push(marker);
   refreshDrawLine();
+  refreshDrawMeasure();
 }
 
 function onDrawMove(e) {
   if (!drawActive || drawPoints.length === 0) return;
   if (drawPreview) map.removeLayer(drawPreview);
   const pts = [...drawPoints, e.latlng];
-  if (drawPoints.length >= 2) pts.push(drawPoints[0]);
+  if (drawMode === 'area' && drawPoints.length >= 2) pts.push(drawPoints[0]);
   drawPreview = L.polyline(pts, {
-    color: '#e06c00', weight: 1.5, dashArray: '5,4', opacity: 0.7, interactive: false
+    color: '#2f6fde', weight: 1.5, dashArray: '5,4', opacity: 0.7, interactive: false
   }).addTo(map);
 }
 
 function onDrawFinish(e) {
   e.originalEvent._drawSkip = true;
+  // Cerrar la barra unificada igual que el botón Guardar
+  const bar = document.getElementById('mob-draw-bar');
+  if (bar) bar.classList.remove('open');
+  const mdd = document.getElementById('mob-draw-direct-btn');
+  if (mdd) mdd.classList.remove('active');
   stopDraw(true);
+  if (typeof syncMobProjectLayers === 'function') syncMobProjectLayers();
 }
 
 function refreshDrawLine() {
   if (drawPoly) map.removeLayer(drawPoly);
   if (drawPoints.length < 2) return;
-  const pts = drawPoints.length >= 3
+  const pts = (drawMode === 'area' && drawPoints.length >= 3)
     ? [...drawPoints, drawPoints[0]]
     : drawPoints;
   drawPoly = L.polyline(pts, {
-    color: '#e06c00', weight: 2.5, opacity: 0.9, interactive: false
+    color: '#2f6fde', weight: 2.5, opacity: 0.9, interactive: false
   }).addTo(map);
 }
 
 drawBtn.addEventListener('click', () => {
-  if (drawActive) stopDraw(false);
-  else startDraw();
+  // Usar la barra unificada (misma UX en escritorio y móvil)
+  if (drawActive) {
+    if (typeof window.closeDrawBar === 'function') window.closeDrawBar();
+    else stopDraw(false);
+  } else {
+    if (typeof window.openDrawBar === 'function') window.openDrawBar();
+    else startDraw();
+  }
 });
 
 // ── ÁREA DE UN POLÍGONO ──
@@ -3682,8 +4308,8 @@ function fmtDist(m) {
 }
 
 // ── MEASURE TOOLS ──
-const measureAreaBtn = document.getElementById('measure-area-btn');
-const measureLineBtn = document.getElementById('measure-line-btn');
+const measureAreaBtn = document.getElementById('measure-area-btn'); // removed from HTML
+const measureLineBtn = document.getElementById('measure-line-btn'); // removed from HTML
 const measurePopup   = document.getElementById('measure-popup');
 const measureValue   = document.getElementById('measure-value');
 const measureSub     = document.getElementById('measure-sub');
@@ -3695,32 +4321,24 @@ let measureLine    = null;
 let measurePreview = null;
 let measureSavedQM = null;
 
-function showMeasurePopup(main, sub, latlng) {
-  const cp = map.latLngToContainerPoint(latlng);
-  const mapRect = document.getElementById('map').getBoundingClientRect();
+function showMeasurePopup(main, sub) {
   measureValue.textContent = main;
   measureSub.textContent   = sub || '';
-  measurePopup.style.display = 'block';
-  const W = measurePopup.offsetWidth || 160;
-  const H = measurePopup.offsetHeight || 50;
-  let x = mapRect.left + cp.x - W/2;
-  let y = mapRect.top  + cp.y - H - 48;
-  if (y < mapRect.top + 8) y = mapRect.top + cp.y + 20;
-  if (x < 8) x = 8;
-  if (x + W > window.innerWidth - 8) x = window.innerWidth - W - 8;
-  measurePopup.style.left = x + 'px';
-  measurePopup.style.top  = y + 'px';
+  measurePopup.classList.add('visible');
 }
-function hideMeasurePopup() { measurePopup.style.display = 'none'; }
+function hideMeasurePopup() { measurePopup.classList.remove('visible'); }
 
 function startMeasure(mode) {
   if (typeof globeActive !== 'undefined' && globeActive) stopGlobeTool();
-  if (drawActive) stopDraw(false);
+  if (drawActive) {
+    if (typeof window.closeDrawBar === 'function') window.closeDrawBar();
+    else stopDraw(false);
+  }
   if (measureMode === mode) { stopMeasure(); return; }
   stopMeasure();
+  if (queryMode !== 'none') applyQueryMode('none');
   measureMode = mode;
   measurePoints = []; measureMarkers = [];
-  measureSavedQM = queryMode; queryMode = 'none';
   measureAreaBtn.classList.toggle('active', mode === 'area');
   measureLineBtn.classList.toggle('active', mode === 'line');
   map.getContainer().style.cursor = 'crosshair';
@@ -3737,8 +4355,8 @@ function startMeasure(mode) {
 function stopMeasure() {
   if (!measureMode) return;
   measureMode = null;
-  measureAreaBtn.classList.remove('active');
-  measureLineBtn.classList.remove('active');
+  if (measureAreaBtn) measureAreaBtn.classList.remove('active');
+  if (measureLineBtn) measureLineBtn.classList.remove('active');
   map.getContainer().style.cursor = '';
   drawHint.textContent = 'Clic para añadir vértices · Doble clic para cerrar';
   drawHint.classList.remove('show');
@@ -3749,7 +4367,6 @@ function stopMeasure() {
   if (measurePreview) { map.removeLayer(measurePreview); measurePreview = null; }
   measureMarkers.forEach(m => map.removeLayer(m));
   measureMarkers = []; measurePoints = [];
-  if (measureSavedQM !== null) { queryMode = measureSavedQM; measureSavedQM = null; }
   hideMeasurePopup();
 }
 
@@ -3784,13 +4401,8 @@ function onMeasureFinish(e) {
   if (measurePreview) { map.removeLayer(measurePreview); measurePreview = null; }
   map.getContainer().style.cursor = '';
   drawHint.classList.remove('show');
-  if (measureSavedQM !== null) { queryMode = measureSavedQM; measureSavedQM = null; }
-  map.once('click', () => {
-    if (measureLine)    { map.removeLayer(measureLine);    measureLine    = null; }
-    measureMarkers.forEach(m => map.removeLayer(m)); measureMarkers = []; measurePoints = [];
-    measureAreaBtn.classList.remove('active'); measureLineBtn.classList.remove('active');
-    measureMode = null; hideMeasurePopup();
-  });
+  // (queryMode no se restaura: el usuario activa otra herramienta manualmente)
+  // popup stays visible until user clicks X or starts new action
 }
 
 function refreshMeasureLine() {
@@ -3820,20 +4432,110 @@ function updateMeasureResult(latlng, isMove, isFinal) {
       sub  = isFinal ? 'Área total' : `${pts.length} vértice${pts.length>1?'s':''}`;
     }
   }
-  showMeasurePopup(main, sub, latlng);
+  showMeasurePopup(main, sub);
 }
 
-measureAreaBtn.addEventListener('click', () => startMeasure('area'));
-measureLineBtn.addEventListener('click', () => startMeasure('line'));
+// measure-area-btn and measure-line-btn removed; functionality merged into draw tool
 
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Escape') return;
-  if (typeof globeActive !== 'undefined' && globeActive) { stopGlobeTool(); toast('Coordenadas desactivadas'); }
-  if (measureMode)  { stopMeasure();    toast('Medición cancelada'); }
-  else if (drawActive) { stopDraw(false); toast('Dibujo cancelado'); }
+document.getElementById('measure-popup-close').addEventListener('click', () => {
+  if (drawActive) { resetDrawTool(); }
+  else { stopMeasure(); }
 });
 
-// ── IMPORTAR XML ──
+function resetDrawTool() {
+  // Reset measurement/drawing but keep the bar open
+  if (!drawActive) return;
+  drawMarkers.forEach(m => map.removeLayer(m));
+  drawMarkers = [];
+  drawPoints = [];
+  if (drawPoly) { map.removeLayer(drawPoly); drawPoly = null; }
+  if (drawPreview) { map.removeLayer(drawPreview); drawPreview = null; }
+  hideMeasurePopup();
+  const mobMeasure = document.getElementById('mob-draw-measure');
+  if (mobMeasure) mobMeasure.textContent = '';
+  // Refresh bar UI
+  const a = document.getElementById('mob-draw-bar-area');
+  const l = document.getElementById('mob-draw-bar-line');
+  if (a) a.classList.toggle('active', drawMode === 'area');
+  if (l) l.classList.toggle('active', drawMode === 'line');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (typeof globeActive !== 'undefined' && globeActive) { stopGlobeTool(); toast('Coordenadas desactivadas'); }
+    if (measureMode)  { stopMeasure(); }
+    else if (drawActive) { resetDrawTool(); toast('Medición reiniciada'); }
+  }
+  if ((e.key === 'Backspace' || e.key === 'Delete') && drawActive) {
+    e.preventDefault();
+    drawUndoLastPoint();
+  }
+});
+
+// ── DESKTOP QUERY BUTTON (lupa) ──
+// UX: clic en lupa => activa el último modo usado (por defecto 'recinto') y abre el selector.
+//      El selector permanece abierto hasta que el usuario vuelva a hacer clic en la lupa
+//      o active otra herramienta. Las opciones del menú sólo cambian el modo (no lo desactivan).
+const desktopQueryBtn  = document.getElementById('desktop-query-btn');
+const desktopQueryMenu = document.getElementById('desktop-query-submenu');
+let lastQueryMode = (queryMode && queryMode !== 'none') ? queryMode : 'recinto';
+
+function updateDesktopQueryUI() {
+  desktopQueryBtn.className = '';
+  if (queryMode === 'recinto') desktopQueryBtn.classList.add('active-recinto');
+  else if (queryMode === 'cultivo') desktopQueryBtn.classList.add('active-cultivo');
+  document.querySelectorAll('.dqs-btn').forEach(b => {
+    b.className = 'dqs-btn';
+    if (b.dataset.mode === queryMode) b.classList.add('active-' + queryMode);
+  });
+  // Menú visible mientras haya un modo activo
+  desktopQueryMenu.classList.toggle('open', queryMode !== 'none');
+}
+
+desktopQueryBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  if (queryMode !== 'none') {
+    applyQueryMode('none');
+  } else {
+    applyQueryMode(lastQueryMode || 'recinto');
+  }
+});
+
+document.querySelectorAll('.dqs-btn').forEach(b => {
+  b.addEventListener('click', e => {
+    e.stopPropagation();
+    applyQueryMode(b.dataset.mode);
+  });
+});
+
+desktopQueryMenu.addEventListener('click', e => e.stopPropagation());
+
+// Patch applyQueryMode: desactiva otras herramientas al activar consulta y sincroniza UI
+const _origApplyQueryModeDesktop = window.applyQueryMode;
+window.applyQueryMode = function(mode) {
+  _origApplyQueryModeDesktop(mode);
+  if (mode !== 'none') {
+    lastQueryMode = mode;
+    if (drawActive) {
+      if (typeof window.closeDrawBar === 'function') window.closeDrawBar();
+      else stopDraw(false);
+    }
+    if (measureMode) stopMeasure();
+    if (typeof globeActive !== 'undefined' && globeActive) stopGlobeTool();
+    // Close GPS bar
+    const _gpsBar2 = document.getElementById('desktop-gps-bar');
+    const _gpsBtn2 = document.getElementById('desktop-gps-btn');
+    const _mobGps2 = document.getElementById('mob-gpsmeasure-toggle');
+    if (_gpsBar2 && _gpsBar2.classList.contains('open')) {
+      _gpsBar2.classList.remove('open');
+      if (_gpsBtn2) _gpsBtn2.classList.remove('active');
+      if (_mobGps2) _mobGps2.classList.remove('active');
+    }
+  }
+  updateDesktopQueryUI();
+};
+
+updateDesktopQueryUI();
 function parseWkt(wkt) {
   if (!wkt || !wkt.trim()) return null;
   const s = wkt.trim();
@@ -4022,20 +4724,37 @@ function openGlobePopup(latlng) {
 }
 
 function startGlobeTool() {
-  if (drawActive)  stopDraw(false);
+  if (drawActive) {
+    if (typeof window.closeDrawBar === 'function') window.closeDrawBar();
+    else stopDraw(false);
+  }
   if (measureMode) stopMeasure();
+  if (queryMode !== 'none') applyQueryMode('none');
+  // Close GPS bar
+  const _gpsBg = document.getElementById('desktop-gps-bar');
+  const _gpsBt = document.getElementById('desktop-gps-btn');
+  const _mobG  = document.getElementById('mob-gpsmeasure-toggle');
+  if (_gpsBg && _gpsBg.classList.contains('open')) {
+    _gpsBg.classList.remove('open');
+    if (_gpsBt) _gpsBt.classList.remove('active');
+    if (_mobG)  _mobG.classList.remove('active');
+  }
   globeActive = true;
   globeBtn.classList.add('active');
+  // Sync mobile globe btn
+  const _mgb = document.getElementById('mob-globe-direct-btn');
+  if (_mgb) _mgb.classList.add('active');
   map.getContainer().style.cursor = 'crosshair';
-  globeSavedQM = queryMode; queryMode = 'none';
   map.on('click', onGlobeClick);
 }
 
 function stopGlobeTool() {
   globeActive = false;
   globeBtn.classList.remove('active');
+  // Sync mobile globe btn
+  const _mgbs = document.getElementById('mob-globe-direct-btn');
+  if (_mgbs) _mgbs.classList.remove('active');
   map.getContainer().style.cursor = '';
-  if (globeSavedQM !== null) { queryMode = globeSavedQM; globeSavedQM = null; }
   map.off('click', onGlobeClick);
   globePopup.style.display = 'none';
 }
@@ -4429,7 +5148,8 @@ async function rejectShare(reqId) {
           <input type="checkbox" id="mob-vis-${layer.id}" ${layer.visible ? 'checked' : ''}>
           <label for="mob-vis-${layer.id}"></label>
         </div>
-        <div class="mob-layer-dot" style="background:${layer.color}" title="Cambiar color">
+        <div class="mob-layer-dot" title="Editar nombre y color">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           <input type="color" value="${layer.color}">
         </div>
         <div class="mob-layer-info">
@@ -4454,21 +5174,9 @@ async function rejectShare(reqId) {
         if (desktopVis) { desktopVis.checked = e.target.checked; }
       });
 
-      // Cambio de color
-      const dot      = item.querySelector('.mob-layer-dot');
-      const colorIn  = item.querySelector('input[type=color]');
-      dot.addEventListener('click', e => { e.stopPropagation(); colorIn.click(); });
-      colorIn.addEventListener('input', e => {
-        layer.color = e.target.value;
-        dot.style.background = e.target.value;
-        layer.leafletLayer.setStyle({ color: e.target.value, fillColor: e.target.value });
-        if (typeof isFirebaseActive === 'function' && isFirebaseActive()) {
-          if (typeof updateShpColorInCloud === 'function') updateShpColorInCloud(layer.id, layer.color);
-        }
-        // Sincronizar con desktop
-        const desktopDot = document.querySelector(`.list-item[data-id="${layer.id}"] .shp-color-dot`);
-        if (desktopDot) desktopDot.style.background = e.target.value;
-      });
+      // Editar nombre y color
+      const dot = item.querySelector('.mob-layer-dot');
+      dot.addEventListener('click', e => { e.stopPropagation(); openLayerEditModal(layer, item); });
 
       // Nombre click = fitBounds
       item.querySelector('.mob-layer-item-name').addEventListener('click', e => {
@@ -4533,23 +5241,9 @@ async function rejectShare(reqId) {
     mo.observe(unifiedList, { childList: true });
   }
 
-  // ── Modal confirmar eliminación móvil ────────────────────────
-  let _mobDeleteCb = null;
-  const mobDeleteConfirm = document.getElementById('mob-delete-confirm');
-  document.getElementById('mob-confirm-cancel').addEventListener('click', () => {
-    mobDeleteConfirm.classList.remove('open');
-    _mobDeleteCb = null;
-  });
-  document.getElementById('mob-confirm-delete').addEventListener('click', () => {
-    mobDeleteConfirm.classList.remove('open');
-    if (_mobDeleteCb) { _mobDeleteCb(); _mobDeleteCb = null; }
-  });
-
+  // ── Modal eliminar capa: delega al sistema global ─────────────
   function showMobDeleteConfirm(name, cb) {
-    const sub = document.getElementById('mob-confirm-sub');
-    if (sub) sub.textContent = `¿Eliminar la capa "${name}"? Esta acción no se puede deshacer y la capa también se borrará de la nube si está sincronizada.`;
-    _mobDeleteCb = cb;
-    mobDeleteConfirm.classList.add('open');
+    if (typeof window.showDeleteConfirm === 'function') window.showDeleteConfirm(name, cb);
   }
 
   // ── Selector raster ─────────────────────────────────────────
@@ -4593,55 +5287,109 @@ async function rejectShare(reqId) {
     mobOrtoYear.value = typeof activeOrtoYear !== 'undefined' ? activeOrtoYear : '2024';
   }
 
-  // ── Herramientas inferiores ─────────────────────────────────
-  const mobWrenchBtn  = document.getElementById('mob-wrench-btn');
-  const mobToolsMenu  = document.getElementById('mob-tools-submenu');
-  const mobGpsMeasBtn = document.getElementById('mob-gpsmeasure-toggle');
-  const mobGpsMenu    = document.getElementById('mob-gpsmeasure-submenu');
+  // ── Herramientas inferiores (comportamiento idéntico al escritorio) ──
+  const mobWrenchBtn   = document.getElementById('mob-wrench-btn');
+  const mobToolsMenu   = document.getElementById('mob-tools-submenu');
+  const mobGpsMeasBtn  = document.getElementById('mob-gpsmeasure-toggle');
+  const mobGpsMenu     = document.getElementById('mob-gpsmeasure-submenu');
   const mobQueryToggle = document.getElementById('mob-query-toggle');
-  const mobQueryMenu  = document.getElementById('mob-query-submenu');
+  const mobQueryMenu   = document.getElementById('mob-query-submenu');
+  const mobDrawBtn     = document.getElementById('mob-draw-direct-btn');
+  const mobGlobeBtn    = document.getElementById('mob-globe-direct-btn');
 
-  function closeAllToolSubmenus() {
-    mobToolsMenu.classList.remove('open');
-    mobGpsMenu.classList.remove('open');
-    mobQueryMenu.classList.remove('open');
-    mobWrenchBtn.classList.remove('active');
-    mobGpsMeasBtn.classList.remove('active');
-    mobQueryToggle.classList.remove('active');
+  // Helper: close GPS bar
+  function closeMobGpsBar() {
+    const b = document.getElementById('desktop-gps-bar');
+    const bt = document.getElementById('desktop-gps-btn');
+    if (b) b.classList.remove('open');
+    if (bt) bt.classList.remove('active');
+    if (mobGpsMeasBtn) mobGpsMeasBtn.classList.remove('active');
   }
 
-  // Wrench toggle
-  mobWrenchBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    const isOpen = mobToolsMenu.classList.contains('open');
-    closeAllToolSubmenus();
-    if (!isOpen) { mobToolsMenu.classList.add('open'); mobWrenchBtn.classList.add('active'); }
-  });
+  // Helper: sync all button active states
+  function syncMobToolBtns() {
+    // draw
+    if (mobDrawBtn) mobDrawBtn.classList.toggle('active', !!drawActive);
+    // globe
+    if (mobGlobeBtn) mobGlobeBtn.classList.toggle('active', !!globeActive);
+    // gps bar
+    const gpsOpen = document.getElementById('desktop-gps-bar')?.classList.contains('open');
+    if (mobGpsMeasBtn) mobGpsMeasBtn.classList.toggle('active', !!gpsOpen);
+    // query
+    if (mobQueryToggle) mobQueryToggle.classList.toggle('active', queryMode !== 'none');
+    if (mobQueryMenu)   mobQueryMenu.classList.toggle('open', queryMode !== 'none');
+  }
 
-  // Submenu items: proxies a las herramientas de escritorio
-  document.getElementById('mob-sub-globe').addEventListener('click', e => {
-    e.stopPropagation(); closeAllToolSubmenus();
-    document.getElementById('globe-btn').click();
-  });
-  document.getElementById('mob-sub-area').addEventListener('click', e => {
-    e.stopPropagation(); closeAllToolSubmenus();
-    document.getElementById('measure-area-btn').click();
-  });
-  document.getElementById('mob-sub-line').addEventListener('click', e => {
-    e.stopPropagation(); closeAllToolSubmenus();
-    document.getElementById('measure-line-btn').click();
-  });
-  document.getElementById('mob-sub-draw').addEventListener('click', e => {
-    e.stopPropagation(); closeAllToolSubmenus();
-    document.getElementById('draw-btn').click();
-  });
+  function closeAllToolSubmenus() {
+    // close everything except query when query active (keep submenu open)
+    if (mobToolsMenu) mobToolsMenu.classList.remove('open');
+    if (mobGpsMenu)   mobGpsMenu.classList.remove('open');
+    if (queryMode === 'none') {
+      if (mobQueryMenu)   mobQueryMenu.classList.remove('open');
+      if (mobQueryToggle) mobQueryToggle.classList.remove('active');
+    }
+    if (mobWrenchBtn) mobWrenchBtn.classList.remove('active');
+  }
 
-  // ── GPS medición ─────────────────────────────────────────────
-  mobGpsMeasBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    const isOpen = mobGpsMenu.classList.contains('open');
-    closeAllToolSubmenus();
-    if (!isOpen) { mobGpsMenu.classList.add('open'); mobGpsMeasBtn.classList.add('active'); }
+  // ── Botón 1: Medir/Dibujar (cota) ─ mismo comportamiento que draw-btn desktop
+  if (mobDrawBtn) {
+    mobDrawBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      // Close other tools first
+      if (queryMode !== 'none') window.applyQueryMode('none');
+      if (globeActive) stopGlobeTool();
+      closeMobGpsBar();
+      // Toggle draw bar
+      if (drawActive) {
+        if (typeof window.closeDrawBar === 'function') window.closeDrawBar();
+      } else {
+        if (typeof window.openDrawBar === 'function') window.openDrawBar();
+      }
+    });
+  }
+
+  // ── Botón 2: Medición GPS ─ abre unified desktop-gps-bar
+  if (mobGpsMeasBtn) {
+    mobGpsMeasBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const dskGpsBar = document.getElementById('desktop-gps-bar');
+      const dskGpsBtn = document.getElementById('desktop-gps-btn');
+      const isOpen = dskGpsBar && dskGpsBar.classList.contains('open');
+      if (isOpen) {
+        closeMobGpsBar();
+      } else {
+        // Close other tools
+        if (drawActive) { if (typeof window.closeDrawBar === 'function') window.closeDrawBar(); }
+        if (globeActive) stopGlobeTool();
+        if (queryMode !== 'none') window.applyQueryMode('none');
+        // Open GPS bar
+        if (dskGpsBar) dskGpsBar.classList.add('open');
+        if (dskGpsBtn) dskGpsBtn.classList.add('active');
+        mobGpsMeasBtn.classList.add('active');
+        // Auto-activate GPS location button
+        const geoBtn = document.getElementById('mob-gps-btn');
+        if (geoBtn && !geoBtn.classList.contains('active')) geoBtn.click();
+      }
+    });
+  }
+
+  // ── Botón 3: Coordenadas (globo) ─ mismo que globe-btn desktop
+  if (mobGlobeBtn) {
+    mobGlobeBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      // Close other tools
+      if (drawActive) { if (typeof window.closeDrawBar === 'function') window.closeDrawBar(); }
+      closeMobGpsBar();
+      if (queryMode !== 'none') window.applyQueryMode('none');
+      // Toggle globe
+      document.getElementById('globe-btn').click();
+    });
+  }
+
+  // Compat stubs for removed submenu items
+  ['mob-sub-globe','mob-sub-area','mob-sub-line','mob-sub-draw'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', e => e.stopPropagation());
   });
 
   // Selector tipo área / línea
@@ -4726,7 +5474,7 @@ async function rejectShare(reqId) {
         gpsTrackPolyline.setLatLngs(gpsTrackPoints);
       } else {
         gpsTrackPolyline = L.polyline(gpsTrackPoints, {
-          color: '#e06c00', weight: 3, opacity: 0.9
+          color: '#2f6fde', weight: 3, opacity: 0.9
         }).addTo(map);
       }
       gpsUpdateUI();
@@ -4753,6 +5501,9 @@ async function rejectShare(reqId) {
       if (gpsTrackPolyline) { map.removeLayer(gpsTrackPolyline); gpsTrackPolyline = null; }
       gpsTrackState = 'recording';
       gpsStartWatch();
+      // Auto-activate GPS location button
+      const geoBtn = document.getElementById('mob-gps-btn');
+      if (geoBtn && !geoBtn.classList.contains('active')) geoBtn.click();
       toast('Medición GPS iniciada (' + (gpsTrackType === 'area' ? 'área' : 'línea') + ')');
     } else if (gpsTrackState === 'paused') {
       gpsTrackState = 'recording';
@@ -4842,65 +5593,95 @@ async function rejectShare(reqId) {
 
   gpsUpdateUI();
 
-  // ── Consultas móvil ──────────────────────────────────────────
-  mobQueryToggle.addEventListener('click', e => {
-    e.stopPropagation();
-    const isOpen = mobQueryMenu.classList.contains('open');
-    closeAllToolSubmenus();
-    if (!isOpen) { mobQueryMenu.classList.add('open'); mobQueryToggle.classList.add('active'); }
-  });
+  // ── Botón 4: Consultas (lupa) ─ mismo comportamiento que desktop-query-btn ──
+  let lastQueryModeMob = (queryMode && queryMode !== 'none') ? queryMode : 'recinto';
+
+  if (mobQueryToggle) {
+    mobQueryToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      if (queryMode !== 'none') {
+        window.applyQueryMode('none');
+      } else {
+        // Close other tools
+        if (drawActive) { if (typeof window.closeDrawBar === 'function') window.closeDrawBar(); }
+        closeMobGpsBar();
+        if (globeActive) stopGlobeTool();
+        window.applyQueryMode(lastQueryModeMob || 'recinto');
+      }
+    });
+  }
 
   function syncQueryBtns() {
     document.querySelectorAll('.mob-query-opt').forEach(b => {
       b.className = 'mob-query-opt';
       if (b.dataset.mode === queryMode) b.classList.add('active-' + queryMode);
     });
-    mobQueryToggle.classList.toggle('active', queryMode !== 'none');
+    if (mobQueryToggle) mobQueryToggle.classList.toggle('active', queryMode !== 'none');
+    if (mobQueryMenu)   mobQueryMenu.classList.toggle('open', queryMode !== 'none');
   }
 
   document.querySelectorAll('.mob-query-opt').forEach(b => {
     b.addEventListener('click', e => {
       e.stopPropagation();
-      applyQueryMode(b.dataset.mode);
-      syncQueryBtns();
-      closeAllToolSubmenus();
+      if (b.dataset.mode === 'none') { window.applyQueryMode('none'); return; }
+      window.applyQueryMode(b.dataset.mode);
+      lastQueryModeMob = b.dataset.mode;
     });
   });
 
-  // Observar cambios de queryMode para sincronizar botones móvil
-  const _origApplyQueryMode = window.applyQueryMode;
+  // Patch applyQueryMode para sincronizar botones móvil
+  const _origApplyQueryModeMob = window.applyQueryMode;
   window.applyQueryMode = function(mode) {
-    _origApplyQueryMode(mode);
+    _origApplyQueryModeMob(mode);
     syncQueryBtns();
+    syncMobToolBtns();
   };
 
   syncQueryBtns();
+  syncMobToolBtns();
 
-  // ── Cerrar submenús al clic exterior ────────────────────────
+  // Patch openDrawBar/closeDrawBar to also sync mobile draw btn
+  const _origOpenDrawBar = window.openDrawBar;
+  window.openDrawBar = function() {
+    _origOpenDrawBar();
+    syncMobToolBtns();
+  };
+  const _origCloseDrawBar = window.closeDrawBar;
+  window.closeDrawBar = function() {
+    _origCloseDrawBar();
+    syncMobToolBtns();
+  };
+
+  // Patch stopGlobeTool to sync mobile globe btn
+  const _origStopGlobeMob = window.stopGlobeTool;
+  window.stopGlobeTool = function() {
+    _origStopGlobeMob();
+    if (mobGlobeBtn) mobGlobeBtn.classList.remove('active');
+    syncMobToolBtns();
+  };
+
+  // ── Barra de dibujo: delega al sistema global ──
+  function openMobDrawBar() { if (typeof window.openDrawBar === 'function') window.openDrawBar(); }
+  function closeMobDrawBar() { if (typeof window.closeDrawBar === 'function') window.closeDrawBar(); }
+  window.closeMobDrawBar = closeMobDrawBar;
+
+  // ── Cerrar submenús al clic exterior (query submenu stays if active) ──
   document.addEventListener('click', () => {
     if (isMobile()) {
-      closeAllToolSubmenus();
       closeMobRaster();
+      // Query submenu stays open while active
+      if (queryMode === 'none') {
+        if (mobQueryMenu)   mobQueryMenu.classList.remove('open');
+        if (mobQueryToggle) mobQueryToggle.classList.remove('active');
+      }
     }
   });
-  document.getElementById('mob-tools-submenu').addEventListener('click', e => e.stopPropagation());
-  document.getElementById('mob-gpsmeasure-submenu').addEventListener('click', e => e.stopPropagation());
-  document.getElementById('mob-query-submenu').addEventListener('click', e => e.stopPropagation());
+  const _qSub = document.getElementById('mob-query-submenu');
+  if (_qSub) _qSub.addEventListener('click', e => e.stopPropagation());
   if (mobRasterPanel) mobRasterPanel.addEventListener('click', e => e.stopPropagation());
   if (mobLayersPanel) mobLayersPanel.addEventListener('click', e => e.stopPropagation());
 
-  // ── Sincronizar estado herramientas de escritorio ───────────
-  // Observar botones de escritorio para reflejar estado activo
-  ['globe-btn', 'measure-area-btn', 'measure-line-btn', 'draw-btn'].forEach(id => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    new MutationObserver(() => {
-      // Si alguna herramienta de escritorio está activa, colapsar submenús
-    }).observe(btn, { attributes: true, attributeFilter: ['class'] });
-  });
-
   // ── Init ─────────────────────────────────────────────────────
-  // Resolver año orto al inicio
   if (mobOrtoYear && typeof activeOrtoYear !== 'undefined') {
     mobOrtoYear.value = activeOrtoYear;
   }
@@ -4935,7 +5716,7 @@ function setupRealtimeCloudSync(user) {
         try {
           const geojson = JSON.parse(data.geojson);
           // Dibujar la capa que viene de la nube en el mapa local (sin volver a subirla)
-          addShpLayer(geojson, data.name, data.id, false);
+          addShpLayer(geojson, data.name, data.id, false, false);
         } catch (e) {
           console.error("Error al procesar capa sincronizada:", e);
         }
@@ -5061,6 +5842,765 @@ if (auth !== null) {
     }
   });
 }
+
+
+// ═══════════════════════════════════════════════════════════════
+// DESKTOP GPS MEASURE TOOL
+// ═══════════════════════════════════════════════════════════════
+(function() {
+  const dskGpsBtn      = document.getElementById('desktop-gps-btn');
+  const dskGpsBar      = document.getElementById('desktop-gps-bar');
+  if (!dskGpsBtn || !dskGpsBar) return;
+
+  const dskGpsTypeArea = document.getElementById('dsk-gps-type-area');
+  const dskGpsTypeLine = document.getElementById('dsk-gps-type-line');
+  const dskGpsState    = document.getElementById('desktop-gps-state-label');
+  const dskGpsMeasure  = document.getElementById('desktop-gps-measure');
+  const dskGpsPtsLabel = document.getElementById('dsk-gps-pts-label');
+  const dskPlayBtn     = document.getElementById('dsk-gps-play-btn');
+  const dskPauseBtn    = document.getElementById('dsk-gps-pause-btn');
+  const dskStopBtn     = document.getElementById('dsk-gps-stop-btn');
+  const dskResetBtn    = document.getElementById('dsk-gps-reset-btn');
+
+  let dskGpsTrackType  = 'area';
+  let dskGpsState_v    = 'idle'; // idle | recording | paused
+  let dskGpsWatchId    = null;
+  let dskGpsPoints     = [];
+  let dskGpsPolyline   = null;
+  let dskGpsCount      = 0;
+
+  function openDskGpsBar() {
+    // Stop other tools
+    if (typeof globeActive !== 'undefined' && globeActive) stopGlobeTool();
+    if (typeof measureMode !== 'undefined' && measureMode) stopMeasure();
+    if (typeof drawActive !== 'undefined' && drawActive) { if (typeof window.closeDrawBar === 'function') window.closeDrawBar(); else stopDraw(false); }
+    if (typeof queryMode !== 'undefined' && queryMode !== 'none') applyQueryMode('none');
+    dskGpsBar.classList.add('open');
+    dskGpsBtn.classList.add('active');
+    // Sync mobile GPS btn
+    const _mobGpsMeas = document.getElementById('mob-gpsmeasure-toggle');
+    if (_mobGpsMeas) _mobGpsMeas.classList.add('active');
+    // Auto-activate GPS location button (desktop uses geolocate-btn, mobile uses mob-gps-btn)
+    const geoBtn = document.getElementById('geolocate-btn') || document.getElementById('mob-gps-btn');
+    if (geoBtn && !geoBtn.classList.contains('active')) geoBtn.click();
+    updateDskGpsUI();
+  }
+
+  function closeDskGpsBar() {
+    dskGpsBar.classList.remove('open');
+    dskGpsBtn.classList.remove('active');
+    // Sync mobile GPS btn
+    const _mobGpsMeas = document.getElementById('mob-gpsmeasure-toggle');
+    if (_mobGpsMeas) _mobGpsMeas.classList.remove('active');
+    if (dskGpsState_v !== 'idle') {
+      dskGpsStopWatch();
+      dskGpsState_v = 'idle';
+    }
+  }
+
+
+
+  function resetDskGps() {
+    dskGpsStopWatch();
+    if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; }
+    dskGpsPoints = [];
+    dskGpsState_v = 'idle';
+    updateDskGpsUI();
+  }
+
+  function updateDskGpsUI() {
+    const canChange = dskGpsState_v === 'idle';
+    dskGpsTypeArea.classList.toggle('active', dskGpsTrackType === 'area');
+    dskGpsTypeLine.classList.toggle('active', dskGpsTrackType === 'line');
+    dskGpsTypeArea.disabled = !canChange;
+    dskGpsTypeLine.disabled = !canChange;
+
+    dskGpsState.className = '';
+    // Highlight persistente en play/pause
+    dskPlayBtn.classList.remove('gps-active-state');
+    dskPauseBtn.classList.remove('gps-active-state');
+
+    if (dskGpsState_v === 'idle') {
+      dskGpsState.textContent = 'Sin iniciar';
+      dskPlayBtn.disabled  = false;
+      dskPauseBtn.disabled = true;
+      dskStopBtn.disabled  = true;
+    } else if (dskGpsState_v === 'recording') {
+      dskGpsState.textContent = '● Grabando…';
+      dskGpsState.classList.add('recording');
+      dskPlayBtn.disabled  = true;
+      dskPauseBtn.disabled = false;
+      dskStopBtn.disabled  = false;
+      // Play activo: resaltar pause (que es el botón "en curso")
+      dskPauseBtn.classList.add('gps-active-state');
+    } else if (dskGpsState_v === 'paused') {
+      dskGpsState.textContent = '⏸ Pausado';
+      dskPlayBtn.disabled  = false;
+      dskPauseBtn.disabled = true;
+      dskStopBtn.disabled  = false;
+      // Pause activo: resaltar play (listo para reanudar)
+      dskPlayBtn.classList.add('gps-active-state');
+    }
+    dskGpsPtsLabel.textContent = dskGpsPoints.length > 0 ? dskGpsPoints.length + ' pts' : '';
+
+    // Botón back (deshacer último punto): solo activo en pausa con puntos
+    dskResetBtn.disabled = !(dskGpsState_v === 'paused' && dskGpsPoints.length > 0);
+    dskResetBtn.style.opacity = dskResetBtn.disabled ? '0.35' : '1';
+    dskResetBtn.style.cursor  = dskResetBtn.disabled ? 'not-allowed' : 'pointer';
+    const mobInfo = document.getElementById('dsk-gps-mob-info');
+    if (mobInfo) {
+      const ptsStr = dskGpsPoints.length > 0 ? ' · ' + dskGpsPoints.length + ' pts' : '';
+      mobInfo.textContent = dskGpsState.textContent + ptsStr;
+      mobInfo.style.color = dskGpsState_v === 'recording' ? 'var(--blue)' : 'var(--muted)';
+    }
+
+    // Update measure display
+    if (dskGpsPoints.length >= 2) {
+      if (dskGpsTrackType === 'line') {
+        let totalM = 0;
+        for (let i=1; i<dskGpsPoints.length; i++) totalM += haversineM({lat:dskGpsPoints[i-1][0],lng:dskGpsPoints[i-1][1]},{lat:dskGpsPoints[i][0],lng:dskGpsPoints[i][1]});
+        dskGpsMeasure.textContent = fmtDist(totalM);
+      } else if (dskGpsPoints.length >= 3) {
+        const lls = dskGpsPoints.map(([lat,lng])=>L.latLng(lat,lng));
+        dskGpsMeasure.textContent = fmtArea(ringAreaSqM(lls));
+      } else {
+        dskGpsMeasure.textContent = dskGpsPoints.length + ' / 3 pts mínimos para área';
+      }
+    } else if (dskGpsPoints.length === 1) {
+      dskGpsMeasure.textContent = '1 / ' + (dskGpsTrackType === 'line' ? '2' : '3') + ' pts mínimos';
+    } else {
+      dskGpsMeasure.textContent = '';
+    }
+  }
+
+  function dskGpsStartWatch() {
+    if (!navigator.geolocation) { toast('Geolocalización no disponible', 'err'); return; }
+    if (dskGpsWatchId !== null) return;
+    dskGpsWatchId = navigator.geolocation.watchPosition(pos => {
+      if (dskGpsState_v !== 'recording') return;
+      const { latitude: lat, longitude: lng } = pos.coords;
+      dskGpsPoints.push([lat, lng]);
+      if (dskGpsPolyline) dskGpsPolyline.setLatLngs(dskGpsPoints);
+      else dskGpsPolyline = L.polyline(dskGpsPoints, { color: '#2f6fde', weight: 3, opacity: 0.9 }).addTo(map);
+      updateDskGpsUI();
+    }, err => {
+      const msgs = { 1:'Permiso denegado', 2:'Posición no disponible', 3:'Sin señal GPS' };
+      toast('GPS: ' + (msgs[err.code] || err.message), 'err');
+      dskGpsState_v = 'idle';
+      dskGpsStopWatch();
+      updateDskGpsUI();
+    }, { enableHighAccuracy: true, maximumAge: 2000 });
+  }
+
+  function dskGpsStopWatch() {
+    if (dskGpsWatchId !== null) { navigator.geolocation.clearWatch(dskGpsWatchId); dskGpsWatchId = null; }
+  }
+
+  dskGpsBtn.addEventListener('click', () => {
+    if (dskGpsBar.classList.contains('open')) closeDskGpsBar();
+    else openDskGpsBar();
+  });
+
+  dskGpsTypeArea.addEventListener('click', e => {
+    e.stopPropagation();
+    if (dskGpsState_v !== 'idle') return;
+    dskGpsTrackType = 'area'; updateDskGpsUI();
+  });
+  dskGpsTypeLine.addEventListener('click', e => {
+    e.stopPropagation();
+    if (dskGpsState_v !== 'idle') return;
+    dskGpsTrackType = 'line'; updateDskGpsUI();
+  });
+
+  dskPlayBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (dskGpsState_v === 'idle') {
+      dskGpsPoints = [];
+      if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; }
+      dskGpsState_v = 'recording';
+      dskGpsStartWatch();
+      toast('Medición GPS iniciada (' + (dskGpsTrackType === 'area' ? 'área' : 'línea') + ')');
+    } else if (dskGpsState_v === 'paused') {
+      dskGpsState_v = 'recording';
+      dskGpsStartWatch();
+      toast('Medición GPS reanudada');
+    }
+    updateDskGpsUI();
+  });
+
+  dskPauseBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    dskGpsState_v = 'paused'; dskGpsStopWatch(); updateDskGpsUI();
+    toast('Medición GPS pausada');
+  });
+
+  dskStopBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    dskGpsStopWatch();
+    if (dskGpsTrackType === 'area') {
+      if (dskGpsPoints.length < 3) { toast('Se necesitan al menos 3 puntos para crear un área', 'err'); dskGpsState_v = 'idle'; if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; } updateDskGpsUI(); return; }
+      const ring = [...dskGpsPoints, dskGpsPoints[0]];
+      const ringCoords = ring.map(([lat,lng]) => [lng,lat]);
+      dskGpsCount++;
+      const name = 'GPS Área ' + dskGpsCount;
+      const ringLL = dskGpsPoints.map(([lat,lng]) => L.latLng(lat,lng));
+      const areaM2 = ringAreaSqM(ringLL);
+      const areaHa = (areaM2/10000).toFixed(4);
+      const geojson = { type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Polygon', coordinates:[ringCoords] }, properties:{ nombre:name, area_m2:Math.round(areaM2), area_ha:areaHa } }] };
+      if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; }
+      addShpLayer(geojson, name, null, true);
+      toast('"' + name + '" creada · ' + areaHa + ' ha', 'ok');
+    } else {
+      if (dskGpsPoints.length < 2) { toast('Se necesitan al menos 2 puntos para crear una línea', 'err'); dskGpsState_v = 'idle'; if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; } updateDskGpsUI(); return; }
+      const lineCoords = dskGpsPoints.map(([lat,lng]) => [lng,lat]);
+      let totalM = 0;
+      for (let i=1;i<dskGpsPoints.length;i++) totalM += haversineM({lat:dskGpsPoints[i-1][0],lng:dskGpsPoints[i-1][1]},{lat:dskGpsPoints[i][0],lng:dskGpsPoints[i][1]});
+      dskGpsCount++;
+      const name = 'GPS Línea ' + dskGpsCount;
+      const distLabel = fmtDist(totalM);
+      const geojson = { type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'LineString', coordinates:lineCoords }, properties:{ nombre:name, distancia_m:Math.round(totalM), distancia:distLabel } }] };
+      if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; }
+      addShpLayer(geojson, name, null, true);
+      toast('"' + name + '" creada · ' + distLabel, 'ok');
+    }
+    dskGpsPoints = []; dskGpsState_v = 'idle'; updateDskGpsUI();
+  });
+
+  dskResetBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (dskGpsState_v !== 'paused' || dskGpsPoints.length === 0) return;
+    dskGpsPoints.pop();
+    if (dskGpsPolyline) {
+      if (dskGpsPoints.length >= 2) {
+        dskGpsPolyline.setLatLngs(dskGpsPoints);
+      } else {
+        map.removeLayer(dskGpsPolyline);
+        dskGpsPolyline = null;
+      }
+    }
+    toast('Último punto eliminado');
+    updateDskGpsUI();
+  });
+
+  updateDskGpsUI();
+})();
+
+// ═══════════════════════════════════════════════════════════════
+// INIT GLOBAL: barra de dibujo unificada + modal eliminar capa
+// (Funciona en escritorio y móvil)
+// ═══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // ── Modal eliminar capa ─────────────────────────────────────
+  const delModal   = document.getElementById('mob-delete-confirm');
+  const delCancel  = document.getElementById('mob-confirm-cancel');
+  const delConfirm = document.getElementById('mob-confirm-delete');
+  let _delCb = null;
+  if (delModal && delCancel && delConfirm) {
+    delCancel.addEventListener('click', () => { delModal.classList.remove('open'); _delCb = null; });
+    delConfirm.addEventListener('click', () => { delModal.classList.remove('open'); const cb = _delCb; _delCb = null; if (cb) cb(); });
+    delModal.addEventListener('click', e => { if (e.target === delModal) { delModal.classList.remove('open'); _delCb = null; } });
+    window.showDeleteConfirm = function(name, cb) {
+      const sub = document.getElementById('mob-confirm-sub');
+      if (sub) sub.textContent = `¿Eliminar la capa "${name}"? Esta acción no se puede deshacer y la capa también se borrará de la nube si está sincronizada.`;
+      _delCb = cb;
+      delModal.classList.add('open');
+    };
+  }
+
+  // ── Barra de dibujo unificada ───────────────────────────────
+  const drawBar = document.getElementById('mob-draw-bar');
+  const dbArea  = document.getElementById('mob-draw-bar-area');
+  const dbLine  = document.getElementById('mob-draw-bar-line');
+  const dbBack  = document.getElementById('mob-draw-bar-back');
+  const dbClose = document.getElementById('mob-draw-bar-close');
+  const dbSave  = document.getElementById('mob-draw-bar-save');
+  if (!drawBar || !dbArea || !dbLine) return;
+
+  function updateBarUI() {
+    dbArea.classList.toggle('active', drawMode === 'area');
+    dbLine.classList.toggle('active', drawMode === 'line');
+    const locked = drawActive && drawPoints.length > 0;
+    dbArea.disabled = locked;
+    dbLine.disabled = locked;
+  }
+
+  window.openDrawBar = function() {
+    if (typeof globeActive !== 'undefined' && globeActive) stopGlobeTool();
+    if (measureMode) stopMeasure();
+    if (queryMode !== 'none') applyQueryMode('none');
+    // Close GPS bar if open
+    const _gpsBar = document.getElementById('desktop-gps-bar');
+    const _gpsBtn = document.getElementById('desktop-gps-btn');
+    const _mobGps = document.getElementById('mob-gpsmeasure-toggle');
+    if (_gpsBar && _gpsBar.classList.contains('open')) {
+      _gpsBar.classList.remove('open');
+      if (_gpsBtn) _gpsBtn.classList.remove('active');
+      if (_mobGps) _mobGps.classList.remove('active');
+    }
+    drawBar.classList.add('open');
+    if (!drawActive) startDraw();
+    updateBarUI();
+    // Sync mobile draw button
+    const mdd = document.getElementById('mob-draw-direct-btn');
+    if (mdd) mdd.classList.add('active');
+  };
+  window.closeDrawBar = function() {
+    drawBar.classList.remove('open');
+    if (drawActive) stopDraw(false);
+    // Sync mobile draw button
+    const mdd = document.getElementById('mob-draw-direct-btn');
+    if (mdd) mdd.classList.remove('active');
+  };
+
+  dbArea.addEventListener('click', e => {
+    e.stopPropagation();
+    if (drawActive && drawPoints.length > 0) return;
+    drawMode = 'area';
+    if (!drawActive) startDraw();
+    updateBarUI();
+  });
+  dbLine.addEventListener('click', e => {
+    e.stopPropagation();
+    if (drawActive && drawPoints.length > 0) return;
+    drawMode = 'line';
+    if (!drawActive) startDraw();
+    updateBarUI();
+  });
+  dbBack.addEventListener('click', e => {
+    e.stopPropagation();
+    drawUndoLastPoint();
+    updateBarUI();
+  });
+  dbClose.addEventListener('click', e => {
+    e.stopPropagation();
+    // Reset measurement but keep bar open
+    if (drawActive) {
+      // Remove all points and markers
+      drawMarkers.forEach(m => map.removeLayer(m));
+      drawMarkers = [];
+      drawPoints = [];
+      if (drawPoly) { map.removeLayer(drawPoly); drawPoly = null; }
+      if (drawPreview) { map.removeLayer(drawPreview); drawPreview = null; }
+      hideMeasurePopup();
+      const mobMeasure = document.getElementById('mob-draw-measure');
+      if (mobMeasure) mobMeasure.textContent = '';
+      updateBarUI();
+    }
+  });
+  dbSave.addEventListener('click', e => {
+    e.stopPropagation();
+    drawBar.classList.remove('open');
+    stopDraw(true);
+    if (typeof syncMobProjectLayers === 'function') syncMobProjectLayers();
+  });
+
+  // Tras refrescar la barra cada vez que cambia el dibujo
+  const _origRefresh = window.refreshDrawMeasure;
+  if (typeof _origRefresh === 'function') {
+    window.refreshDrawMeasure = function() { _origRefresh(); updateBarUI(); };
+  }
+});
+</script>
+
+<script>
+function mobSetRecintoYear(year) {
+  setRecintoYear(year);
+  document.querySelectorAll('#mob-recinto-year-pills .mob-year-pill').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.year === year);
+  });
+  var label = document.getElementById('mob-recinto-year-label');
+  if (label) label.textContent = 'Recintos ' + year;
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('#mob-recinto-year-pills .mob-year-pill').forEach(function(b) {
+    b.addEventListener('click', function() { mobSetRecintoYear(b.dataset.year); });
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// MODAL EDICIÓN DE CAPA (nombre + color)
+// ═══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+  const modal       = document.getElementById('layer-edit-modal');
+  const nameInput   = document.getElementById('layer-edit-name');
+  const colorPreview= document.getElementById('layer-edit-color-preview');
+  const colorInput  = document.getElementById('layer-edit-color-input');
+  const cancelBtn   = document.getElementById('layer-edit-cancel');
+  const saveBtn     = document.getElementById('layer-edit-save');
+
+  let _editLayer = null;
+
+  // ─── Popover paleta de colores ───────────────────────────────
+  const colorPop      = document.getElementById('layer-edit-color-pop');
+  const swatchesEl    = document.getElementById('lec-swatches');
+  const hexInputEl    = document.getElementById('lec-hex');
+  const moreBtn       = document.getElementById('lec-more');
+  const okColorBtn    = document.getElementById('lec-ok');
+  const PRESET_COLORS = [
+    '#2f6fde','#1e8a4c','#d93025','#ff8c00','#ffcc00','#9b27c8',
+    '#ff00ff','#00bcd4','#795548','#607d8b','#000000','#ffffff'
+  ];
+  function renderSwatches(active) {
+    swatchesEl.innerHTML = '';
+    PRESET_COLORS.forEach(c => {
+      const sw = document.createElement('div');
+      sw.className = 'lec-swatch' + (c.toLowerCase() === (active||'').toLowerCase() ? ' selected' : '');
+      sw.style.background = c;
+      sw.addEventListener('click', () => {
+        hexInputEl.value = c.toUpperCase();
+        colorPreview.style.background = c;
+        colorInput.value = c;
+        renderSwatches(c);
+      });
+      swatchesEl.appendChild(sw);
+    });
+  }
+  function openColorPop() {
+    hexInputEl.value = (colorInput.value || '#000000').toUpperCase();
+    renderSwatches(colorInput.value);
+    colorPop.classList.add('open');
+  }
+  function closeColorPop() { colorPop.classList.remove('open'); }
+  colorPreview.addEventListener('click', e => { e.stopPropagation(); openColorPop(); });
+  hexInputEl.addEventListener('input', () => {
+    const v = hexInputEl.value.trim();
+    if (/^#[0-9a-fA-F]{6}$/.test(v)) {
+      colorInput.value = v;
+      colorPreview.style.background = v;
+      renderSwatches(v);
+    }
+  });
+  moreBtn.addEventListener('click', e => { e.stopPropagation(); colorInput.click(); });
+  colorInput.addEventListener('input', () => {
+    colorPreview.style.background = colorInput.value;
+    hexInputEl.value = colorInput.value.toUpperCase();
+    renderSwatches(colorInput.value);
+  });
+  okColorBtn.addEventListener('click', e => { e.stopPropagation(); closeColorPop(); });
+  document.addEventListener('click', e => {
+    if (!colorPop.classList.contains('open')) return;
+    if (colorPop.contains(e.target) || colorPreview.contains(e.target)) return;
+    closeColorPop();
+  });
+
+
+  cancelBtn.addEventListener('click', () => { closeColorPop(); modal.classList.remove('open'); _editLayer = null; });
+  modal.addEventListener('click', e => { if (e.target === modal) { closeColorPop(); modal.classList.remove('open'); _editLayer = null; } });
+
+  saveBtn.addEventListener('click', () => {
+    if (!_editLayer) return;
+    const newName  = nameInput.value.trim() || _editLayer.name;
+    const newColor = colorInput.value;
+
+    if (newName !== _editLayer.name) {
+      _editLayer.name = newName;
+      const dskName = document.querySelector(`.list-item[data-id="${_editLayer.id}"] .item-name`);
+      if (dskName) { dskName.textContent = newName; dskName.title = newName; }
+      const mobName = document.querySelector(`.mob-layer-item[data-id="${_editLayer.id}"] .mob-layer-item-name`);
+      if (mobName) { mobName.textContent = newName; mobName.title = newName; }
+    }
+
+    if (newColor !== _editLayer.color) {
+      _editLayer.color = newColor;
+      _editLayer.leafletLayer.setStyle({ color: newColor, fillColor: newColor });
+      const dskDot = document.querySelector(`.list-item[data-id="${_editLayer.id}"] .shp-color-dot`);
+      if (dskDot) dskDot.style.background = newColor;
+      if (typeof isFirebaseActive === 'function' && isFirebaseActive()) {
+        if (typeof updateShpColorInCloud === 'function') updateShpColorInCloud(_editLayer.id, newColor);
+      }
+    }
+
+    toast(`Capa "${_editLayer.name}" actualizada`, 'ok');
+    closeColorPop();
+    modal.classList.remove('open');
+    _editLayer = null;
+  });
+
+  window.openLayerEditModal = function(layer) {
+    _editLayer = layer;
+    nameInput.value = layer.name;
+    colorInput.value = layer.color;
+    colorPreview.style.background = layer.color;
+    modal.classList.add('open');
+    setTimeout(() => { nameInput.focus(); nameInput.select(); }, 80);
+  };
+});
+</script>
+<!-- Modal edición de capa (nombre + color) -->
+<div id="layer-edit-modal">
+  <div class="layer-edit-card">
+    <div class="layer-edit-title">Editar capa</div>
+    <div class="layer-edit-field">
+      <div class="layer-edit-label">Nombre</div>
+      <input class="layer-edit-input" type="text" id="layer-edit-name" placeholder="Nombre de la capa">
+    </div>
+    <div class="layer-edit-field">
+      <div class="layer-edit-label">Color</div>
+      <div class="layer-edit-color-row">
+        <div class="layer-edit-color-preview" id="layer-edit-color-preview"></div>
+        <input class="layer-edit-color-input" type="color" id="layer-edit-color-input">
+        <span class="layer-edit-color-hint">Pulsa el cuadro para elegir color</span>
+        <div id="layer-edit-color-pop">
+          <div class="lec-swatches" id="lec-swatches"></div>
+          <div class="lec-pop-row">
+            <input class="lec-hex" id="lec-hex" type="text" maxlength="7" placeholder="#RRGGBB">
+            <button class="lec-more" id="lec-more" type="button" title="Más colores">＋</button>
+            <button class="lec-ok" id="lec-ok" type="button">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layer-edit-actions">
+      <button class="layer-edit-cancel" id="layer-edit-cancel">Cancelar</button>
+      <button class="layer-edit-save" id="layer-edit-save">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// HERRAMIENTA DE SELECCIÓN PARA GENERAR NUEVO SHP
+// ═══════════════════════════════════════════════════════════════
+(function() {
+  window._selActive = false;
+  window._selSource = 'recinto';
+  let selFeatures = [];
+
+  // Proxy para que el código interno use las vars como locales
+  let selActive = false;
+  let selSource = 'recinto';
+
+  const bar      = document.getElementById('sel-tool-bar');
+  const dskBtn   = document.getElementById('select-tool-btn');
+  const mobBtn   = document.getElementById('mob-select-btn');
+  const layerSel = document.getElementById('sel-tool-layer');
+  const countEl  = document.getElementById('sel-tool-count');
+  const backBtn  = document.getElementById('sel-tool-back');
+  const closeBtn = document.getElementById('sel-tool-close');
+  const saveBtn  = document.getElementById('sel-tool-save');
+  if (!bar || !dskBtn) return;
+
+  function refreshCount() {
+    const n = selFeatures.length;
+    countEl.textContent = n + (n === 1 ? ' seleccionada' : ' seleccionadas');
+  }
+  function buildLayerOptions() {
+    const prev = layerSel.value;
+    const opts = [
+      { value: 'recinto', label: 'Recintos SIGPAC' },
+      { value: 'cultivo', label: 'Cultivos SIGPAC' },
+    ];
+    if (typeof shpLayers !== 'undefined') {
+      shpLayers.forEach(l => { if (l.visible) opts.push({ value: l.id, label: l.name }); });
+    }
+    layerSel.innerHTML = opts.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+    layerSel.value = opts.some(o => o.value === prev) ? prev : 'recinto';
+    selSource = layerSel.value; window._selSource = selSource;
+  }
+  function clearSelection() {
+    selFeatures.forEach(s => { if (s.hl) map.removeLayer(s.hl); });
+    selFeatures = []; window._selFeatures = selFeatures;
+    refreshCount();
+  }
+  const HL_STYLE = { color: '#7b1fa2', weight: 2.5, fillColor: '#9b27c8', fillOpacity: 0.55, interactive: false };
+
+  function openSelBar() {
+    if (selActive) return;
+    if (typeof globeActive !== 'undefined' && globeActive) stopGlobeTool();
+    if (typeof measureMode !== 'undefined' && measureMode) stopMeasure();
+    if (typeof drawActive !== 'undefined' && drawActive) {
+      if (typeof window.closeDrawBar === 'function') window.closeDrawBar();
+      else stopDraw(false);
+    }
+    if (typeof queryMode !== 'undefined' && queryMode !== 'none') applyQueryMode('none');
+    selActive = true; window._selActive = true;
+    dskBtn.classList.add('active');
+    if (mobBtn) mobBtn.classList.add('active');
+    buildLayerOptions();
+    clearSelection();
+    bar.classList.add('open');
+    map.getContainer().style.cursor = 'crosshair';
+    clearHoverHighlight();
+    lastHoverKey = null;
+    // Desactivar popups de capas SHP para evitar que aparezcan al clicar durante la selección
+    if (typeof shpLayers !== 'undefined') {
+      shpLayers.forEach(l => l.polyLayer.eachLayer(sub => { if (sub.getPopup()) sub.unbindPopup(); }));
+    }
+    map.on('click', onSelClick);
+  }
+  function closeSelBar() {
+    selActive = false; window._selActive = false;
+    dskBtn.classList.remove('active');
+    if (mobBtn) mobBtn.classList.remove('active');
+    bar.classList.remove('open');
+    map.getContainer().style.cursor = '';
+    map.off('click', onSelClick);
+    // Restaurar popups de capas SHP
+    if (typeof shpLayers !== 'undefined') {
+      shpLayers.forEach(l => l.polyLayer.eachLayer(sub => {
+        if (sub.feature && !sub.getPopup()) sub.bindPopup(buildPopupHtml(sub.feature.properties));
+      }));
+    }
+    clearSelection();
+  }
+
+  async function onSelClick(e) {
+    if (!selActive) return;
+    // Cancelar cualquier hover pendiente y limpiar el highlight para que el violeta sea visible
+    clearTimeout(hoverDebounce);
+    clearHoverHighlight();
+    lastHoverKey = null;
+    map.closePopup();
+    if (selSource === 'recinto' || selSource === 'cultivo') await pickFromSigpac(e.latlng, selSource);
+    else pickFromShpLayer(e.latlng, selSource);
+  }
+
+  async function pickFromSigpac(latlng, mode) {
+    try {
+      const size   = map.getSize();
+      const point  = map.latLngToContainerPoint(latlng);
+      const bounds = map.getBounds();
+      const wmsUrl = mode === 'recinto' ? WMS_URL : CULTIVO_WMS;
+
+      // 1) Atributos via HTML
+      const htmlParams = buildGFIParams(mode, point, size, bounds, 'text/html');
+      const htmlRes = await fetch(`${wmsUrl}?${htmlParams}`);
+      const props = extractData(await htmlRes.text()) || {};
+
+      let coords = null;
+
+      // 2a) Reutilizar geometría del hover si está activa y es reciente
+      if (hoverHighlight) {
+        try {
+          const ll = hoverHighlight.getLatLngs();
+          console.log('[SEL] hoverHighlight getLatLngs niveles:', JSON.stringify(ll).slice(0,200));
+          const flat = (Array.isArray(ll[0]) && ll[0].length && typeof ll[0][0].lat === 'number')
+            ? ll[0]
+            : (Array.isArray(ll[0][0]) ? ll[0][0] : ll);
+          console.log('[SEL] coords desde hover, n puntos:', flat.length, 'primer punto:', flat[0]);
+          if (flat.length >= 3) coords = flat;
+        } catch(e) { console.warn('[SEL] Error leyendo hoverHighlight:', e); }
+      } else {
+        console.log('[SEL] hoverHighlight es null, yendo a fallback GML');
+      }
+
+      // 2b) GML via WMS GetFeatureInfo (funciona para cultivos; recintos no lo soporta)
+      if (!coords || coords.length < 3) {
+        if (mode !== 'recinto') {
+          try {
+            const gmlParams = buildGFIParams(mode, point, size, bounds, 'application/vnd.ogc.gml');
+            const gmlRes = await fetch(`${wmsUrl}?${gmlParams}`);
+            const gmlText = await gmlRes.text();
+            console.log('[SEL] GML response (primeros 500 chars):', gmlText.slice(0, 500));
+            coords = parseGmlCoords(gmlText);
+            console.log('[SEL] coords desde GML:', coords ? coords.length + ' puntos, primer punto: ' + JSON.stringify(coords[0]) : 'null');
+          } catch(e) { console.warn('[SEL] Error en GML fetch:', e); }
+        } else {
+          console.log('[SEL] Modo recinto: saltando GML (no soportado), yendo a REST');
+        }
+      }
+
+      // 2c) ArcGIS REST identify (solo recintos)
+      if ((!coords || coords.length < 3) && mode === 'recinto') {
+        try {
+          coords = await fetchRecintoGeom(latlng, size, bounds);
+          console.log('[SEL] coords desde REST (corregidas), n puntos:', coords ? coords.length : 0, 'primer punto:', coords?.[0]);
+        } catch(e) { console.warn('[SEL] Error en REST identify:', e); }
+      }
+
+      if (!coords || coords.length < 3) { toast('Geometría no disponible', 'err'); return; }
+
+      // Construir GeoJSON: coords son LatLng[] → convertir a [lng, lat][]
+      const key = mode === 'recinto'
+        ? [props.PROVINCIA, props.MUNICIPIO, props.AGREGADO, props.ZONA, props.POLIGONO, props.PARCELA, props.RECINTO].join(':')
+        : JSON.stringify(props);
+      if (selFeatures.some(s => s.key === key)) { toast('Ya seleccionado', 'err'); return; }
+
+      const ring = coords.map(p => [p.lng, p.lat]);
+      if (ring[0][0] !== ring[ring.length-1][0] || ring[0][1] !== ring[ring.length-1][1]) {
+        ring.push([...ring[0]]);
+      }
+      console.log('[SEL] ring[0] (primer vértice GeoJSON):', ring[0], 'ring[-1]:', ring[ring.length-1]);
+      const feature = { type: 'Feature', geometry: { type: 'Polygon', coordinates: [ring] }, properties: props };
+      const hl = L.polygon(coords, HL_STYLE).addTo(map);
+      selFeatures.push({ feature, hl, key }); window._selFeatures = selFeatures;
+      refreshCount();
+    } catch (err) { console.error('pickFromSigpac error:', err); toast('Error al consultar geometría', 'err'); }
+  }
+
+  function pointInGeoJSON(latlng, geom) {
+    const x = latlng.lng, y = latlng.lat;
+    const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+    for (const poly of polys) {
+      const ring = poly[0];
+      let inside = false;
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+        const intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+      }
+      if (inside) return true;
+    }
+    return false;
+  }
+
+  function pickFromShpLayer(latlng, layerId) {
+    const layer = shpLayers.find(l => l.id === layerId);
+    if (!layer) { toast('Capa no encontrada', 'err'); return; }
+    let hit = null;
+    layer.polyLayer.eachLayer(sub => {
+      if (hit || !sub.feature) return;
+      const g = sub.feature.geometry;
+      if (g && /Polygon/.test(g.type)) {
+        if (pointInGeoJSON(latlng, g)) hit = sub;
+      } else if (sub.getBounds && sub.getBounds().contains(latlng)) {
+        hit = sub;
+      }
+    });
+    if (!hit) return;
+    const key = layerId + ':' + (hit._leaflet_id || JSON.stringify(hit.feature.properties));
+    if (selFeatures.some(s => s.key === key)) { toast('Ya seleccionado', 'err'); return; }
+    const hl = L.geoJSON(hit.feature, { style: HL_STYLE, interactive: false }).addTo(map);
+    selFeatures.push({ feature: hit.feature, hl, key }); window._selFeatures = selFeatures;
+    refreshCount();
+  }
+
+  dskBtn.addEventListener('click', () => { selActive ? closeSelBar() : openSelBar(); });
+  if (mobBtn) mobBtn.addEventListener('click', () => { selActive ? closeSelBar() : openSelBar(); });
+  layerSel.addEventListener('change', () => { selSource = layerSel.value; window._selSource = selSource; clearSelection(); });
+  backBtn.addEventListener('click', () => {
+    const last = selFeatures.pop();
+    if (last && last.hl) map.removeLayer(last.hl);
+    refreshCount();
+  });
+  closeBtn.addEventListener('click', closeSelBar);
+  saveBtn.addEventListener('click', () => {
+    if (selFeatures.length === 0) { toast('No hay geometrías seleccionadas', 'err'); return; }
+    const fc = { type: 'FeatureCollection', features: selFeatures.map(s => s.feature) };
+    const srcLabel = layerSel.options[layerSel.selectedIndex]?.text || 'Selección';
+    const name = `Selección ${srcLabel} (${selFeatures.length})`;
+    addShpLayer(fc, name, null, true);
+    toast(`"${name}" añadida`, 'ok');
+    closeSelBar();
+  });
+
+  // Sincronización con otras herramientas
+  const _origStartDraw = window.startDraw;
+  if (typeof _origStartDraw === 'function') {
+    window.startDraw = function() { if (selActive) closeSelBar(); return _origStartDraw.apply(this, arguments); };
+  }
+  const _origStartMeasure = window.startMeasure;
+  if (typeof _origStartMeasure === 'function') {
+    window.startMeasure = function() { if (selActive) closeSelBar(); return _origStartMeasure.apply(this, arguments); };
+  }
+  const _origApplyQM = window.applyQueryMode;
+  if (typeof _origApplyQM === 'function') {
+    window.applyQueryMode = function(mode) {
+      if (selActive && mode !== 'none') closeSelBar();
+      return _origApplyQM.apply(this, arguments);
+    };
+  }
+})();
 </script>
 </body>
 </html>
