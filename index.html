@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GEOfotos</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%232f6fde'/><rect x='10' y='24' width='44' height='30' rx='5' fill='none' stroke='white' stroke-width='3'/><rect x='24' y='15' width='16' height='10' rx='3' fill='none' stroke='white' stroke-width='3'/><circle cx='32' cy='39' r='8' fill='none' stroke='white' stroke-width='3'/><circle cx='32' cy='39' r='3.5' fill='white' opacity='0.6'/><rect x='13' y='28' width='6' height='4' rx='1.5' fill='white' opacity='0.8'/><line x1='44' y1='18' x2='52' y2='10' stroke='white' stroke-width='2.5' stroke-linecap='round'/><polygon points='52,10 46,10 52,16' fill='white'/></svg>">
+<title>GEOmaps</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%232f6fde'/><path d='M32 10 C22 10 15 18 15 27 C15 40 32 56 32 56 C32 56 49 40 49 27 C49 18 42 10 32 10 Z' fill='none' stroke='white' stroke-width='3.5' stroke-linejoin='round'/><circle cx='32' cy='27' r='7' fill='none' stroke='white' stroke-width='3'/></svg>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
@@ -61,7 +61,7 @@ header {
   background: var(--blue); display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; box-shadow: 0 2px 6px rgba(47,111,222,.4);
 }
-.logo-text { font-size: 18px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+.logo-text { font-size: 32px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
 .logo-text .geo   { color: var(--blue); }
 .logo-text .fotos { color: var(--text); }
 .logo-text .dot   { color: var(--blue); font-size: 22px; line-height: 0; vertical-align: -3px; }
@@ -573,15 +573,15 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 /* BASEMAP SWITCHER */
 #basemap-switcher {
   position: absolute; top: 12px; right: 12px; z-index: 999;
-  display: flex; gap: 2px;
+  display: flex; gap: 3px;
   background: var(--glass); border: 1px solid var(--glass-border);
-  border-radius: 10px; padding: 3px;
+  border-radius: 14px; padding: 4px;
   box-shadow: var(--shadow);
   backdrop-filter: blur(14px);
 }
 .bm-btn {
-  padding: 5px 13px; border-radius: 7px; border: none; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  padding: 7px 18px; border-radius: 10px; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase;
   transition: all .18s; color: var(--text2); background: transparent;
 }
@@ -882,7 +882,7 @@ body:has(#sel-tool-bar.open) #measure-popup { display: none !important; }
 
   header { padding: 0 12px; height: 48px; gap: 6px; }
   .logo-sub, .status-pill, #hover-btn { display: none; }
-  .logo-text { font-size: 15px; }
+  .logo-text { font-size: 26px; }
 
   /* Sidebar: ocultar en móvil (reemplazado por panel móvil) */
   .sidebar { display: none !important; }
@@ -1054,12 +1054,12 @@ body:has(#sel-tool-bar.open) #measure-popup { display: none !important; }
     display: flex !important;
     position: absolute;
     bottom: 6px; right: 12px; z-index: 999;
-    height: 36px; padding: 0 12px;
-    border-radius: 18px; border: 1px solid var(--glass-border);
+    height: 50px; padding: 0 17px;
+    border-radius: 25px; border: 1px solid var(--glass-border);
     background: var(--glass); backdrop-filter: blur(14px);
     box-shadow: var(--shadow); cursor: pointer; color: var(--text2);
-    align-items: center; gap: 6px;
-    font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+    align-items: center; gap: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
     white-space: nowrap;
   }
   #mob-raster-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
@@ -1067,24 +1067,24 @@ body:has(#sel-tool-bar.open) #measure-popup { display: none !important; }
   #mob-raster-panel {
     display: none;
     position: absolute;
-    bottom: 50px; right: 12px; z-index: 998;
+    bottom: 64px; right: 12px; z-index: 998;
     background: var(--glass); border: 1px solid var(--glass-border);
-    border-radius: 12px; padding: 6px; box-shadow: var(--shadow); backdrop-filter: blur(14px);
-    flex-direction: column; gap: 2px; min-width: 130px;
+    border-radius: 14px; padding: 8px; box-shadow: var(--shadow); backdrop-filter: blur(14px);
+    flex-direction: column; gap: 3px; min-width: 180px;
   }
   #mob-raster-panel.open { display: flex !important; }
   .mob-raster-opt {
-    padding: 7px 12px; border-radius: 7px; border: none; cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+    padding: 10px 16px; border-radius: 10px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
     text-align: left; background: transparent; color: var(--text2); transition: all .15s;
     display: flex; align-items: center; justify-content: space-between; gap: 8px;
   }
   .mob-raster-opt:hover { background: var(--blue-lt); color: var(--blue); }
   .mob-raster-opt.active { background: var(--blue); color: #fff; }
   .mob-raster-year {
-    font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
     color: var(--blue); background: var(--blue-lt); border: 1px solid rgba(47,111,222,.25);
-    border-radius: 4px; padding: 2px 5px; cursor: pointer; outline: none;
+    border-radius: 5px; padding: 3px 7px; cursor: pointer; outline: none;
   }
   .mob-raster-opt.active .mob-raster-year { color: rgba(255,255,255,.8); background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.3); }
 
@@ -1093,18 +1093,19 @@ body:has(#sel-tool-bar.open) #measure-popup { display: none !important; }
     display: flex !important;
     position: absolute;
     bottom: 6px; left: 12px; z-index: 999;
-    align-items: flex-end; gap: 6px;
-    flex-direction: row;
+    align-items: flex-start; gap: 8px;
+    flex-direction: column-reverse;
   }
 
-  /* Botón herramientas móvil (mismo estilo que desktop) */
+  /* Botón herramientas móvil — mismo tamaño que el botón de localización */
   .mob-tool-btn {
-    width: 36px; height: 36px; border-radius: 8px; border: none; cursor: pointer;
+    width: 44px; height: 44px; border-radius: 10px; border: none; cursor: pointer;
     background: var(--glass); border: 1px solid var(--glass-border);
     box-shadow: var(--shadow); backdrop-filter: blur(14px);
     display: flex; align-items: center; justify-content: center;
     transition: all .2s; color: var(--text2); flex-shrink: 0;
   }
+  .mob-tool-btn svg { width: 18px; height: 18px; }
   .mob-tool-btn:hover { background: var(--blue-lt); color: var(--blue); }
   .mob-tool-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
 
@@ -1417,14 +1418,13 @@ body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
   <div class="logo">
     <div class="logo-icon">
       <!-- cámara + pin -->
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-        <circle cx="12" cy="13" r="4"/>
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+        <path d="M10 2 C6.5 2 4 5 4 8 C4 13 10 19 10 19 C10 19 16 13 16 8 C16 5 13.5 2 10 2 Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+        <circle cx="10" cy="8" r="2.5" stroke="white" stroke-width="1.8"/>
       </svg>
     </div>
     <div>
-      <div class="logo-text"><span class="geo">GEO</span><span class="dot">·</span><span class="fotos">fotos</span></div>
-      <div class="logo-sub">visor SIGPAC</div>
+      <div class="logo-text"><span class="geo">geo</span><span class="fotos">maps</span></div>
     </div>
   </div>
   <div class="header-sep"></div>
@@ -2069,7 +2069,7 @@ const ORTOFOTO_CONFIGS = {
   }),
 };
 
-const ORTOFOTO_YEAR_KEY = 'geofotos_ortofoto_year';
+const ORTOFOTO_YEAR_KEY = 'geomaps_ortofoto_year';
 let activeOrtoYear = localStorage.getItem(ORTOFOTO_YEAR_KEY) || '2024';
 
 // Crear el tile layer de la ortofoto activa
@@ -2172,7 +2172,7 @@ const RECINTOS_WMS = {
 const CULTIVO_WMS   = 'https://sigpac-hubcloud.es/wms';
 const CULTIVO_LAYER = 'cultivo_declarado';
 
-const WMS_YEAR_KEY = 'geofotos_recintos_year';
+const WMS_YEAR_KEY = 'geomaps_recintos_year';
 let activeRecintoYear = '2026';
 let WMS_URL        = RECINTOS_WMS[activeRecintoYear];
 let ARCGIS_REST_URL = WMS_URL.replace('/WMSServer','/0/query').replace('/services/','/rest/services/');
@@ -2228,7 +2228,7 @@ document.getElementById('tog-cultivo').addEventListener('change', e => {
 })();
 
 // ── TRIPLE QUERY SWITCHER ──
-const QS_KEY = 'geofotos_querymode';
+const QS_KEY = 'geomaps_querymode';
 let queryMode = localStorage.getItem(QS_KEY) || 'none';
 
 function applyQueryMode(mode) {
@@ -4135,7 +4135,9 @@ function startDraw() {
   map.getContainer().style.cursor = 'crosshair';
   map.on('click',     onDrawClick);
   map.on('mousemove', onDrawMove);
-  map.on('dblclick',  onDrawFinish);
+  if (!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+    map.on('dblclick', onDrawFinish);
+  }
 }
 
 function stopDraw(save) {
@@ -4349,7 +4351,9 @@ function startMeasure(mode) {
   drawHint.classList.add('show');
   map.on('click',    onMeasureClick);
   map.on('mousemove',onMeasureMove);
-  map.on('dblclick', onMeasureFinish);
+  if (!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+    map.on('dblclick', onMeasureFinish);
+  }
 }
 
 function stopMeasure() {
@@ -4830,7 +4834,7 @@ function setupModoLocalNoConfigured() {
   appFirebase = null;
   auth = null;
   db = null;
-  console.log("Corriendo GEOfotos en Modo Local (Sincronización Cloud desactivada).");
+  console.log("Corriendo GEOmaps en Modo Local (Sincronización Cloud desactivada).");
   
   // Modificar el botón de cabecera de cuenta para avisar de forma nativa
   document.addEventListener("DOMContentLoaded", () => {
