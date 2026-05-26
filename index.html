@@ -733,39 +733,14 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
 @media (max-width: 700px) { #select-tool-btn { display: none !important; } }
 
 /* Barra de selección */
-#sel-tool-bar {
-  display: none;
-  position: absolute;
-  top: 60px; left: 12px; right: 12px; z-index: 1050;
-  background: var(--glass); border: 1px solid rgba(155,39,200,.4);
-  border-radius: 12px; padding: 8px 10px;
-  box-shadow: var(--shadow); backdrop-filter: blur(16px);
-  max-width: 620px; margin: 0 auto;
-}
-@media (min-width: 701px) {
-  #sel-tool-bar { left: 50%; right: auto; transform: translateX(-50%); top: 64px; width: 620px; }
-}
-#sel-tool-bar.open { display: block !important; }
-.sel-bar-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.sel-bar-label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .08em; }
-.sel-bar-select {
-  flex: 1; min-width: 120px; height: 30px; padding: 0 8px;
-  border: 1.5px solid var(--border2); border-radius: 7px;
-  font-family: 'DM Sans', sans-serif; font-size: 12px; background: #fff; color: var(--text); cursor: pointer;
-}
-.sel-bar-count { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700; color: #9b27c8; margin-right: 4px; }
-#sel-tool-save { background: var(--green); color: #fff; }
-#sel-tool-save:hover { background: #166038; }
-#sel-tool-close { background: rgba(217,48,37,.1); color: var(--danger); }
-#sel-tool-close:hover { background: var(--danger); color: #fff; }
-#sel-tool-back  { background: var(--s3); color: var(--text2); }
-#sel-tool-back:hover  { background: var(--border2); }
+/* sel-tool-bar usa .tool-bar-panel — ver estilos compartidos arriba */
+#sel-tool-bar.open { display: flex !important; }
 body:has(#sel-tool-bar.open) #measure-popup { display: none !important; }
 
 /* Popup de medida */
 #measure-popup {
   position: fixed; z-index: 1100;
-  top: 58px; left: 50%; transform: translateX(-50%);
+  top: 60px; left: 50%; transform: translateX(-50%);
   background: var(--glass); border: 1.5px solid var(--blue);
   border-radius: 10px; padding: 8px 36px 8px 14px;
   font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700;
@@ -1197,45 +1172,8 @@ body:has(#sel-tool-bar.open) #measure-popup { display: none !important; }
 }
 
 /* ── BARRA DIBUJO UNIFICADA (desktop + móvil) ── */
-#mob-draw-bar {
-  display: none;
-  position: absolute;
-  top: 60px; left: 12px; right: 12px; z-index: 1050;
-  background: var(--glass); border: 1px solid rgba(47,111,222,.4);
-  border-radius: 12px; padding: 8px 10px;
-  box-shadow: var(--shadow); backdrop-filter: blur(16px);
-  flex-direction: column; gap: 8px;
-  max-width: 520px; margin: 0 auto;
-}
-@media (min-width: 701px) {
-  #mob-draw-bar { left: 50%; right: auto; transform: translateX(-50%); top: 64px; width: 520px; }
-}
+/* mob-draw-bar usa .tool-bar-panel — ver estilos compartidos arriba */
 #mob-draw-bar.open { display: flex !important; }
-.mob-draw-bar-row { display: flex; align-items: center; gap: 6px; }
-.mob-draw-bar-row:first-child { justify-content: space-between; }
-.mob-draw-type-btn {
-  flex: 1; height: 32px; border-radius: 8px; border: none; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
-  background: var(--s3); color: var(--text2); transition: all .15s;
-  display: flex; align-items: center; justify-content: center; gap: 4px;
-}
-.mob-draw-type-btn.active { background: var(--blue); color: #fff; }
-.mob-draw-type-btn:disabled { opacity: .4; cursor: not-allowed; }
-#mob-draw-measure {
-  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
-  color: var(--blue); flex: 1; text-align: center; min-height: 16px;
-}
-.mob-draw-action {
-  height: 36px; padding: 0 12px; border-radius: 8px; border: none; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
-  display: flex; align-items: center; gap: 4px; transition: all .15s;
-}
-#mob-draw-bar-back  { background: var(--s3); color: var(--text2); }
-#mob-draw-bar-back:hover  { background: var(--border2); }
-#mob-draw-bar-close { background: rgba(217,48,37,.1); color: var(--danger); }
-#mob-draw-bar-close:hover { background: var(--danger); color: #fff; }
-#mob-draw-bar-save  { background: var(--green); color: #fff; }
-#mob-draw-bar-save:hover  { background: #166038; }
 body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
 
 /* ── MODAL ELIMINAR CAPA UNIFICADO (desktop + móvil) ── */
@@ -1283,95 +1221,133 @@ body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
 #desktop-gps-btn:hover { background: var(--blue-lt); color: var(--blue); border-color: rgba(47,111,222,.3); }
 #desktop-gps-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47,111,222,.25), var(--shadow); }
 
-/* ── GPS MEASURE POPUP (desktop + mobile) ── */
-#desktop-gps-bar {
+/* desktop-gps-bar usa .tool-bar-panel — ver estilos compartidos arriba */
+#desktop-gps-bar { width: 520px; top: 60px; }
+#desktop-gps-bar.open { display: flex !important; }
+@media (max-width: 700px) {
+  #desktop-gps-bar { left: 12px; right: 12px; transform: none; width: auto; gap: 6px; }
+  #desktop-gps-bar .tool-bar-row { flex-wrap: nowrap; gap: 5px; width: 100%; }
+  #desktop-gps-bar .tool-bar-row:first-child { display: flex; align-items: center; gap: 5px; }
+  #desktop-gps-bar .tool-type-btn { flex: 1; min-width: 0; height: 32px; font-size: 8.5px; }
+  #desktop-gps-bar .tool-ctrl-btn { padding: 0 10px; font-size: 8.5px; height: 32px; flex-shrink: 0; }
+  #desktop-gps-bar .tool-action-btn { padding: 0 10px; height: 32px; }
+  #desktop-gps-bar #desktop-gps-state-label,
+  #desktop-gps-bar #dsk-gps-pts-label { display: none !important; }
+  #desktop-gps-bar #desktop-gps-measure { display: flex !important; }
+}
+/* ── PANELES DE HERRAMIENTAS: estilos compartidos (draw, gps, sel) ── */
+.tool-bar-panel {
   display: none;
   position: fixed;
-  top: 60px; left: 50%; transform: translateX(-50%); z-index: 1050;
+  top: 60px; left: 12px; right: 12px; z-index: 1050;
   background: var(--glass); border: 1px solid rgba(47,111,222,.4);
   border-radius: 12px; padding: 8px 10px;
   box-shadow: var(--shadow); backdrop-filter: blur(16px);
   flex-direction: column; gap: 8px;
-  width: 520px;
+  max-width: 520px; margin: 0 auto;
 }
-#desktop-gps-bar.open { display: flex !important; }
-@media (max-width: 700px) {
-  #desktop-gps-bar {
-    left: 12px; right: 12px; transform: none;
-    width: auto; gap: 6px;
-  }
-  /* Mobile GPS bar: top row = all buttons, bottom row = info */
-  #desktop-gps-bar .dsk-gps-bar-row {
-    flex-wrap: nowrap; gap: 5px; width: 100%;
-  }
-  /* Row 1: type buttons + control buttons */
-  #desktop-gps-bar .dsk-gps-bar-row:first-child {
-    display: flex; align-items: center; gap: 5px;
-  }
-  #desktop-gps-bar .dsk-gps-type-btn {
-    flex: 1; min-width: 0; height: 34px; font-size: 8.5px;
-  }
-  #desktop-gps-bar .dsk-gps-ctrl-btn {
-    padding: 0 10px; font-size: 8.5px; height: 34px; flex-shrink: 0;
-  }
-  #desktop-gps-bar #dsk-gps-reset-btn {
-    padding: 0 10px; font-size: 8.5px; height: 34px;
-  }
-  /* Ocultar labels de info de la fila de botones en móvil */
-  #desktop-gps-bar #desktop-gps-state-label,
-  #desktop-gps-bar #dsk-gps-pts-label {
-    display: none;
-  }
-  /* Medición: siempre visible en móvil, en su propia fila */
-  #desktop-gps-bar #desktop-gps-measure {
-    display: flex !important;
-    flex-direction: row; align-items: center; justify-content: center;
-    gap: 10px; font-size: 11px;
-    width: 100%; text-align: center; padding: 2px 0;
-  }
+.tool-bar-panel.open { display: flex !important; }
+@media (min-width: 701px) {
+  .tool-bar-panel { left: 50%; right: auto; transform: translateX(-50%); top: 64px; width: 520px; }
+  #measure-popup { top: 64px; }
+  #desktop-gps-bar { top: 64px; }
+  #sel-tool-bar { width: 620px; max-width: 620px; }
 }
-.dsk-gps-bar-row { display: flex; align-items: center; gap: 6px; }
-.dsk-gps-type-btn {
+
+/* Fila de controles dentro de un panel */
+.tool-bar-row { display: flex; align-items: center; gap: 6px; }
+.tool-bar-row:first-child { justify-content: space-between; }
+
+/* Botones de tipo (Área / Línea) */
+.tool-type-btn {
   flex: 1; height: 32px; border-radius: 8px; border: none; cursor: pointer;
   font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
   background: var(--s3); color: var(--text2); transition: all .15s;
   display: flex; align-items: center; justify-content: center; gap: 4px;
 }
-.dsk-gps-type-btn.active { background: var(--blue); color: #fff; }
-.dsk-gps-type-btn:disabled { opacity: .4; cursor: not-allowed; }
-#desktop-gps-state-label {
-  font-family: 'DM Sans', sans-serif; font-size: 9px;
-  color: var(--muted); text-align: center; letter-spacing: .06em;
-  text-transform: uppercase; min-width: 80px;
+.tool-type-btn.active { background: var(--blue); color: #fff; }
+.tool-type-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* Botones de acción (guardar, cancelar, retroceder, reset) */
+.tool-action-btn {
+  height: 32px; padding: 0 12px; border-radius: 8px; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; gap: 4px; transition: all .15s; flex-shrink: 0;
 }
-#desktop-gps-state-label.recording { color: var(--blue); }
-#desktop-gps-measure {
-  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
-  color: var(--blue); flex: 1; text-align: center; min-height: 16px;
-}
-.dsk-gps-ctrl-btn {
-  height: 36px; padding: 0 12px; border-radius: 8px; cursor: pointer;
+.tool-action-btn.btn-save  { background: var(--green); color: #fff; }
+.tool-action-btn.btn-save:hover  { background: #166038; }
+.tool-action-btn.btn-cancel { background: rgba(217,48,37,.1); color: var(--danger); }
+.tool-action-btn.btn-cancel:hover { background: var(--danger); color: #fff; }
+.tool-action-btn.btn-back  { background: var(--s3); color: var(--text2); }
+.tool-action-btn.btn-back:hover  { background: var(--border2); }
+.tool-action-btn.btn-blue  { background: rgba(47,111,222,.1); color: var(--blue); }
+.tool-action-btn.btn-blue:hover  { background: var(--blue); color: #fff; }
+.tool-action-btn:disabled  { opacity: .35; cursor: not-allowed; }
+
+/* Botones de control GPS (play/pause/stop) */
+.tool-ctrl-btn {
+  height: 32px; padding: 0 12px; border-radius: 8px; cursor: pointer;
   font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700;
   display: flex; align-items: center; gap: 4px; transition: all .15s;
   background: var(--s3); color: var(--text2); border: 1px solid var(--border2);
 }
-.dsk-gps-ctrl-btn:hover:not(:disabled) { background: var(--blue); color: #fff; border-color: var(--blue); }
-.dsk-gps-ctrl-btn:disabled { opacity: .35; cursor: not-allowed; }
-/* Highlight persistente cuando play/pause están activos */
-.dsk-gps-ctrl-btn.gps-active-state {
+.tool-ctrl-btn:hover:not(:disabled) { background: var(--blue); color: #fff; border-color: var(--blue); }
+.tool-ctrl-btn:disabled { opacity: .35; cursor: not-allowed; }
+.tool-ctrl-btn.gps-active-state {
   background: var(--blue) !important; color: #fff !important;
   border-color: var(--blue) !important;
   box-shadow: 0 0 0 2px rgba(47,111,222,.35) !important;
 }
-#dsk-gps-pts-label { font-family: 'DM Sans', sans-serif; font-size: 9px; color: var(--muted); min-width: 60px; text-align: center; }
 
-/* Mostrar label en móvil para claridad */
+/* Info de medición dentro del panel */
+.tool-measure-info {
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--blue); text-align: center; min-height: 16px; width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+
+/* Contador de selección */
+.tool-count-label {
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
+  color: var(--blue); margin-right: 4px;
+}
+/* Contador selección: en escritorio inline, en móvil fila propia */
+.sel-count-mobile-row { display: none; }
 @media (max-width: 700px) {
-  /* Mostrar fila de info contextual en móvil */
-  #dsk-gps-mob-info { display: block !important; }
-  /* Ocultar labels de info de la fila de botones en móvil */
+  .sel-count-desktop { display: none !important; }
+  .sel-count-mobile-row { display: flex !important; align-items: center; padding-top: 2px; border-top: 1px solid var(--border); }
+  .sel-count-mobile-row .tool-count-label { margin-right: 0; }
+}
+
+/* Label de estado GPS */
+.tool-state-label {
+  font-family: 'DM Sans', sans-serif; font-size: 9px;
+  color: var(--muted); text-align: center; letter-spacing: .06em;
+  text-transform: uppercase; min-width: 80px;
+}
+.tool-state-label.recording { color: var(--blue); }
+
+/* Select de capa en panel selección */
+.tool-layer-select {
+  flex: 1; min-width: 120px; height: 32px; padding: 0 8px;
+  border: 1.5px solid var(--border2); border-radius: 7px;
+  font-family: 'DM Sans', sans-serif; font-size: 12px;
+  background: var(--surface); color: var(--text); cursor: pointer;
+}
+
+/* Label uppercase */
+.tool-label {
+  font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700;
+  color: var(--text2); text-transform: uppercase; letter-spacing: .08em;
+}
+
+@media (max-width: 700px) {
+  #dsk-gps-mob-info { display: none !important; }
   #desktop-gps-bar #desktop-gps-state-label,
   #desktop-gps-bar #dsk-gps-pts-label { display: none !important; }
+  #desktop-gps-bar #desktop-gps-measure { display: flex !important; }
+  #desktop-gps-bar #dsk-gps-reset-btn,
+  #desktop-gps-bar #dsk-gps-clear-btn { padding: 0 10px; height: 32px; }
 }
 
 /* ── ZOOM CONTROL: bottom-left, right of sidebar panel ── */
@@ -1655,42 +1631,6 @@ body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
   </button>
 
   <!-- Desktop GPS Measure Bar (popup) -->
-  <div id="desktop-gps-bar">
-    <!-- Fila 1: Tipo + botones de control (en móvil, todos en una fila) -->
-    <div class="dsk-gps-bar-row" id="dsk-gps-btn-row">
-      <button class="dsk-gps-type-btn active" id="dsk-gps-type-area">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-        Área
-      </button>
-      <button class="dsk-gps-type-btn" id="dsk-gps-type-line">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h18"/></svg>
-        Línea
-      </button>
-      <!-- Info labels: visibles en escritorio dentro de la misma fila -->
-      <div id="desktop-gps-state-label">Sin iniciar</div>
-      <div id="dsk-gps-pts-label"></div>
-      <!-- Botones de control -->
-      <button class="dsk-gps-ctrl-btn" id="dsk-gps-play-btn" title="Iniciar / Reanudar">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-
-      </button>
-      <button class="dsk-gps-ctrl-btn" id="dsk-gps-pause-btn" title="Pausar" disabled>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-
-      </button>
-      <button class="dsk-gps-ctrl-btn" id="dsk-gps-stop-btn" title="Finalizar y guardar" disabled>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-        Guardar
-      </button>
-      <button class="mob-draw-action" id="dsk-gps-reset-btn" title="Borrar último punto (solo en pausa)" style="background:rgba(47,111,222,.1);color:var(--blue);">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg>
-      </button>
-    </div>
-    <!-- Fila 2: medición + info contextual -->
-    <div id="desktop-gps-measure" style="display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Sans',monospace;font-size:11px;font-weight:700;color:var(--blue);min-height:16px;width:100%;text-align:center;"></div>
-    <!-- Fila info extra en móvil (estado + pts) -->
-    <div id="dsk-gps-mob-info" style="display:none;font-family:'DM Sans',monospace;font-size:9px;color:var(--muted);text-align:center;letter-spacing:.06em;text-transform:uppercase;"></div>
-  </div>
 
   <button id="geolocate-btn" title="Mi ubicación">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -1716,6 +1656,39 @@ body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
   </div>
   <div id="imagery-date">Google Earth</div>
 </div>
+
+  <div id="desktop-gps-bar" class="tool-bar-panel">
+    <div class="tool-bar-row dsk-gps-bar-row" id="dsk-gps-btn-row">
+      <button class="tool-type-btn active" id="dsk-gps-type-area">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        Área
+      </button>
+      <button class="tool-type-btn" id="dsk-gps-type-line">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h18"/></svg>
+        Línea
+      </button>
+      <div class="tool-state-label" id="desktop-gps-state-label">Sin iniciar</div>
+      <div id="dsk-gps-pts-label" style="font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);min-width:60px;text-align:center;"></div>
+      <button class="tool-ctrl-btn" id="dsk-gps-play-btn" title="Iniciar / Reanudar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <button class="tool-ctrl-btn" id="dsk-gps-pause-btn" title="Pausar" disabled>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </button>
+      <button class="tool-ctrl-btn" id="dsk-gps-stop-btn" title="Finalizar y guardar" disabled>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        Guardar
+      </button>
+      <button class="tool-action-btn btn-back" id="dsk-gps-reset-btn" title="Borrar último punto (solo en pausa)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg>
+      </button>
+      <button class="tool-action-btn btn-cancel" id="dsk-gps-clear-btn" title="Resetear medición" disabled>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="tool-measure-info" id="desktop-gps-measure"></div>
+    <div id="dsk-gps-mob-info" style="display:none;font-family:'DM Sans',monospace;font-size:9px;color:var(--muted);text-align:center;letter-spacing:.06em;text-transform:uppercase;"></div>
+  </div>
 
 <!-- Modal Compartir Capa -->
 <div class="share-modal" id="shareModal">
@@ -1922,46 +1895,49 @@ body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
 </div>
 
 <!-- Barra de dibujo móvil (aparece en la parte superior del mapa) -->
-<div id="mob-draw-bar">
-  <div class="mob-draw-bar-row">
-    <button class="mob-draw-type-btn active" id="mob-draw-bar-area">
+<div id="mob-draw-bar" class="tool-bar-panel">
+  <div class="tool-bar-row">
+    <button class="tool-type-btn active" id="mob-draw-bar-area">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
       Área
     </button>
-    <button class="mob-draw-type-btn" id="mob-draw-bar-line">
+    <button class="tool-type-btn" id="mob-draw-bar-line">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h18"/></svg>
       Línea
     </button>
-    <button class="mob-draw-action" id="mob-draw-bar-back" title="Borrar último punto">
+    <button class="tool-action-btn btn-back" id="mob-draw-bar-back" title="Borrar último punto">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg>
     </button>
-    <button class="mob-draw-action" id="mob-draw-bar-close" title="Cancelar dibujo">
+    <button class="tool-action-btn btn-cancel" id="mob-draw-bar-close" title="Cancelar dibujo">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <button class="mob-draw-action" id="mob-draw-bar-save" title="Guardar y añadir a capas">
+    <button class="tool-action-btn btn-save" id="mob-draw-bar-save" title="Guardar y añadir a capas">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       Guardar
     </button>
   </div>
-  <div id="mob-draw-measure"></div>
+  <div class="tool-measure-info" id="mob-draw-measure"></div>
 </div>
 
 <!-- Barra de selección (escritorio + móvil) -->
-<div id="sel-tool-bar">
-  <div class="sel-bar-row">
-    <label class="sel-bar-label">Capa:</label>
-    <select id="sel-tool-layer" class="sel-bar-select"></select>
-    <span id="sel-tool-count" class="sel-bar-count">0 seleccionadas</span>
-    <button class="mob-draw-action" id="sel-tool-back" title="Deshacer última selección">
+<div id="sel-tool-bar" class="tool-bar-panel">
+  <div class="tool-bar-row">
+    <label class="tool-label">Capa:</label>
+    <select id="sel-tool-layer" class="tool-layer-select"></select>
+    <span id="sel-tool-count" class="tool-count-label sel-count-desktop">0 seleccionadas</span>
+    <button class="tool-action-btn btn-back" id="sel-tool-back" title="Deshacer última selección">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg>
     </button>
-    <button class="mob-draw-action" id="sel-tool-close" title="Cancelar">
+    <button class="tool-action-btn btn-cancel" id="sel-tool-close" title="Cancelar">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <button class="mob-draw-action" id="sel-tool-save" title="Guardar selección como capa">
+    <button class="tool-action-btn btn-save" id="sel-tool-save" title="Guardar selección como capa">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       Guardar
     </button>
+  </div>
+  <div class="tool-bar-row sel-count-mobile-row">
+    <span class="tool-count-label">0 seleccionadas</span>
   </div>
 </div>
 
@@ -5438,6 +5414,7 @@ async function rejectShare(reqId) {
   let gpsTrackState = 'idle'; // idle | recording | paused
   let gpsTrackWatchId = null;
   let gpsTrackPoints = [];
+  let gpsTrackLastTime = null;
   let gpsTrackPolyline = null;
   let gpsTrackCount = 0;
 
@@ -5484,6 +5461,22 @@ async function rejectShare(reqId) {
     gpsTrackWatchId = navigator.geolocation.watchPosition(pos => {
       if (gpsTrackState !== 'recording') return;
       const { latitude: lat, longitude: lng } = pos.coords;
+
+      // Filtro: mínimo 1 segundo entre puntos
+      const now = Date.now();
+      if (gpsTrackLastTime && now - gpsTrackLastTime < 1000) return;
+
+      // Filtro: mínimo 2 metros desde el último punto
+      if (gpsTrackPoints.length > 0) {
+        const last = gpsTrackPoints[gpsTrackPoints.length - 1];
+        const dLat = (lat - last[0]) * Math.PI / 180;
+        const dLng = (lng - last[1]) * Math.PI / 180;
+        const a = Math.sin(dLat/2)**2 + Math.cos(last[0]*Math.PI/180) * Math.cos(lat*Math.PI/180) * Math.sin(dLng/2)**2;
+        const dist = 6371000 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        if (dist < 2) return;
+      }
+
+      gpsTrackLastTime = now;
       gpsTrackPoints.push([lat, lng]);
       if (gpsTrackPolyline) {
         gpsTrackPolyline.setLatLngs(gpsTrackPoints);
@@ -5513,6 +5506,7 @@ async function rejectShare(reqId) {
     e.stopPropagation();
     if (gpsTrackState === 'idle') {
       gpsTrackPoints = [];
+      gpsTrackLastTime = null;
       if (gpsTrackPolyline) { map.removeLayer(gpsTrackPolyline); gpsTrackPolyline = null; }
       gpsTrackState = 'recording';
       gpsStartWatch();
@@ -5876,11 +5870,13 @@ if (auth !== null) {
   const dskPauseBtn    = document.getElementById('dsk-gps-pause-btn');
   const dskStopBtn     = document.getElementById('dsk-gps-stop-btn');
   const dskResetBtn    = document.getElementById('dsk-gps-reset-btn');
+  const dskClearBtn    = document.getElementById('dsk-gps-clear-btn');
 
   let dskGpsTrackType  = 'area';
   let dskGpsState_v    = 'idle'; // idle | recording | paused
   let dskGpsWatchId    = null;
   let dskGpsPoints     = [];
+  let dskGpsLastTime   = null;
   let dskGpsPolyline   = null;
   let dskGpsCount      = 0;
 
@@ -5965,6 +5961,14 @@ if (auth !== null) {
     dskResetBtn.disabled = !(dskGpsState_v === 'paused' && dskGpsPoints.length > 0);
     dskResetBtn.style.opacity = dskResetBtn.disabled ? '0.35' : '1';
     dskResetBtn.style.cursor  = dskResetBtn.disabled ? 'not-allowed' : 'pointer';
+
+    // Botón clear (resetear todo): activo solo en pausa o idle con puntos, nunca durante play
+    const clearActive = dskGpsState_v !== 'recording' && dskGpsPoints.length > 0;
+    if (dskClearBtn) {
+      dskClearBtn.disabled = !clearActive;
+      dskClearBtn.style.opacity = clearActive ? '1' : '0.35';
+      dskClearBtn.style.cursor  = clearActive ? 'pointer' : 'not-allowed';
+    }
     const mobInfo = document.getElementById('dsk-gps-mob-info');
     if (mobInfo) {
       const ptsStr = dskGpsPoints.length > 0 ? ' · ' + dskGpsPoints.length + ' pts' : '';
@@ -5997,6 +6001,22 @@ if (auth !== null) {
     dskGpsWatchId = navigator.geolocation.watchPosition(pos => {
       if (dskGpsState_v !== 'recording') return;
       const { latitude: lat, longitude: lng } = pos.coords;
+
+      // Filtro: mínimo 1 segundo entre puntos
+      const now = Date.now();
+      if (dskGpsLastTime && now - dskGpsLastTime < 1000) return;
+
+      // Filtro: mínimo 2 metros desde el último punto
+      if (dskGpsPoints.length > 0) {
+        const last = dskGpsPoints[dskGpsPoints.length - 1];
+        const dLat = (lat - last[0]) * Math.PI / 180;
+        const dLng = (lng - last[1]) * Math.PI / 180;
+        const a = Math.sin(dLat/2)**2 + Math.cos(last[0]*Math.PI/180) * Math.cos(lat*Math.PI/180) * Math.sin(dLng/2)**2;
+        const dist = 6371000 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        if (dist < 2) return;
+      }
+
+      dskGpsLastTime = now;
       dskGpsPoints.push([lat, lng]);
       if (dskGpsPolyline) dskGpsPolyline.setLatLngs(dskGpsPoints);
       else dskGpsPolyline = L.polyline(dskGpsPoints, { color: '#2f6fde', weight: 3, opacity: 0.9 }).addTo(map);
@@ -6034,6 +6054,7 @@ if (auth !== null) {
     e.stopPropagation();
     if (dskGpsState_v === 'idle') {
       dskGpsPoints = [];
+      dskGpsLastTime = null;
       if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; }
       dskGpsState_v = 'recording';
       dskGpsStartWatch();
@@ -6099,6 +6120,20 @@ if (auth !== null) {
     toast('Último punto eliminado');
     updateDskGpsUI();
   });
+
+  if (dskClearBtn) {
+    dskClearBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (dskGpsState_v === 'recording') return;
+      dskGpsPoints = [];
+      dskGpsLastTime = null;
+      dskGpsState_v = 'idle';
+      dskGpsStopWatch();
+      if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; }
+      updateDskGpsUI();
+      toast('Medición reseteada');
+    });
+  }
 
   updateDskGpsUI();
 })();
@@ -6393,6 +6428,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const mobBtn   = document.getElementById('mob-select-btn');
   const layerSel = document.getElementById('sel-tool-layer');
   const countEl  = document.getElementById('sel-tool-count');
+  const countElMob = document.querySelector('.sel-count-mobile-row .tool-count-label');
   const backBtn  = document.getElementById('sel-tool-back');
   const closeBtn = document.getElementById('sel-tool-close');
   const saveBtn  = document.getElementById('sel-tool-save');
@@ -6400,7 +6436,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function refreshCount() {
     const n = selFeatures.length;
-    countEl.textContent = n + (n === 1 ? ' seleccionada' : ' seleccionadas');
+    const txt = n + (n === 1 ? ' seleccionada' : ' seleccionadas');
+    countEl.textContent = txt;
+    if (countElMob) countElMob.textContent = txt;
   }
   function buildLayerOptions() {
     const prev = layerSel.value;
