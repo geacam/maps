@@ -345,6 +345,22 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px;
   font-size: 14px; padding: 2px 5px; border-radius: 4px; line-height: 1;
 }
 #query-popup .qp-close:hover { color: var(--danger); background: rgba(217,48,37,.08); }
+/* ── Checklist popup tabs ── */
+.popup-tabs { display:flex; border-bottom:1px solid #e0e0e0; margin:-4px -8px 8px; }
+.popup-tab  { flex:1; padding:5px 4px; font-size:9.5px; font-weight:700; text-align:center; cursor:pointer; color:#999; border-bottom:2px solid transparent; transition:all .15s; font-family:'DM Sans',sans-serif; }
+.popup-tab.active { color:#2f6fde; border-bottom-color:#2f6fde; }
+.popup-tab-panel { display:none; }
+.popup-tab-panel.active { display:block; }
+.cl-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.cl-label { font-size:10px; font-weight:700; color:#555; font-family:'DM Sans',sans-serif; white-space:nowrap; }
+.cl-checkbox { width:16px; height:16px; accent-color:#2f6fde; cursor:pointer; flex-shrink:0; }
+.cl-textarea { width:100%; box-sizing:border-box; font-family:'DM Sans',sans-serif; font-size:10px; border:1px solid #ddd; border-radius:6px; padding:5px 7px; resize:vertical; min-height:52px; outline:none; transition:border .15s; }
+.cl-textarea:focus { border-color:#2f6fde; }
+.cl-save-btn { width:100%; padding:5px; font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700; background:#2f6fde; color:#fff; border:none; border-radius:6px; cursor:pointer; transition:background .15s; }
+.cl-save-btn:hover { background:#2257b8; }
+.cl-saved-msg { font-size:9px; color:#2f6fde; text-align:center; margin-top:4px; display:none; font-family:'DM Sans',sans-serif; }
+.cl-badge { display:inline-block; width:8px; height:8px; border-radius:50%; background:#2f6fde; margin-left:4px; vertical-align:middle; flex-shrink:0; }
+
 #query-popup .qp-id {
   font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
   line-height: 1.35; margin-bottom: 6px; margin-right: 18px;
@@ -866,6 +882,8 @@ body:has(#sel-tool-bar.open) #measure-popup { display: none !important; }
 
   header { padding: 0 12px; height: 48px; gap: 6px; }
   .logo-sub, .status-pill, #hover-btn { display: none; }
+  .offline-btn-label { display: none; }
+  #offline-btn { padding: 0 8px; }
   .logo-text { font-size: 26px; }
 
   /* Sidebar: ocultar en móvil (reemplazado por panel móvil) */
@@ -1434,6 +1452,13 @@ body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
     </svg>
   </button>
   
+  <!-- Botón offline -->
+  <button id="offline-btn" title="Guardar zona para uso offline" onclick="window.openOfflineModal && openOfflineModal()" style="display:flex;align-items:center;gap:5px;padding:0 10px;height:32px;border-radius:8px;background:rgba(255,255,255,.75);border:1.5px solid var(--border2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;flex-shrink:0;">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 6l5 5 5-5"/><path d="M6 2v9"/><rect x="2" y="14" width="20" height="8" rx="2"/>
+    </svg>
+    <span class="offline-btn-label">Offline</span>
+  </button>
   <div class="status-pill"><span class="dot"></span>WMS activo</div>
 </header>
 
@@ -1705,6 +1730,22 @@ body:has(#mob-draw-bar.open) #measure-popup { display: none !important; }
 </div>
 
 <!-- Modal enlace público -->
+<!-- Modal: Añadir capa a... -->
+<div class="share-modal" id="addToLayerModal">
+  <div class="share-card" style="max-width:340px;">
+    <div class="share-title">Añadir capa a:</div>
+    <select id="addToLayerSelect" style="width:100%;height:36px;padding:0 10px;margin:14px 0 18px;
+      border:1.5px solid var(--border2);border-radius:8px;font-family:'DM Sans',sans-serif;
+      font-size:13px;background:var(--surface);color:var(--text);cursor:pointer;">
+      <option value="__new__">— Nueva capa vectorial —</option>
+    </select>
+    <div class="share-actions">
+      <button class="share-btn secondary" id="addToLayerCancel">Cancelar</button>
+      <button class="share-btn primary" id="addToLayerSave">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <div class="share-modal" id="shareLinkModal">
   <div class="share-card">
     <div class="share-title">Enlace público</div>
@@ -3380,6 +3421,46 @@ async function processGenericShpFiles(files) {
 }
 
 const SHP_ZOOM_THRESHOLD = 14;
+const VISITED_COLOR = '#2e7d32'; // Verde para geometrías marcadas como visitadas
+
+// Actualiza el color de un feature concreto al marcar/desmarcar como visitado
+function updateFeatureVisitedStyle(layerId, featureIdx, visitado) {
+  const layer = shpLayers.find(l => l.id === layerId);
+  if (!layer) return;
+  const newColor = visitado ? VISITED_COLOR : layer.color;
+
+  // Actualizar polígono en polyLayer
+  let fCount = 0;
+  layer.polyLayer.eachLayer(sub => {
+    if (fCount === featureIdx) {
+      sub.setStyle({ color: newColor, fillColor: newColor, weight: 2, fillOpacity: 0.25 });
+    }
+    fCount++;
+  });
+
+  // Actualizar pin en pinLayer
+  const allFeatures = [];
+  const collect = g => {
+    if (!g) return;
+    if (Array.isArray(g)) { g.forEach(collect); return; }
+    if (g.type === 'FeatureCollection') g.features?.forEach(f => allFeatures.push(f));
+    else if (g.type === 'Feature') allFeatures.push(g);
+  };
+  collect(layer.geojson);
+
+  const pins = [];
+  layer.pinLayer.eachLayer(m => pins.push(m));
+  if (pins[featureIdx]) {
+    const f = allFeatures[featureIdx];
+    const c = featureCentroid(f);
+    if (c) {
+      layer.pinLayer.removeLayer(pins[featureIdx]);
+      L.marker(c, { icon: buildPinIcon(newColor) })
+        .bindPopup(buildPopupHtml(f.properties, layerId, featureIdx))
+        .addTo(layer.pinLayer);
+    }
+  }
+}
 
 function buildPinIcon(color) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="30" viewBox="0 0 22 30">
@@ -3411,12 +3492,44 @@ function featureCentroid(feature) {
   return [sumLat / pts.length, sumLng / pts.length];
 }
 
-function buildPopupHtml(properties) {
-  if (!properties) return '<i style="font-size:10px;color:#aaa">Sin atributos</i>';
-  let html = '<div style="font-family:DM Sans,sans-serif;font-size:10px;max-height:160px;overflow:auto;padding:2px 0;">';
-  for (const k in properties) html += `<b>${esc(k)}:</b> ${esc(String(properties[k] ?? ''))}<br>`;
-  html += '</div>';
-  return html;
+function buildPopupHtml(properties, layerId, featureIdx) {
+  const hasChecklist = layerId != null;
+
+  // ── Panel de atributos ──
+  let attrsHtml = '<div style="font-family:DM Sans,sans-serif;font-size:10px;max-height:140px;overflow:auto;padding:2px 0;">';
+  if (!properties) attrsHtml += '<i style="color:#aaa">Sin atributos</i>';
+  else for (const k in properties) attrsHtml += `<b>${esc(k)}:</b> ${esc(String(properties[k] ?? ''))}<br>`;
+  attrsHtml += '</div>';
+
+  if (!hasChecklist) return attrsHtml;
+
+  // ── Panel checklist ──
+  const clKey = `cl_${layerId}_${featureIdx}`;
+  const saved = (() => { try { return JSON.parse(localStorage.getItem(clKey) || 'null'); } catch(e) { return null; } })();
+  const visitado = saved?.visitado || false;
+  const comentario = saved?.comentario || '';
+  const badgeDot = visitado ? '<span class="cl-badge"></span>' : '';
+
+  const clHtml = `
+    <div class="cl-row">
+      <input type="checkbox" class="cl-checkbox" id="cl-cb-${clKey}" ${visitado ? 'checked' : ''}>
+      <label class="cl-label" for="cl-cb-${clKey}" style="cursor:pointer;">Marcado como visitado</label>
+    </div>
+    <div style="margin-bottom:6px;">
+      <div class="cl-label" style="margin-bottom:4px;">Comentario</div>
+      <textarea class="cl-textarea" id="cl-ta-${clKey}" placeholder="Añade una nota…">${esc(comentario)}</textarea>
+    </div>
+    <button class="cl-save-btn" id="cl-btn-${clKey}">Guardar</button>
+    <div class="cl-saved-msg" id="cl-msg-${clKey}">✓ Guardado</div>`;
+
+  return `<div style="width:220px;">
+    <div class="popup-tabs">
+      <div class="popup-tab active" data-tab="attrs">Atributos</div>
+      <div class="popup-tab" data-tab="checklist">Checklist ${badgeDot}</div>
+    </div>
+    <div class="popup-tab-panel active" data-panel="attrs">${attrsHtml}</div>
+    <div class="popup-tab-panel" data-panel="checklist">${clHtml}</div>
+  </div>`;
 }
 
 // ── Agregar Capa Vectorial (Modificada con integración de base de datos) ──
@@ -3446,16 +3559,25 @@ function addShpLayer(geojson, name, cloudId = null, shouldSaveToCloud = false, s
   collect(geojson);
 
   const polyLayer = L.geoJSON(geojson, {
-    style: { color, weight: 2, fillOpacity: 0.25, fillColor: color },
-    onEachFeature: (f, l) => { l.bindPopup(buildPopupHtml(f.properties)); }
+    style: f => {
+      const fIdx = allFeatures.indexOf(f);
+      const clKey = `cl_${id}_${fIdx}`;
+      const saved = (() => { try { return JSON.parse(localStorage.getItem(clKey) || 'null'); } catch(e) { return null; } })();
+      const c = saved?.visitado ? VISITED_COLOR : color;
+      return { color: c, weight: 2, fillOpacity: 0.25, fillColor: c };
+    },
+    onEachFeature: (f, l, fIdx = allFeatures.indexOf(f)) => { l.bindPopup(() => buildPopupHtml(f.properties, id, fIdx)); }
   });
 
   const pinLayer = L.layerGroup();
-  allFeatures.forEach(f => {
+  allFeatures.forEach((f, fIdx) => {
     const c = featureCentroid(f);
     if (!c) return;
-    L.marker(c, { icon: buildPinIcon(color) })
-      .bindPopup(buildPopupHtml(f.properties))
+    const clKey = `cl_${id}_${fIdx}`;
+    const saved = (() => { try { return JSON.parse(localStorage.getItem(clKey) || 'null'); } catch(e) { return null; } })();
+    const pinColor = saved?.visitado ? VISITED_COLOR : color;
+    L.marker(c, { icon: buildPinIcon(pinColor) })
+      .bindPopup(buildPopupHtml(f.properties, id, fIdx))
       .addTo(pinLayer);
   });
 
@@ -3490,7 +3612,7 @@ function addShpLayer(geojson, name, cloudId = null, shouldSaveToCloud = false, s
         const c = featureCentroid(f);
         if (!c) return;
         L.marker(c, { icon: buildPinIcon(s.color || color) })
-          .bindPopup(buildPopupHtml(f.properties))
+          .bindPopup(() => buildPopupHtml(f.properties, id, allFeatures.indexOf(f)))
           .addTo(pinLayer);
       });
     }
@@ -4267,8 +4389,7 @@ function stopDraw(save) {
           type: 'Polygon', coordinates: [ring]
         }, properties: { nombre: name, area_m2: Math.round(areaM2), area_ha: areaHa } }]
       };
-      addShpLayer(geojson, name, null, true);
-      toast(`"${name}" añadida · ${areaHa} ha`, 'ok');
+      showSaveLayerModal(geojson, name);
     } else if (drawMode === 'line' && drawPoints.length >= 2) {
       drawCount++;
       const name = `Línea dibujada ${drawCount}`;
@@ -4281,8 +4402,7 @@ function stopDraw(save) {
           type: 'LineString', coordinates: coords
         }, properties: { nombre: name, distancia_m: Math.round(totalM), distancia: fmtDist(totalM) } }]
       };
-      addShpLayer(geojson, name, null, true);
-      toast(`"${name}" añadida · ${fmtDist(totalM)}`, 'ok');
+      showSaveLayerModal(geojson, name);
     }
   }
   drawPoints = [];
@@ -5669,8 +5789,8 @@ async function rejectShare(reqId) {
         }, properties: { nombre: name, area_m2: Math.round(areaM2), area_ha: areaHa } }]
       };
       if (gpsTrackPolyline) { map.removeLayer(gpsTrackPolyline); gpsTrackPolyline = null; }
-      if (typeof addShpLayer === 'function') addShpLayer(geojson, name, null, true);
-      toast(`"${name}" creada · ${areaHa} ha`, 'ok');
+      if (typeof addShpLayer === 'function') showSaveLayerModal(geojson, name);
+      else toast('Error al guardar', 'err');
 
     } else {
       // Modo línea: necesita ≥ 2 puntos, NO cierra el polígono
@@ -5702,8 +5822,8 @@ async function rejectShare(reqId) {
         }, properties: { nombre: name, distancia_m: Math.round(totalM), distancia: distLabel } }]
       };
       if (gpsTrackPolyline) { map.removeLayer(gpsTrackPolyline); gpsTrackPolyline = null; }
-      if (typeof addShpLayer === 'function') addShpLayer(geojson, name, null, true);
-      toast(`"${name}" creada · ${distLabel}`, 'ok');
+      if (typeof showSaveLayerModal === 'function') showSaveLayerModal(geojson, name);
+      else if (typeof addShpLayer === 'function') addShpLayer(geojson, name, null, true);
     }
 
     gpsTrackPoints = [];
@@ -5974,6 +6094,8 @@ if (auth !== null) {
 
       // Sincronizar capas locales actuales que se hayan cargado antes de loguearse
       shpLayers.forEach(layer => saveShpToCloud(layer));
+      // Sincronizar checklists desde Firestore
+      document.dispatchEvent(new CustomEvent('cl-sync-firestore', { detail: { uid: user.uid } }));
       // Cargar capa desde enlace público si hay ?share= en la URL
       const _sp = new URLSearchParams(window.location.search);
       const _shareId = _sp.get('share');
@@ -6228,8 +6350,8 @@ if (auth !== null) {
       const areaHa = (areaM2/10000).toFixed(4);
       const geojson = { type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'Polygon', coordinates:[ringCoords] }, properties:{ nombre:name, area_m2:Math.round(areaM2), area_ha:areaHa } }] };
       if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; }
-      addShpLayer(geojson, name, null, true);
-      toast('"' + name + '" creada · ' + areaHa + ' ha', 'ok');
+      showSaveLayerModal(geojson, name, () => { dskGpsPoints = []; dskGpsState_v = 'idle'; updateDskGpsUI(); });
+      return;
     } else {
       if (dskGpsPoints.length < 2) { toast('Se necesitan al menos 2 puntos para crear una línea', 'err'); dskGpsState_v = 'idle'; if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; } updateDskGpsUI(); return; }
       const lineCoords = dskGpsPoints.map(([lat,lng]) => [lng,lat]);
@@ -6240,8 +6362,8 @@ if (auth !== null) {
       const distLabel = fmtDist(totalM);
       const geojson = { type:'FeatureCollection', features:[{ type:'Feature', geometry:{ type:'LineString', coordinates:lineCoords }, properties:{ nombre:name, distancia_m:Math.round(totalM), distancia:distLabel } }] };
       if (dskGpsPolyline) { map.removeLayer(dskGpsPolyline); dskGpsPolyline = null; }
-      addShpLayer(geojson, name, null, true);
-      toast('"' + name + '" creada · ' + distLabel, 'ok');
+      showSaveLayerModal(geojson, name, () => { dskGpsPoints = []; dskGpsState_v = 'idle'; updateDskGpsUI(); });
+      return;
     }
     dskGpsPoints = []; dskGpsState_v = 'idle'; updateDskGpsUI();
   });
@@ -6585,7 +6707,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const prev = layerSel.value;
     const opts = [
       { value: 'recinto', label: 'Recintos SIGPAC' },
-      { value: 'cultivo', label: 'Cultivos SIGPAC' },
     ];
     if (typeof shpLayers !== 'undefined') {
       shpLayers.forEach(l => { if (l.visible) opts.push({ value: l.id, label: l.name }); });
@@ -6636,7 +6757,7 @@ document.addEventListener('DOMContentLoaded', function() {
     map.off('click', onSelClick);
     if (typeof shpLayers !== 'undefined') {
       shpLayers.forEach(l => l.polyLayer.eachLayer(sub => {
-        if (sub.feature && !sub.getPopup()) sub.bindPopup(buildPopupHtml(sub.feature.properties));
+        if (sub.feature && !sub.getPopup()) { const _l = shpLayers.find(l => l.polyLayer.hasLayer(sub) || l.pinLayer?.hasLayer(sub)); sub.bindPopup(() => buildPopupHtml(sub.feature.properties, _l?.id, _l ? _l.geojson?.features?.indexOf(sub.feature) : -1)); }
       }));
     }
     clearSelection();
@@ -6778,9 +6899,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const fc = { type: 'FeatureCollection', features: selFeatures.map(s => s.feature) };
     const srcLabel = layerSel.options[layerSel.selectedIndex]?.text || 'Selección';
     const name = `Selección ${srcLabel} (${selFeatures.length})`;
-    addShpLayer(fc, name, null, true);
-    toast(`"${name}" añadida`, 'ok');
-    closeSelBar();
+    showSaveLayerModal(fc, name, () => closeSelBar());
   });
 
   // Sincronización con otras herramientas
@@ -6803,6 +6922,70 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
+  // ── Checklist: tabs y guardado via event delegation en popups de Leaflet ──
+  document.addEventListener('click', function(e) {
+    // Tab switching
+    const tab = e.target.closest('.popup-tab');
+    if (tab) {
+      const wrap = tab.closest('div');
+      wrap.querySelectorAll('.popup-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const panel = tab.dataset.tab;
+      tab.closest('[style]').querySelectorAll('.popup-tab-panel').forEach(p => {
+        p.classList.toggle('active', p.dataset.panel === panel);
+      });
+      return;
+    }
+    // Save button
+    const btn = e.target.closest('.cl-save-btn');
+    if (btn) {
+      const key = btn.id.replace('cl-btn-', '');
+      const visitado = document.getElementById('cl-cb-' + key)?.checked || false;
+      const comentario = document.getElementById('cl-ta-' + key)?.value || '';
+      const data = { visitado, comentario, ts: Date.now() };
+      localStorage.setItem(key, JSON.stringify(data));
+      // Actualizar color del feature en el mapa inmediatamente
+      // key tiene formato: cl_${layerId}_${featureIdx}
+      const keyParts = key.replace(/^cl_/, '').match(/^(.+)_(\d+)$/);
+      if (keyParts) {
+        updateFeatureVisitedStyle(keyParts[1], parseInt(keyParts[2]), visitado);
+      }
+      // Si Firebase activo, guardar también en Firestore
+      if (typeof isFirebaseActive === 'function' && isFirebaseActive() && typeof db !== 'undefined' && typeof appId !== 'undefined') {
+        const uid = auth?.currentUser?.uid;
+        if (uid) db.doc(`artifacts/${appId}/users/${uid}/checklists/${key}`).set(data).catch(() => {});
+      }
+      // Mostrar confirmación
+      const msg = document.getElementById('cl-msg-' + key);
+      if (msg) { msg.style.display = 'block'; setTimeout(() => { msg.style.display = 'none'; }, 1800); }
+      // Actualizar badge en la pestaña
+      const tabEl = btn.closest('[style]')?.querySelector('.popup-tab[data-tab="checklist"]');
+      if (tabEl) {
+        const badge = tabEl.querySelector('.cl-badge');
+        if (visitado && !badge) tabEl.insertAdjacentHTML('beforeend', '<span class="cl-badge"></span>');
+        else if (!visitado && badge) badge.remove();
+      }
+      return;
+    }
+  });
+
+  // Cargar checklists desde Firestore al iniciar sesión (complementa localStorage)
+  document.addEventListener('cl-sync-firestore', async (e) => {
+    const uid = e.detail?.uid;
+    if (!uid || typeof db === 'undefined') return;
+    try {
+      const snap = await db.collection(`artifacts/${appId}/users/${uid}/checklists`).get();
+      snap.forEach(doc => {
+        const existing = localStorage.getItem(doc.id);
+        const remote = doc.data();
+        // Gana el más reciente
+        if (!existing || (JSON.parse(existing).ts || 0) < (remote.ts || 0)) {
+          localStorage.setItem(doc.id, JSON.stringify(remote));
+        }
+      });
+    } catch(err) { console.warn('Checklist sync error:', err); }
+  });
+
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')
@@ -6810,6 +6993,286 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(e => console.warn('[PWA] SW error:', e));
     });
   }
+
+// ═══════════════════════════════════════════════════════════════
+// MODAL "AÑADIR CAPA A:" — función central usada por dibujo, GPS y selección
+// ═══════════════════════════════════════════════════════════════
+(function() {
+  const modal    = document.getElementById('addToLayerModal');
+  const select   = document.getElementById('addToLayerSelect');
+  const btnSave  = document.getElementById('addToLayerSave');
+  const btnCancel= document.getElementById('addToLayerCancel');
+
+  let _pendingGeojson  = null;
+  let _pendingName     = null;
+  let _pendingCallback = null;
+
+  // Exponer globalmente para que los tres flujos la llamen
+  window.showSaveLayerModal = function(geojson, defaultName, onSave) {
+    _pendingGeojson  = geojson;
+    _pendingName     = defaultName;
+    _pendingCallback = onSave || null;
+
+    // Poblar el select con las capas existentes
+    select.innerHTML = '<option value="__new__">— Nueva capa vectorial —</option>';
+    if (typeof shpLayers !== 'undefined') {
+      shpLayers.forEach(l => {
+        const opt = document.createElement('option');
+        opt.value = l.id;
+        opt.textContent = l.name;
+        select.appendChild(opt);
+      });
+    }
+    select.value = '__new__';
+    modal.classList.add('open');
+  };
+
+  btnCancel.addEventListener('click', () => {
+    modal.classList.remove('open');
+    _pendingGeojson = _pendingName = _pendingCallback = null;
+  });
+
+  btnSave.addEventListener('click', () => {
+    modal.classList.remove('open');
+    if (!_pendingGeojson) return;
+
+    const targetId = select.value;
+
+    if (targetId === '__new__') {
+      // Nueva capa
+      if (typeof addShpLayer === 'function') {
+        addShpLayer(_pendingGeojson, _pendingName, null, true);
+        toast(`"${_pendingName}" añadida`, 'ok');
+      }
+    } else {
+      // Añadir a capa existente
+      mergeIntoLayer(targetId, _pendingGeojson);
+    }
+
+    if (typeof _pendingCallback === 'function') _pendingCallback();
+    _pendingGeojson = _pendingName = _pendingCallback = null;
+  });
+
+  // Mezcla las features del geojson nuevo en una capa existente
+  function mergeIntoLayer(layerId, newGeojson) {
+    const layer = shpLayers.find(l => l.id === layerId);
+    if (!layer) { toast('Capa no encontrada', 'err'); return; }
+
+    // Extraer features nuevas
+    const newFeatures = [];
+    const collect = g => {
+      if (!g) return;
+      if (Array.isArray(g)) { g.forEach(collect); return; }
+      if (g.type === 'FeatureCollection') g.features?.forEach(f => newFeatures.push(f));
+      else if (g.type === 'Feature') newFeatures.push(g);
+    };
+    collect(newGeojson);
+
+    // Construir nuevo geojson combinado
+    const existingFeatures = [];
+    const collectExisting = g => {
+      if (!g) return;
+      if (Array.isArray(g)) { g.forEach(collectExisting); return; }
+      if (g.type === 'FeatureCollection') g.features?.forEach(f => existingFeatures.push(f));
+      else if (g.type === 'Feature') existingFeatures.push(g);
+    };
+    collectExisting(layer.geojson);
+
+    const mergedGeojson = {
+      type: 'FeatureCollection',
+      features: [...existingFeatures, ...newFeatures]
+    };
+
+    // Eliminar la capa actual del mapa y del array
+    map.removeLayer(layer.polyLayer);
+    map.removeLayer(layer.pinLayer);
+    map.off('zoomend', layer.leafletLayer._onZoom);
+    const idx = shpLayers.findIndex(l => l.id === layerId);
+    if (idx !== -1) shpLayers.splice(idx, 1);
+    // Eliminar del panel de capas
+    document.querySelector(`.list-item[data-id="${layerId}"]`)?.remove();
+
+    // Recrear la capa con los datos combinados, manteniendo el mismo id y nombre
+    addShpLayer(mergedGeojson, layer.name, layer.id, true, false);
+    toast(`${newFeatures.length} geometría${newFeatures.length > 1 ? 's' : ''} añadida${newFeatures.length > 1 ? 's' : ''} a "${layer.name}"`, 'ok');
+  }
+
+})();
 </script>
+
+<!-- ── OFFLINE ZONE MODAL ── -->
+<div id="offline-modal" style="display:none; position:fixed; inset:0; z-index:10500; background:rgba(15,20,30,.55); backdrop-filter:blur(4px); align-items:center; justify-content:center;">
+  <div style="background:var(--glass); border:1.5px solid var(--blue); border-radius:16px; padding:24px 20px; width:320px; max-width:calc(100vw - 32px); box-shadow:var(--shadow); backdrop-filter:blur(16px); font-family:'DM Sans',sans-serif;">
+    <div style="font-size:15px; font-weight:800; color:var(--text); margin-bottom:4px;" id="offline-modal-title">Guardar zona para offline</div>
+    <div style="font-size:12px; color:var(--muted); margin-bottom:14px;" id="offline-modal-sub">Se guardarán los tiles del mapa visible en los zooms actuales.</div>
+
+    <!-- Selector de zooms -->
+    <div style="margin-bottom:12px;">
+      <div style="font-size:11px; font-weight:700; color:var(--text2); margin-bottom:6px;">Niveles de zoom a guardar</div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <label style="font-size:11px; color:var(--muted);">Desde</label>
+        <select id="offline-zoom-min" style="font-family:'DM Sans',sans-serif; font-size:11px; border:1px solid var(--border); border-radius:6px; padding:3px 6px; background:var(--s3); color:var(--text);">
+          <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+          <option value="13">13</option><option value="14" selected>14</option><option value="15">15</option>
+        </select>
+        <label style="font-size:11px; color:var(--muted);">Hasta</label>
+        <select id="offline-zoom-max" style="font-family:'DM Sans',sans-serif; font-size:11px; border:1px solid var(--border); border-radius:6px; padding:3px 6px; background:var(--s3); color:var(--text);">
+          <option value="15">15</option><option value="16">16</option><option value="17" selected>17</option>
+          <option value="18">18</option><option value="19">19</option>
+        </select>
+      </div>
+      <div style="font-size:10px; color:var(--muted); margin-top:4px;" id="offline-tile-estimate">Estimando tiles…</div>
+    </div>
+
+    <!-- Barra de progreso (oculta hasta iniciar) -->
+    <div id="offline-progress-wrap" style="display:none; margin-bottom:12px;">
+      <div style="height:6px; background:var(--border); border-radius:3px; overflow:hidden;">
+        <div id="offline-progress-bar" style="height:100%; width:0%; background:var(--blue); transition:width .3s; border-radius:3px;"></div>
+      </div>
+      <div style="font-size:10px; color:var(--muted); margin-top:4px; text-align:center;" id="offline-progress-text">0 / 0 tiles</div>
+    </div>
+
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="share-btn primary" id="offline-start-btn">💾 Guardar zona</button>
+      <button class="share-btn secondary" id="offline-clear-btn">🗑 Borrar caché</button>
+      <button class="share-btn secondary" id="offline-close-btn">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── OFFLINE ZONE MANAGER ──
+(function() {
+  const modal      = document.getElementById('offline-modal');
+  const titleEl    = document.getElementById('offline-modal-title');
+  const subEl      = document.getElementById('offline-modal-sub');
+  const startBtn   = document.getElementById('offline-start-btn');
+  const clearBtn   = document.getElementById('offline-clear-btn');
+  const closeBtn   = document.getElementById('offline-close-btn');
+  const progressWrap = document.getElementById('offline-progress-wrap');
+  const progressBar  = document.getElementById('offline-progress-bar');
+  const progressText = document.getElementById('offline-progress-text');
+  const estimateEl   = document.getElementById('offline-tile-estimate');
+  const zoomMinEl    = document.getElementById('offline-zoom-min');
+  const zoomMaxEl    = document.getElementById('offline-zoom-max');
+
+  window.openOfflineModal = function() {
+    modal.style.display = 'flex';
+    progressWrap.style.display = 'none';
+    progressBar.style.width = '0%';
+    startBtn.disabled = false;
+    startBtn.textContent = '💾 Guardar zona';
+    updateEstimate();
+  };
+
+  closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+  modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+  [zoomMinEl, zoomMaxEl].forEach(el => el.addEventListener('change', updateEstimate));
+
+  function updateEstimate() {
+    if (!window.map) return;
+    const bounds = window.map.getBounds();
+    const zMin = parseInt(zoomMinEl.value);
+    const zMax = parseInt(zoomMaxEl.value);
+    let total = 0;
+    for (let z = zMin; z <= zMax; z++) total += countTilesInBounds(bounds, z);
+    estimateEl.textContent = `≈ ${total.toLocaleString()} tiles · ~${Math.round(total * 15 / 1024)} MB estimados`;
+    estimateEl.style.color = total > 5000 ? 'var(--danger)' : 'var(--muted)';
+  }
+
+  startBtn.addEventListener('click', async () => {
+    if (!navigator.serviceWorker?.controller) {
+      alert('El Service Worker no está activo. Recarga la página e inténtalo de nuevo.');
+      return;
+    }
+    const bounds = window.map.getBounds();
+    const zMin = parseInt(zoomMinEl.value);
+    const zMax = parseInt(zoomMaxEl.value);
+
+    // Generar URLs de tiles para el mapa base activo
+    const tiles = generateTileUrls(bounds, zMin, zMax);
+    if (tiles.length > 8000) {
+      if (!confirm(`Se van a guardar ${tiles.length.toLocaleString()} tiles (~${Math.round(tiles.length*15/1024)} MB). ¿Continuar?`)) return;
+    }
+
+    startBtn.disabled = true;
+    startBtn.textContent = '⏳ Guardando…';
+    progressWrap.style.display = 'block';
+    progressBar.style.width = '0%';
+    progressText.textContent = `0 / ${tiles.length}`;
+
+    // Escuchar progreso del SW
+    const onMessage = (e) => {
+      if (e.data?.type === 'CACHE_PROGRESS') {
+        const pct = Math.round(e.data.saved / e.data.total * 100);
+        progressBar.style.width = pct + '%';
+        progressText.textContent = `${e.data.saved.toLocaleString()} / ${e.data.total.toLocaleString()} tiles`;
+      }
+      if (e.data?.type === 'CACHE_DONE') {
+        navigator.serviceWorker.removeEventListener('message', onMessage);
+        progressBar.style.width = '100%';
+        progressText.textContent = `✅ ${e.data.saved.toLocaleString()} tiles guardados`;
+        startBtn.disabled = false;
+        startBtn.textContent = '💾 Guardar zona';
+        subEl.textContent = 'Zona guardada. El mapa estará disponible sin conexión.';
+        subEl.style.color = 'var(--blue)';
+      }
+    };
+    navigator.serviceWorker.addEventListener('message', onMessage);
+    navigator.serviceWorker.controller.postMessage({ type: 'CACHE_TILES', tiles });
+  });
+
+  clearBtn.addEventListener('click', async () => {
+    if (!navigator.serviceWorker?.controller) return;
+    navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_TILES' });
+    const onMsg = (e) => {
+      if (e.data?.type === 'TILES_CLEARED') {
+        navigator.serviceWorker.removeEventListener('message', onMsg);
+        subEl.textContent = 'Caché de tiles borrada.';
+        subEl.style.color = 'var(--muted)';
+      }
+    };
+    navigator.serviceWorker.addEventListener('message', onMsg);
+  });
+
+  // ── Helpers de tiles ──
+  function lon2tile(lon, zoom) { return Math.floor((lon + 180) / 360 * Math.pow(2, zoom)); }
+  function lat2tile(lat, zoom) { return Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom)); }
+
+  function countTilesInBounds(bounds, zoom) {
+    const xMin = lon2tile(bounds.getWest(), zoom),  xMax = lon2tile(bounds.getEast(), zoom);
+    const yMin = lat2tile(bounds.getNorth(), zoom), yMax = lat2tile(bounds.getSouth(), zoom);
+    return Math.abs((xMax - xMin + 1) * (yMax - yMin + 1));
+  }
+
+  function getActiveTileLayerUrl() {
+    // Intentar obtener la URL del layer activo de Leaflet
+    if (!window.map) return null;
+    let tileUrl = null;
+    window.map.eachLayer(layer => {
+      if (layer._url && layer._url.includes('{z}')) tileUrl = layer._url;
+    });
+    return tileUrl;
+  }
+
+  function generateTileUrls(bounds, zMin, zMax) {
+    const baseUrl = getActiveTileLayerUrl();
+    if (!baseUrl) return [];
+    const urls = [];
+    for (let z = zMin; z <= zMax; z++) {
+      const xMin = lon2tile(bounds.getWest(), z),  xMax = lon2tile(bounds.getEast(), z);
+      const yMin = lat2tile(bounds.getNorth(), z), yMax = lat2tile(bounds.getSouth(), z);
+      for (let x = xMin; x <= xMax; x++) {
+        for (let y = yMin; y <= yMax; y++) {
+          urls.push(baseUrl.replace('{z}', z).replace('{x}', x).replace('{y}', y).replace('{s}', 'a'));
+        }
+      }
+    }
+    return urls;
+  }
+})();
+</script>
+
 </body>
 </html>
